@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.sort.Sort;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.data.sort.SortDirection;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 import life.qbic.datamodel.services.*;
+import life.qbic.portal.utils.PortalUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -111,9 +114,15 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
         //////////////////////////
 
-        TextField rpField = new TextField("Responsible Person email:");
-        rpField.setValue("sven.fillinger@qbic.uni-tuebingen.de");
-        rpField.setWidth("80%");
+        Label rpText = new Label("<b>Responsible Person email:</b>", ContentMode.HTML);
+        Label rpEmail = new Label("sven.fillinger@qbic.uni-tuebingen.de");
+
+        if (PortalUtils.isLiferayPortlet()) {
+            rpEmail.setValue(PortalUtils.getUser().getEmailAddress());
+        }
+
+        rpText.setWidth("80%");
+        rpEmail.setWidth("80%");
 
         Button locationsButton = new Button("Get Locations");
         locationsButton.setWidth("40%");
@@ -165,7 +174,14 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
                 if (idField.getValue().equals("")){
 
-                    Notification.show("Invalid QBiC ID");
+                    //Notification.show("Invalid QBiC ID");
+
+                    Notification notif = new Notification("Invalid QBiC ID","", Notification.TYPE_ERROR_MESSAGE);
+                    notif.setDelayMsec(20000);
+                    notif.setPosition(Notification.POSITION_CENTERED_TOP);
+                    notif.show(Page.getCurrent());
+
+
                     //logTable.getContainerDataSource().removeAllItems();
                 }else {
 
@@ -195,7 +211,13 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                     } catch (Exception E) { //IOException
 
                         System.out.println("api exception********");
-                        Notification.show("Invalid QBiC ID");
+
+                        //Notification.show("Invalid QBiC ID");
+                        Notification notif = new Notification("Invalid QBiC ID","", Notification.TYPE_ERROR_MESSAGE);
+                        notif.setDelayMsec(20000);
+                        notif.setPosition(Notification.POSITION_CENTERED_TOP);
+                        notif.show(Page.getCurrent());
+
                     }
 
                 }
@@ -213,17 +235,22 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                 //if (idField.getValue().equals("")){
                 if( (validIdList.size() == 0) || (selectedLocation.equals("")) ){
 
-                    Notification.show("Can not update, add valid IDs and fill all information");
+                    //Notification.show("Can not update, add valid IDs and fill all information");
+
+                    Notification notif = new Notification("Invalid Information","Can not update, add valid IDs and fill all information", Notification.TYPE_ERROR_MESSAGE);
+                    notif.setDelayMsec(20000);
+                    notif.setPosition(Notification.POSITION_CENTERED_TOP);
+                    notif.show(Page.getCurrent());
 
                     //logTable.getContainerDataSource().removeAllItems();
                 }else {
 
                     try {
 
-                        System.out.println("flag 1");
+                        //System.out.println("flag 1");
 
                         System.out.println("++++++++ selected loc: " + selectedLocation.toString());
-                        System.out.println("flag 2");
+                        //System.out.println("flag 2");
 
                  /*       //first update location
 
@@ -311,8 +338,12 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
                         }
 
-                        Notification.show("ID(s) updated");
+                        //Notification.show("ID(s) updated");
 
+                        Notification notif = new Notification("ID(s) Updated","", Notification.TYPE_WARNING_MESSAGE);
+                        notif.setDelayMsec(20000);
+                        notif.setPosition(Notification.POSITION_CENTERED_TOP);
+                        notif.show(Page.getCurrent());
 
 
                         // clear sample list
@@ -354,14 +385,14 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
                 ////////////////////////////////////////////
 
-                if (rpField.getValue().equals("")){
+                if (rpEmail.getValue().equals("")){
 
                     //logTable.getContainerDataSource().removeAllItems();
                 }else {
 
                     try {
 
-                        String contactEmail = rpField.getValue();
+                        String contactEmail = rpEmail.getValue();
 
                         String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
                         HttpClient client = HttpClientBuilder.create().build();
@@ -429,7 +460,8 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
         panelContentA.addComponent(logTable);
         panelContentA.addComponent(clearTableButton);
 
-        panelContentB.addComponent(rpField);
+        panelContentB.addComponent(rpText);
+        panelContentB.addComponent(rpEmail);
         panelContentB.addComponent(locationsButton);
 
         panelContentB.addComponent(locationBox);
