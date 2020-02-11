@@ -4,14 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.sort.Sort;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
-import life.qbic.datamodel.services.*;
+import life.qbic.datamodel.samples.*;
+import life.qbic.datamodel.people.Address;
 import life.qbic.portal.utils.PortalUtils;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,8 +30,25 @@ import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+////////////////////////////////////////
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import life.qbic.portal.utils.ConfigurationManagerFactory;
+import life.qbic.portal.utils.ConfigurationManager;
+import life.qbic.services.ConsulServiceFactory;
+import life.qbic.services.Service;
+import life.qbic.services.ServiceConnector;
+import life.qbic.services.ServiceType;
+import life.qbic.services.connectors.ConsulConnector;
+
+import life.qbic.datamodel.services.ServiceUser;
 
 /**
  * Entry point for portlet sample-tracking-update-portlet. This class derives from {@link QBiCPortletUI}, which is found in the {@code portal-utils-lib} library.
@@ -44,9 +66,35 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     public String selectedStatus;
     public Vector<String> validIdList;
 
+    private static List<Service> serviceList;
+    private static ServiceUser httpUser;
+    private String authHeader;
+
     @Override
     protected Layout getPortletContent(final VaadinRequest request) {
         LOG.info("Generating content for {}", SampleTrackingUpdatePortlet.class);
+
+        /////////////
+        //set service factory
+        ConfigurationManager confManager = ConfigurationManagerFactory.getInstance();
+        URL serviceURL = null;
+        httpUser = confManager.getServiceUser();
+        try {
+            serviceURL = new URL(confManager.getServicesRegistryUrl());
+
+            serviceList = new ArrayList<Service>();
+            ServiceConnector connector = new ConsulConnector(serviceURL);
+            ConsulServiceFactory factory = new ConsulServiceFactory(connector);
+            serviceList.addAll(factory.getServicesOfType(ServiceType.SAMPLE_TRACKING));
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        byte[] credentials = Base64.encodeBase64((httpUser.name + ":" + httpUser.password).getBytes(StandardCharsets.UTF_8));
+        authHeader = "Basic " + new String(credentials, StandardCharsets.UTF_8);
+        //////////////////////
 
         this.locationMap = new HashMap<String, Location>();
         this.selectedStatus = Status.WAITING.toString();
@@ -92,14 +140,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
         Button addIdButton = new Button("Add ID");
         addIdButton.setWidth("30%");
 
-
-        Upload idFileUpload = new Upload("Upload ID file", null);
-        //Button uploadIdFileButton = new Button("Upload ID file");
-
-        //inputButtonLayout.addComponent(addIdButton);
-        //inputButtonLayout.addComponent(idFileUpload);
-
-        ////////////////////////
+        /////////////////////////////////////////////
 
         Grid logTable = new Grid("Samples to update:");
         logTable.setSelectionMode(Grid.SelectionMode.NONE);
@@ -109,6 +150,58 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
         logTable.setWidth("100%");
         logTable.setHeight("30%");
+
+        ///////////////////////////////
+
+        // Implement both receiver that saves upload in a file and
+        // listener for successful upload
+        class IdReceiver implements Upload.Receiver, Upload.SucceededListener {
+
+            protected File tempFile;
+
+            public OutputStream receiveUpload(String filename, String mimeType) {
+
+                try {
+                    tempFile = File.createTempFile("temp", ".csv");
+                    return new FileOutputStream(tempFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            public void uploadSucceeded(Upload.SucceededEvent event) {
+
+                try {
+
+                    BufferedReader reader = new BufferedReader(new FileReader(tempFile));
+                    String next;
+                    while ((next = reader.readLine()) != null) {
+
+                        next = next.trim();
+                        System.out.println("-------> id: " + next);
+
+                        addIdToTable(next, logTable);
+
+                    }
+
+                    reader.close();
+                    tempFile.delete();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+        IdReceiver receiver = new IdReceiver();
+
+        // Create the upload with a caption and set receiver later
+        Upload idFileUpload = new Upload("Upload ID file", receiver);
+        idFileUpload.setButtonCaption("Add File IDs");
+        idFileUpload.addSucceededListener(receiver);
+
+        ///////////////////////////////
 
         Button clearTableButton = new Button("Clear samples");
 
@@ -188,13 +281,15 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                     try {
 
 
-                        String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        //String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
                         HttpClient client = HttpClientBuilder.create().build();
 
                         String sampleId = idField.getValue();
 
                         HttpGet getSampleInfo = new HttpGet(baseURL + "samples/" + sampleId);
+                        getSampleInfo.setHeader("Authorization", authHeader);
                         HttpResponse response = client.execute(getSampleInfo);
 
                         ObjectMapper mapper = new ObjectMapper();
@@ -213,7 +308,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                         System.out.println("api exception********");
 
                         //Notification.show("Invalid QBiC ID");
-                        Notification notif = new Notification("Invalid QBiC ID","", Notification.TYPE_ERROR_MESSAGE);
+                        Notification notif = new Notification("Invalid QBiC ID: " + idField.getValue(),"", Notification.TYPE_ERROR_MESSAGE);
                         notif.setDelayMsec(20000);
                         notif.setPosition(Notification.POSITION_CENTERED_TOP);
                         notif.show(Page.getCurrent());
@@ -294,7 +389,9 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                         /////////////////////////////////////////////////////////
                         System.out.println("iterating over valid ids...........................");
 
-                        String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        //String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
+
                         HttpClient client = HttpClientBuilder.create().build();
 
                         for(String validId: validIdList){
@@ -306,6 +403,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                             String sampleId = validId;
 
                             HttpPost post = new HttpPost(baseURL + "samples/" + sampleId + "/currentLocation/");      // we also need to transfer a (known!) location object (as json)
+                            post.setHeader("Authorization", authHeader);
                             ObjectMapper mapper = new ObjectMapper();
 
                             Location newLocation = locationMap.get(selectedLocation);
@@ -328,6 +426,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                             ///then update the sample status
 
                             HttpPut put = new HttpPut(baseURL + "samples/" + sampleId + "/currentLocation/" + selectedStatus);
+                            put.setHeader("Authorization", authHeader);
                             response = client.execute(put);
 
                             result = EntityUtils.toString(response.getEntity());
@@ -394,10 +493,13 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
                         String contactEmail = rpEmail.getValue();
 
-                        String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        //String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                        String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
+
                         HttpClient client = HttpClientBuilder.create().build();
 
                         HttpGet getLocations = new HttpGet(baseURL + "locations/" + contactEmail);
+                        getLocations.setHeader("Authorization", authHeader);
                         HttpResponse response = client.execute(getLocations);
                         ObjectMapper mapper = new ObjectMapper();
                         List<LinkedHashMap> LocationList = mapper.readValue(response.getEntity().getContent(), List.class);
@@ -477,6 +579,44 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
         queryPanel.setContent(mainLayout);
         return queryPanel;
+    }
+
+
+    private void addIdToTable(String sampleId, Grid logTable){
+
+        try {
+
+            String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
+
+            HttpClient client = HttpClientBuilder.create().build();
+
+            HttpGet getSampleInfo = new HttpGet(baseURL + "samples/" + sampleId);
+            getSampleInfo.setHeader("Authorization", authHeader);
+            HttpResponse response = client.execute(getSampleInfo);
+
+            ObjectMapper mapper = new ObjectMapper();
+            Sample sample = mapper.readValue(response.getEntity().getContent(), Sample.class);
+            //System.out.println(sample);
+
+            logTable.addRow(sampleId,
+                    sample.getCurrentLocation().getName(),
+                    sample.getCurrentLocation().getStatus().toString());
+
+            validIdList.add(sampleId);
+
+
+        } catch (Exception E) { //IOException
+
+            System.out.println("Error at addIdToTable()");
+
+            //Notification.show("Invalid QBiC ID");
+            Notification notif = new Notification("Invalid QBiC ID: " + sampleId,"", Notification.TYPE_ERROR_MESSAGE);
+            notif.setDelayMsec(10000);
+            notif.setPosition(Notification.POSITION_CENTERED_TOP);
+            notif.show(Page.getCurrent());
+
+        }
+
     }
 }
 

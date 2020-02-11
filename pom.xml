@@ -49,12 +49,12 @@
 		<dependency>
 			<groupId>life.qbic</groupId>
 			<artifactId>portal-utils-lib</artifactId>
-			<version>1.4.0</version>
+			<version>1.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>life.qbic</groupId>
 			<artifactId>core-utils-lib</artifactId>
-			<version>1.0.0</version>
+			<version>1.3.0</version>
 		</dependency>
 
 
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>life.qbic</groupId>
 			<artifactId>data-model-lib</artifactId>
-			<version>1.5.0-SNAPSHOT</version>
+			<version>1.7.0</version>
 		</dependency>
 
 
