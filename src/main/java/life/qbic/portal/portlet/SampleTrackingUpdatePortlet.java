@@ -3,19 +3,49 @@ package life.qbic.portal.portlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
-import com.vaadin.data.sort.Sort;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
-import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-
-import life.qbic.datamodel.samples.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.VerticalLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Vector;
 import life.qbic.datamodel.people.Address;
+import life.qbic.datamodel.samples.Location;
+import life.qbic.datamodel.samples.Sample;
+import life.qbic.datamodel.samples.Status;
+import life.qbic.datamodel.services.ServiceUser;
+import life.qbic.portal.utils.ConfigurationManager;
+import life.qbic.portal.utils.ConfigurationManagerFactory;
 import life.qbic.portal.utils.PortalUtils;
-
+import life.qbic.services.ConsulServiceFactory;
+import life.qbic.services.Service;
+import life.qbic.services.ServiceConnector;
+import life.qbic.services.ServiceType;
+import life.qbic.services.connectors.ConsulConnector;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,25 +60,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 ////////////////////////////////////////
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import life.qbic.portal.utils.ConfigurationManagerFactory;
-import life.qbic.portal.utils.ConfigurationManager;
-import life.qbic.services.ConsulServiceFactory;
-import life.qbic.services.Service;
-import life.qbic.services.ServiceConnector;
-import life.qbic.services.ServiceType;
-import life.qbic.services.connectors.ConsulConnector;
-
-import life.qbic.datamodel.services.ServiceUser;
 
 /**
  * Entry point for portlet sample-tracking-update-portlet. This class derives from {@link QBiCPortletUI}, which is found in the {@code portal-utils-lib} library.
