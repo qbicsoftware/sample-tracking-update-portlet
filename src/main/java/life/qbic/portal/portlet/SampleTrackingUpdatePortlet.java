@@ -245,6 +245,8 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     Button updateButton = new Button("Update");
     updateButton.setWidth("40%");
 
+    //TODO: Replace the Component.EventTypeListener by lambda expressions
+
     //TODO: ValueChangeListener do value type conversion. Be careful.
     locationBox.addValueChangeListener(
         event -> selectedLocation = event.getProperty().getValue().toString());
@@ -276,33 +278,38 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
               notif.show(Page.getCurrent());
             } else {
               try {
-
+                //TODO: move service connection responsibility out of click listener
                 String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
                 HttpClient client = HttpClientBuilder.create().build();
 
+                //TODO: do not store values directly in user interface
                 String sampleId = idField.getValue();
 
+                //TODO: rename variable to avoid confusion with Getter naming schema
                 HttpGet getSampleInfo = new HttpGet(baseURL + "samples/" + sampleId);
                 getSampleInfo.setHeader("Authorization", authHeader);
                 HttpResponse response = client.execute(getSampleInfo);
 
+                //TODO: add error handling and reporting to JSON parsing
                 ObjectMapper mapper = new ObjectMapper();
                 Sample sample = mapper.readValue(response.getEntity().getContent(), Sample.class);
-                // System.out.println(sample);
 
+                //TODO: this can be done in the UI. Does probably not need to move
                 logTable.addRow(
                     sampleId,
                     sample.getCurrentLocation().getName(),
                     sample.getCurrentLocation().getStatus().toString());
-
+                //TODO: look into this validIdList business. What is it for? How is it used?
                 validIdList.add(sampleId);
 
               } catch (Exception E) { // IOException
 
+                //TODO: remove out stream output.
                 System.out.println("api exception********");
 
-                // Notification.show("Invalid QBiC ID");
+                //TODO: move notification handling on the UI into a separate method.
+                // This code exists multiple times already.
                 Notification notif =
                     new Notification(
                         "Invalid QBiC ID: " + idField.getValue(),
@@ -316,19 +323,14 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
           }
         });
 
-    //////////////////////////////////////////////////////// 7/
-
     updateButton.addClickListener(
         new Button.ClickListener() {
           public void buttonClick(Button.ClickEvent event) {
 
-            ////////////////////////////////////////////
-
+            //TODO: which check is the correct one?
+            //TODO: replace deprecated values.
             // if (idField.getValue().equals("")){
             if ((validIdList.size() == 0) || (selectedLocation.equals(""))) {
-
-              // Notification.show("Can not update, add valid IDs and fill all information");
-
               Notification notif =
                   new Notification(
                       "Invalid Information",
@@ -338,67 +340,22 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
               notif.setPosition(Notification.POSITION_CENTERED_TOP);
               notif.show(Page.getCurrent());
 
-              // logTable.getContainerDataSource().removeAllItems();
             } else {
 
               try {
-
-                // System.out.println("flag 1");
-
+                //TODO: remove system.out prints
                 System.out.println("++++++++ selected loc: " + selectedLocation);
-                // System.out.println("flag 2");
 
-                /*       //first update location
-
-                String baseURL = "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
-                HttpClient client = HttpClientBuilder.create().build();
-
-                String sampleId = idField.getValue();
-
-                HttpPost post = new HttpPost(baseURL + "samples/" + sampleId + "/currentLocation/");      // we also need to transfer a (known!) location object (as json)
-                ObjectMapper mapper = new ObjectMapper();
-
-                Location newLocation = locationMap.get(selectedLocation);
-                //System.out.println("selected loc---" + newLocation);
-
-                newLocation.setArrivalDate(dateInput.getValue());
-                newLocation.setStatus(Status.WAITING);
-
-                String json = mapper.writeValueAsString(newLocation);
-                HttpEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
-                post.setEntity(entity);
-                HttpResponse response = client.execute(post);
-
-                String result = EntityUtils.toString(response.getEntity());
-
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println(result);
-
-                ////////////////////////////////////////
-                ///then update the sample status
-
-                HttpPut put = new HttpPut(baseURL + "samples/" + sampleId + "/currentLocation/" + selectedStatus);
-                response = client.execute(put);
-
-                result = EntityUtils.toString(response.getEntity());
-
-                System.out.println("++++++++####################");
-                System.out.println(result);*/
-
-                /////////////////////////////////////////////////////////
                 System.out.println("iterating over valid ids...........................");
 
-                // String baseURL =
-                // "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
                 String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
                 HttpClient client = HttpClientBuilder.create().build();
-
+                //TODO: validIdList seems to contain Ids of samples to be updated
                 for (String validId : validIdList) {
                   System.out.println("id: " + validId);
 
                   // first update location
-
                   String sampleId = validId;
 
                   HttpPost post =
