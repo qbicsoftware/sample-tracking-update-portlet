@@ -9,7 +9,7 @@ class SampleTracker {
     private static SampleTrackingCenter INSTANCE
 
     private SampleTracker(){
-
+        throw new AssertionError()
     }
 
     static SampleTrackingUpdate getSampleTrackingUpdate(Service trackingService) {
