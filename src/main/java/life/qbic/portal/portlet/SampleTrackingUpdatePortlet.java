@@ -60,8 +60,6 @@ import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-////////////////////////////////////////
-
 /**
  * Entry point for portlet sample-tracking-update-portlet. This class derives from {@link
  * QBiCPortletUI}, which is found in the {@code portal-utils-lib} library.
@@ -74,21 +72,19 @@ import org.apache.logging.log4j.Logger;
 public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
   private static final Logger LOG = LogManager.getLogger(SampleTrackingUpdatePortlet.class);
-  public HashMap<String, Location> locationMap;
-  public String selectedLocation;
-  public String selectedStatus;
-  public Vector<String> validIdList;
+  private HashMap<String, Location> locationMap;
+  private String selectedLocation;
+  private String selectedStatus;
+  private Vector<String> validIdList;
 
-  private static List<Service> serviceList;
-  private static ServiceUser httpUser;
+  private static List<Service> serviceList; //TODO: why is this static?
+  private static ServiceUser httpUser; //TODO: why is this static?
   private String authHeader;
 
   @Override
   protected Layout getPortletContent(final VaadinRequest request) {
     LOG.info("Generating content for {}", SampleTrackingUpdatePortlet.class);
-
-    /////////////
-    // set service factory
+    //TODO: separate service connection from UI composition
     ConfigurationManager confManager = ConfigurationManagerFactory.getInstance();
     URL serviceURL = null;
     httpUser = confManager.getServiceUser();
@@ -101,25 +97,26 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
       serviceList.addAll(factory.getServicesOfType(ServiceType.SAMPLE_TRACKING));
 
     } catch (MalformedURLException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //TODO: why not exit when there is no service? At least inform?
     }
 
-    byte[] credentials =
-        Base64.encodeBase64(
-            (httpUser.name + ":" + httpUser.password).getBytes(StandardCharsets.UTF_8));
+    byte[] credentials = Base64
+        .encodeBase64((httpUser.name + ":" + httpUser.password).getBytes(StandardCharsets.UTF_8));
+    //TODO: consider replacing the field by an extra object handling authentication
     authHeader = "Basic " + new String(credentials, StandardCharsets.UTF_8);
-    //////////////////////
 
     this.locationMap = new HashMap<String, Location>();
-    this.selectedStatus = Status.WAITING.toString();
+    this.selectedStatus = Status.WAITING.toString(); //TODO: why string?
     this.validIdList = new Vector<String>();
-    this.selectedLocation = "";
+    this.selectedLocation = ""; //TODO: why string?
 
+    //TODO: the following should be the only content of this method
     final HorizontalLayout mainLayout = new HorizontalLayout();
     mainLayout.setSpacing(true);
     mainLayout.setMargin(true);
     mainLayout.setSizeFull();
 
+    //TODO: create object before passing it to addComponent
     mainLayout.addComponent(this.getRegistrationInterface());
 
     return mainLayout;
@@ -143,18 +140,12 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     panelContentB.setSpacing(true);
     panelContentB.setMargin(true);
 
-    // HorizontalLayout inputButtonLayout = new HorizontalLayout();
-    // inputButtonLayout.setSpacing(true);
-    // inputButtonLayout.setMargin(true);
-
     TextField idField = new TextField("Enter QBiC IDs:");
-    idField.setValue("QABCD004AO");
+    idField.setValue("QABCD004AO"); //TODO: should a valid ID be the default?
     idField.setWidth("30%");
 
     Button addIdButton = new Button("Add ID");
     addIdButton.setWidth("30%");
-
-    /////////////////////////////////////////////
 
     Grid logTable = new Grid("Samples to update:");
     logTable.setSelectionMode(Grid.SelectionMode.NONE);
@@ -165,16 +156,16 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     logTable.setWidth("100%");
     logTable.setHeight("30%");
 
-    ///////////////////////////////
 
     // Implement both receiver that saves upload in a file and
     // listener for successful upload
     class IdReceiver implements Upload.Receiver, Upload.SucceededListener {
+    //TODO: should this class be moved out of the method?
 
       protected File tempFile;
 
       public OutputStream receiveUpload(String filename, String mimeType) {
-
+        //TODO: String mimeType is not used?
         try {
           tempFile = File.createTempFile("temp", ".csv");
           return new FileOutputStream(tempFile);
@@ -187,39 +178,40 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
       public void uploadSucceeded(Upload.SucceededEvent event) {
 
         try {
-
           BufferedReader reader = new BufferedReader(new FileReader(tempFile));
           String next;
           while ((next = reader.readLine()) != null) {
 
             next = next.trim();
+            //TODO: remove unnecessary output
             System.out.println("-------> id: " + next);
 
             addIdToTable(next, logTable);
           }
-
           reader.close();
           tempFile.delete();
 
         } catch (IOException e) {
           e.printStackTrace();
+          //TODO: inform about error
         }
       }
-    }
-      IdReceiver receiver = new IdReceiver();
+    }//close IdReceiver
 
-    // Create the upload with a caption and set receiver later
+    IdReceiver receiver = new IdReceiver();
+    // Create the upload with a caption and set receiver later //TODO: what is meant by later?
     Upload idFileUpload = new Upload("Upload ID file", receiver);
     idFileUpload.setButtonCaption("Add File IDs");
+    //TODO: the receiver is also a listener. Is this how it should be?
     idFileUpload.addSucceededListener(receiver);
 
-    ///////////////////////////////
 
+    //TODO: here UI composition takes place. move to correct location
     Button clearTableButton = new Button("Clear samples");
 
-    //////////////////////////
-
+    //TODO: why use html here and not also somewhere else?
     Label rpText = new Label("<b>Responsible Person email:</b>", ContentMode.HTML);
+    //TODO: is a valid permissive mail going to be the fallback?
     Label rpEmail = new Label("sven.fillinger@qbic.uni-tuebingen.de");
 
     if (PortalUtils.isLiferayPortlet()) {
@@ -253,8 +245,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     Button updateButton = new Button("Update");
     updateButton.setWidth("40%");
 
-    ///////////////////////////////////////////////////////////
-
+    //TODO: ValueChangeListener do value type conversion. Be careful.
     locationBox.addValueChangeListener(
         event -> selectedLocation = event.getProperty().getValue().toString());
     statusBox.addValueChangeListener(
@@ -263,37 +254,29 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     clearTableButton.addClickListener(
         new Button.ClickListener() {
           public void buttonClick(Button.ClickEvent event) {
-
+            //TODO: separate clearTable into own method.
             logTable.getContainerDataSource().removeAllItems();
             validIdList.clear();
           }
         });
 
-    //////////////////////////////////////////////////////////
-
     addIdButton.addClickListener(
         new Button.ClickListener() {
           public void buttonClick(Button.ClickEvent event) {
+            //TODO: simplify and separate method. It is quite huge and complex.
 
-            ////////////////////////////////////////////
-
+            //TODO: is idField.getValue().equals("") the correct check?
             if (idField.getValue().equals("")) {
-
-              // Notification.show("Invalid QBiC ID");
-
+              //TODO: replace deprecated Notification.FOOBAR by respective Foo.Bar
+              // Notification.POSITION_CENTERED_TOP -> Position.TOP_CENTER
               Notification notif =
                   new Notification("Invalid QBiC ID", "", Notification.TYPE_ERROR_MESSAGE);
               notif.setDelayMsec(20000);
               notif.setPosition(Notification.POSITION_CENTERED_TOP);
               notif.show(Page.getCurrent());
-
-              // logTable.getContainerDataSource().removeAllItems();
             } else {
-
               try {
 
-                // String baseURL =
-                // "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
                 String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
                 HttpClient client = HttpClientBuilder.create().build();
