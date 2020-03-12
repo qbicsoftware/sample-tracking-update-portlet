@@ -4,10 +4,11 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
 import life.qbic.services.Service
 
+// Noninstantiable utility class
 class SampleTracker {
 
     private static SampleTrackingCenter INSTANCE
-
+    // Suppress default constructor for noninstantiability
     private SampleTracker(){
         throw new AssertionError()
     }
