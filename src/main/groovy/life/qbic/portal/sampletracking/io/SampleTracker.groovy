@@ -12,14 +12,14 @@ class SampleTracker {
 
     }
 
-    static SampleTrackingUpdate createSampleTrackingUpdate(Service trackingService) {
+    static SampleTrackingUpdate getSampleTrackingUpdate(Service trackingService) {
         if ( !INSTANCE ) {
             INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
         }
         return INSTANCE
     }
 
-    static SampleTrackingInformation createSampleTrackingInformation(Service trackingService) {
+    static SampleTrackingInformation getSampleTrackingInformation(Service trackingService) {
         if ( !INSTANCE ) {
             INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
         }
