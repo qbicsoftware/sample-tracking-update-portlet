@@ -7,24 +7,17 @@ import life.qbic.services.Service
 // Noninstantiable utility class
 class SampleTracker {
 
-    private static SampleTrackingCenter INSTANCE
     // Suppress default constructor for noninstantiability
     private SampleTracker(){
         throw new AssertionError()
     }
 
-    static SampleTrackingUpdate getSampleTrackingUpdate(Service trackingService) {
-        if ( !INSTANCE ) {
-            INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
-        }
-        return INSTANCE
+    static SampleTrackingUpdate createSampleTrackingUpdate(Service trackingService) {
+        new SampleTrackingCenter(trackingService: trackingService)
     }
 
-    static SampleTrackingInformation getSampleTrackingInformation(Service trackingService) {
-        if ( !INSTANCE ) {
-            INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
-        }
-        return INSTANCE
+    static SampleTrackingInformation createSampleTrackingInformation(Service trackingService) {
+        new SampleTrackingCenter(trackingService: trackingService)
     }
 
     class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
