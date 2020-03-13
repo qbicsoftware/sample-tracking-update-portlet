@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Tests for {@link SampleTrackingUpdatePortlet}.
  */
-public class SampleTrackingUpdatePortletIntegrationTest {
+public class SampleUpdatePortletIntegrationTest {
 
     @Test
     public void testPortletConnectsToRemoteServer() {

@@ -5,8 +5,8 @@ import life.qbic.datamodel.samples.Status
 
 interface SampleTrackingUpdate {
 
-    updateLocationForSample(Location updatedLocation, String sampleId) throws SampleTrackingUpdateException;
+    def updateLocationForSample(Location updatedLocation, String sampleId) throws SampleTrackingUpdateException;
 
-    updateStatusForSample(Status updatedStatus, String sampleId) throws SampleTrackingUpdateException;
+    def updateStatusForSample(Status updatedStatus, String sampleId) throws SampleTrackingUpdateException;
 
 }
