@@ -355,14 +355,13 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                           baseURL
                               + "samples/"
                               + sampleId
-                              + "/currentLocation/"); // we also need to transfer a (known!)
-                                                      // location object (as json)
+                              + "/currentLocation/"); // we also need to transfer a (known!) location object (as json)
                   post.setHeader("Authorization", authHeader);
+                  //TODO: clean up JSON mapping
                   ObjectMapper mapper = new ObjectMapper();
 
                   Location newLocation = locationMap.get(selectedLocation);
-                  // System.out.println("selected loc---" + newLocation);
-
+                  //TODO: do not parse the date directly from the UI and use it for update
                   newLocation.setArrivalDate(dateInput.getValue());
                   newLocation.setStatus(Status.WAITING);
 
@@ -373,12 +372,12 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
 
                   String result = EntityUtils.toString(response.getEntity());
 
+                  //TODO: remove System.out.prinln() statements
                   System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
                   System.out.println(result);
 
-                  ////////////////////////////////////////
-                  /// then update the sample status
-
+                  // update the sample status
+                  //TODO: replace by interface for service connection
                   HttpPut put =
                       new HttpPut(
                           baseURL + "samples/" + sampleId + "/currentLocation/" + selectedStatus);
@@ -386,12 +385,11 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                   response = client.execute(put);
 
                   result = EntityUtils.toString(response.getEntity());
-
+                  //TODO: remove System.out.println()
                   System.out.println(result);
                 }
 
-                // Notification.show("ID(s) updated");
-
+                //TODO: replace deprecated notification settings
                 Notification notif =
                     new Notification("ID(s) Updated", "", Notification.TYPE_WARNING_MESSAGE);
                 notif.setDelayMsec(20000);
@@ -399,28 +397,31 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                 notif.show(Page.getCurrent());
 
                 // clear sample list
+                //TODO: clearing the sample list should be done in a separate method
                 logTable.getContainerDataSource().removeAllItems();
                 validIdList.clear();
+                //TODO remove Syste.out.println() statement
                 System.out.println(
                     "++++++++####################" + validIdList.size());
 
+                //TODO: why is this needed? What is achieved by clearing the locationMap?
                 // clear locations
                 locationMap.clear();
                 selectedLocation = "";
 
                 locationBox.setEnabled(false);
 
+                //TODO: remove System.out.println() statement
                 System.out.println("--- flag x2");
 
                 locationBox
                     .removeAllItems(); // breaks somehow, look for a way to clear this combobox
                                        // without this call
+                //TODO: here a bug seems to exist?
 
               } catch (Exception E) { // IOException
-
-                /// System.out.println("api exception********");
-                // Notification.show("Invalid QBiC ID");
-
+                //TODO: improve exception handling.
+                //TODO: remove System.out.println() statement
                 System.out.println("**********************************");
                 System.out.println(E.toString());
               }
@@ -428,25 +429,21 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
           }
         });
 
-    //////////////////////////////////////////////////////////
-
     locationsButton.addClickListener(
         new Button.ClickListener() {
           public void buttonClick(Button.ClickEvent event) {
 
-            ////////////////////////////////////////////
-
+            //TODO: is this the correct check?
             if (rpEmail.getValue().equals("")) {
-
-              // logTable.getContainerDataSource().removeAllItems();
+              //TODO: why this empty code block?
             } else {
 
               try {
 
+                //TODO: replace parsing of important information out of a Label
                 String contactEmail = rpEmail.getValue();
 
-                // String baseURL =
-                // "http://services.qbic.uni-tuebingen.de:8080/sampletrackingservice/";
+                //TODO: replace with service connection interface
                 String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
                 HttpClient client = HttpClientBuilder.create().build();
@@ -459,13 +456,13 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                     mapper.readValue(response.getEntity().getContent(), List.class);
 
                 locationBox.setEnabled(true);
+                //TODO: what is done here? Why are the items removed?
                 locationBox.removeAllItems();
 
                 locationMap.clear();
 
+                //TODO: Where to move the object parsing to?
                 for (LinkedHashMap loc : LocationList) {
-
-                  // System.out.println("#############///////////////////////////////////////////////////---" + loc.toString());
 
                   Location contactLocation = new Location();
                   Address contactAddress = new Address();
@@ -479,26 +476,21 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
                   contactAddress.setCountry(
                       ((LinkedHashMap) loc.get("address")).get("country").toString());
 
-                  // System.out.println("/---" + contactAddress.toString());
-
                   contactLocation.setAddress(contactAddress);
                   contactLocation.setResponsibleEmail(contactEmail);
                   contactLocation.setResponsiblePerson(loc.get("responsible_person").toString());
+                  //TODO: do not use a constructor within this method
                   contactLocation.setArrivalDate(new Date()); // take NOW for now
                   contactLocation.setStatus(Status.WAITING);
                   contactLocation.setName(loc.get("name").toString());
-
-                  // System.out.println("/###---" + contactLocation.toString());
 
                   locationMap.put(contactLocation.getName(), contactLocation);
                   locationBox.addItem(contactLocation.getName());
                 }
 
               } catch (Exception E) { // IOException
-
-                /// System.out.println("api exception********");
-                // Notification.show("Invalid QBiC ID");
-
+                //TODO: improve exception handling
+                //TODO: remove System.out.println() statements
                 System.out.println("**********************************");
                 System.out.println(E.toString());
               }
@@ -506,8 +498,7 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
           }
         });
 
-    ////////////////////////////////////////////////////////// 7
-
+    //TODO: here some UI composition takes place
     panelContentA.addComponent(idField);
     panelContentA.addComponent(addIdButton);
     panelContentA.addComponent(idFileUpload);
@@ -527,16 +518,16 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
     mainLayout.addComponent(panelContentA);
     mainLayout.addComponent(panelContentB);
 
-    ///////////////////////////////////////////////////////////
-
+    //TODO: finish creating the queryPanel
     queryPanel.setContent(mainLayout);
     return queryPanel;
   }
 
+  //TODO: separate visual and internal representation of the data
   private void addIdToTable(String sampleId, Grid logTable) {
 
     try {
-
+      //TODO: replace by use of service interface
       String baseURL = serviceList.get(0).getRootUrl().toString() + "/";
 
       HttpClient client = HttpClientBuilder.create().build();
@@ -557,10 +548,11 @@ public class SampleTrackingUpdatePortlet extends QBiCPortletUI {
       validIdList.add(sampleId);
 
     } catch (Exception E) { // IOException
-
+      //TODO: replace System.out.println() by Logger
       System.out.println("Error at addIdToTable()");
 
       // Notification.show("Invalid QBiC ID");
+      //TODO: replace by notification method
       Notification notif =
           new Notification("Invalid QBiC ID: " + sampleId, "", Notification.TYPE_ERROR_MESSAGE);
       notif.setDelayMsec(10000);
