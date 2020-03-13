@@ -1,34 +1,38 @@
 package life.qbic.portal.sampletracking.io
 
+import io.micronaut.http.client.HttpClient
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
 import life.qbic.services.Service
 
+// Noninstantiable utility class
 class SampleTracker {
 
-    private static SampleTrackingCenter INSTANCE
-
+    // Suppress default constructor for noninstantiability
     private SampleTracker(){
-
+        throw new AssertionError()
     }
 
-    static SampleTrackingUpdate createSampleTrackingUpdate(Service trackingService) {
-        if ( !INSTANCE ) {
-            INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
+    static SampleTrackingUpdate createSampleTrackingUpdate(HttpClient client,
+                                                           ServiceCredentials serviceCredentials) {
+        new SampleTrackingCenter(client, serviceCredentials)
+    }
+
+    static SampleTrackingInformation createSampleTrackingInformation(HttpClient client,
+                                                                     ServiceCredentials serviceCredentials) {
+        new SampleTrackingCenter(client, serviceCredentials)
+    }
+
+    static class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
+
+        private final HttpClient client
+
+        private final ServiceCredentials credentials
+
+        SampleTrackingCenter(HttpClient client, ServiceCredentials credentials) {
+            this.client = client
+            this.credentials = credentials
         }
-        return INSTANCE
-    }
-
-    static SampleTrackingInformation createSampleTrackingInformation(Service trackingService) {
-        if ( !INSTANCE ) {
-            INSTANCE = new SampleTrackingCenter(trackingService: trackingService)
-        }
-        return INSTANCE
-    }
-
-    class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
-
-        private final Service trackingService
 
         @Override
         Location currentLocationForSample(String sampleId) {
