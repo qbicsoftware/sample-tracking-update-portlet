@@ -6,11 +6,11 @@ import life.qbic.datamodel.samples.Sample
 @Log4j2
 class RemoveSelection {
 
-    void removeAll(List<Sample> samples) {
-        for (sample in samples) {
+    static List<Sample> removeAll(List<Sample> selection) {
+        for (sample in selection) {
             removeSample(sample)
         }
     }
 
-    void removeSample(Sample sample) {}
+    static List<Sample> removeSample(Sample sample, List<Sample> selection) {}
 }
