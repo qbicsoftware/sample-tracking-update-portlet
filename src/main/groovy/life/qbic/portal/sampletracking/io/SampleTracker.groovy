@@ -3,7 +3,9 @@ package life.qbic.portal.sampletracking.io
 import io.micronaut.http.client.HttpClient
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
-import life.qbic.services.Service
+import life.qbic.portal.sampletracking.app.samples.SampleTrackingInformation
+import life.qbic.portal.sampletracking.app.samples.SampleTrackingUpdate
+import life.qbic.portal.sampletracking.app.samples.SampleTrackingUpdateException
 
 // Noninstantiable utility class
 class SampleTracker {
