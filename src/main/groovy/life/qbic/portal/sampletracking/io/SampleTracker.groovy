@@ -6,6 +6,7 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
+import life.qbic.datamodel.services.ServiceUser
 import life.qbic.services.Service
 
 // Noninstantiable utility class
@@ -17,23 +18,23 @@ class SampleTracker {
     }
 
     static SampleTrackingUpdate createSampleTrackingUpdate(Service service,
-                                                           ServiceCredentials serviceCredentials) {
-        new SampleTrackingCenter(service, serviceCredentials)
+                                                           ServiceUser serviceUser) {
+        new SampleTrackingCenter(service, serviceUser)
     }
 
     static SampleTrackingInformation createSampleTrackingInformation(Service service,
-                                                                     ServiceCredentials serviceCredentials) {
-        new SampleTrackingCenter(service, serviceCredentials)
+                                                                     ServiceUser serviceUser) {
+        new SampleTrackingCenter(service, serviceUser)
     }
 
     static class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
 
-        private final ServiceCredentials credentials
+        private final ServiceUser user
 
         private final Service service
 
-        SampleTrackingCenter(Service service, ServiceCredentials credentials) {
-            this.credentials = credentials
+        SampleTrackingCenter(Service service, ServiceUser user) {
+            this.user = user
             this.service = service
         }
 
@@ -42,7 +43,7 @@ class SampleTracker {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
 
-            HttpRequest request = HttpRequest.GET(locationUri).basicAuth(credentials.user, credentials.password)
+            HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
             HttpResponse<Location> response
 
             client.withCloseable {
@@ -64,7 +65,7 @@ class SampleTracker {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAdress")
 
-            HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(credentials.user, credentials.password)
+            HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(user.name, user.password)
             HttpResponse<List> response
 
             client.withCloseable {
@@ -87,7 +88,7 @@ class SampleTracker {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updateLocationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation")
 
-            HttpRequest request = HttpRequest.POST(updateLocationUri, updatedLocation).basicAuth(credentials.user, credentials.password)
+            HttpRequest request = HttpRequest.POST(updateLocationUri, updatedLocation).basicAuth(user.name, user.password)
             HttpResponse response
 
             client.withCloseable {
@@ -105,7 +106,7 @@ class SampleTracker {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updatedStatusUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/$updatedStatus")
 
-            HttpRequest request = HttpRequest.PUT(updatedStatusUri, "").basicAuth(credentials.user, credentials.password)
+            HttpRequest request = HttpRequest.PUT(updatedStatusUri, "").basicAuth(user.name, user.password)
             HttpResponse response
 
             client.withCloseable {
