@@ -2,13 +2,12 @@ package life.qbic.portal.sampletracking.ui
 
 import com.vaadin.ui.VerticalLayout
 
-class SampleModifyControls extends VerticalLayout{
-
+class SampleImport extends VerticalLayout{
     private PortletController controller
 
-    SampleModifyControls(PortletController portletController) {
+    SampleImport(PortletController controller) {
         super()
-        this.controller = portletController
+        this.controller = controller
         initLayout()
     }
 
