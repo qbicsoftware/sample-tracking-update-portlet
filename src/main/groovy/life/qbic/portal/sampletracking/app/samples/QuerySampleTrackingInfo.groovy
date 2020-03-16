@@ -6,6 +6,10 @@ class QuerySampleTrackingInfo implements SampleLocation{
 
     final SampleTrackingInformation sampleTrackingInformation
 
+    QuerySampleTrackingInfo(){
+        new AssertionError()
+    }
+
     QuerySampleTrackingInfo(SampleTrackingInformation sampleTrackingInformation) {
         this.sampleTrackingInformation = sampleTrackingInformation
     }

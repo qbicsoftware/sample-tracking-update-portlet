@@ -11,6 +11,10 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
 
     final SampleUpdateOutput output
 
+    UpdateSampleTrackingInfo(){
+        new AssertionError()
+    }
+
     UpdateSampleTrackingInfo(SampleTrackingUpdate sampleTrackingUpdate, SampleUpdateOutput output) {
         this.sampleTrackingUpdate = sampleTrackingUpdate
         this.output = output
