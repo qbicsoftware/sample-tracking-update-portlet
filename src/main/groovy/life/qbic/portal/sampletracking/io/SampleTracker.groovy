@@ -49,7 +49,7 @@ class SampleTracker {
                 response = it.toBlocking().exchange(request)
             }
 
-            if (response?.status.code != 200) {
+            if (response?.status?.code != 200) {
                 throw new SampleTrackingQueryException("Request for current location failed, service returned ${response?.status.code}")
             }
             if (!response?.body() instanceof Location) {
@@ -60,9 +60,27 @@ class SampleTracker {
         }
 
         @Override
-        List<Location> availableLocations() {
-            return null
+        List<Location> availableLocationsForPersonWithEmail(String emailAdress) {
+            HttpClient client = RxHttpClient.create(service.rootUrl)
+            URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAdress")
+
+            HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(credentials.user, credentials.password)
+            HttpResponse<List> response
+
+            client.withCloseable {
+                response = it.toBlocking().exchange(request)
+            }
+
+            if (response?.status?.code != 200) {
+                throw new SampleTrackingQueryException("Request for current location failed, service returned ${response?.status.code}")
+            }
+            if (!response?.body() instanceof List) {
+                throw new SampleTrackingQueryException("Did not receive a valid List response.")
+            }
+
+            return response?.body()
         }
+
 
         @Override
         def updateLocationForSample(Location updatedLocation, String sampleId) throws SampleTrackingUpdateException {

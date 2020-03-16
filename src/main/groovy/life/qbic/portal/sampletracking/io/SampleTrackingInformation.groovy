@@ -6,6 +6,6 @@ interface SampleTrackingInformation {
 
     Location currentLocationForSample(String sampleId) throws SampleTrackingQueryException
 
-    List<Location> availableLocations()
+    List<Location> availableLocationsForPersonWithEmail(String emailAdress)
 
 }
