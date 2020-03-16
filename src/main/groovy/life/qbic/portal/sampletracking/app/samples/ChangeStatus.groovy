@@ -1,4 +1,4 @@
-package life.qbic.portal.sampletracking.app.applychange
+package life.qbic.portal.sampletracking.app.samples
 
 import groovy.util.logging.Log4j2
 

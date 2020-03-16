@@ -9,4 +9,6 @@
     <!-- Inherit DefaultWidgetSet -->
     <inherits name="com.vaadin.DefaultWidgetSet" /> 
 
+
+    <inherits name="life.qbic.portal.portlet.AppWidgetSet" />
 </module>
