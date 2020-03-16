@@ -1,6 +1,7 @@
 package life.qbic.portal.sampletracking.ui
 
 import com.vaadin.ui.VerticalLayout
+import life.qbic.portal.sampletracking.app.PortletController
 
 class SampleModifyControls extends VerticalLayout{
 

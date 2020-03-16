@@ -22,21 +22,22 @@ class SampleUpdatePortlet extends QBiCPortletUI {
         try {
             this.dependencyManager = new DependencyManager()
         } catch (Exception e) {
-            log.error("Could not initialize sample-update-portlet", e)
+            log.error("Could not initialize {}", SampleUpdatePortlet.getClass(), e)
         }
     }
 
     @Override
     protected Layout getPortletContent(VaadinRequest vaadinRequest) {
         def layout
-        log.info "Generating content for class {}", SampleUpdatePortlet.class
+        log.info "Generating content for class {}", SampleUpdatePortlet.getCanonicalName()
         try {
             layout = this.dependencyManager.getPortletView();
         } catch (Exception e) {
-            log.error("Failed generatind content for class {}", SampleUpdatePortlet.class)
+            log.error("Failed generatind content for class {}", SampleUpdatePortlet.getCanonicalName())
             log.error(e)
             layout = new VerticalLayout()
         }
+        log.info"Finished content generation for class {}", SampleUpdatePortlet.getCanonicalName()
         return layout
     }
 }
