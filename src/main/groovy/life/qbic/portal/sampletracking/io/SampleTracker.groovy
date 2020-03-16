@@ -43,14 +43,14 @@ class SampleTracker {
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(credentials.user, credentials.password)
-            HttpResponse response
+            HttpResponse<Location> response
 
             client.withCloseable {
                 response = it.toBlocking().exchange(request)
             }
 
             if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed, service returned ${response?.status.code}")
+                throw new SampleTrackingQueryException("Request for current location failed.")
             }
             if (!response?.body() instanceof Location) {
                 throw new SampleTrackingQueryException("Did not receive a valid Location response.")
@@ -72,7 +72,7 @@ class SampleTracker {
             }
 
             if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed, service returned ${response?.status.code}")
+                throw new SampleTrackingQueryException("Request for current location failed.")
             }
             if (!response?.body() instanceof List) {
                 throw new SampleTrackingQueryException("Did not receive a valid List response.")
@@ -84,12 +84,38 @@ class SampleTracker {
 
         @Override
         def updateLocationForSample(Location updatedLocation, String sampleId) throws SampleTrackingUpdateException {
-            return null
+            HttpClient client = RxHttpClient.create(service.rootUrl)
+            URI updateLocationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation")
+
+            HttpRequest request = HttpRequest.POST(updateLocationUri, updatedLocation).basicAuth(credentials.user, credentials.password)
+            HttpResponse response
+
+            client.withCloseable {
+                response = it.toBlocking().exchange(request)
+            }
+
+            if (response?.status?.code != 200) {
+                throw new SampleTrackingUpdateException("Request for update location for sample $sampleId failed.")
+            }
+
         }
 
         @Override
         def updateStatusForSample(Status updatedStatus, String sampleId) throws SampleTrackingUpdateException {
-            return null
+            HttpClient client = RxHttpClient.create(service.rootUrl)
+            URI updatedStatusUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/$updatedStatus")
+
+            HttpRequest request = HttpRequest.PUT(updatedStatusUri).basicAuth(credentials.user, credentials.password)
+            HttpResponse response
+
+            client.withCloseable {
+                response = it.toBlocking().exchange(request)
+            }
+
+            if (response?.status?.code != 200) {
+                throw new SampleTrackingUpdateException("Request for update location status for sample $sampleId failed.")
+            }
+
         }
     }
 
