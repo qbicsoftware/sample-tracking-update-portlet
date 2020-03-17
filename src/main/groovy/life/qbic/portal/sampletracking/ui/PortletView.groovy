@@ -27,11 +27,15 @@ class PortletView extends GridLayout implements SampleStatusOutput, SampleUpdate
 
     @Override
     def updateAvailableLocations(List<Location> locations) {
+        // This method will be called from the use case classes, once they have retreived
+        // location information
         return null
     }
 
     @Override
     def updateCurrentLocation(Location location) {
+        // This method will be called from the use case classes, once they have
+        // current location information found
         return null
     }
 
