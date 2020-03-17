@@ -29,7 +29,7 @@ class QuerySampleTrackingInfo implements SampleLocation{
 
 
     @Override
-    def availableLocationsForEmail(String email, SampleStatusOutput output) {
+    def availableLocationsForPerson(String email, SampleStatusOutput output) {
         try {
             List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPersonWithEmail(email)
             output.availableLocations(locationsForPerson)

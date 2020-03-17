@@ -6,6 +6,6 @@ interface SampleTrackingInformation {
 
     Location currentLocationForSample(String sampleId)
 
-    List<Location> availableLocationsForPersonWithEmail(String emailAdress)
+    List<Location> availableLocationsForPerson(String emailAdress)
 
 }
