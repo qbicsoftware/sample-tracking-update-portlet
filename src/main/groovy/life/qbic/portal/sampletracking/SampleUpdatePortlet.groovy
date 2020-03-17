@@ -22,7 +22,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
         try {
             this.dependencyManager = new DependencyManager()
         } catch (Exception e) {
-            log.error("Could not initialize {}", SampleUpdatePortlet.getClass(), e)
+            log.error("Could not initialize {}", SampleUpdatePortlet.getCanonicalName(), e)
         }
     }
 
