@@ -10,12 +10,8 @@ import life.qbic.datamodel.samples.Status
 interface SampleUpdate {
 
 
-    // We do not need an output interface, as the method will
-    // throw an exception if something goes wrong
-    def setSampleStatusForSample(Status sampleStatus, String sampleId) throws SampleTrackingUpdateException
+    def setSampleStatusForSample(Status sampleStatus, String sampleId)
 
-    // We do not need an output interface, as the method will
-    // throw an exception if something goes wrong
-    def setCurrentLocationforSample(Location location, String sampleId) throws SampleTrackingUpdateException
+    def setCurrentLocationforSample(Location location, String sampleId)
 
 }
