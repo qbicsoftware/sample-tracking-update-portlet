@@ -31,7 +31,7 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
     }
 
     @Override
-    def setCurrentLocationforSample(Location location, String sampleId) {
+    def setCurrentLocationForSample(Location location, String sampleId) {
        try {
            this.sampleTrackingUpdate.updateLocationForSample(location, sampleId)
        } catch (SampleTrackingUpdateException e) {

@@ -7,6 +7,6 @@ interface SampleUpdate {
 
     def setSampleStatusForSample(Status sampleStatus, String sampleId)
 
-    def setCurrentLocationforSample(Location location, String sampleId)
+    def setCurrentLocationForSample(Location location, String sampleId)
 
 }
