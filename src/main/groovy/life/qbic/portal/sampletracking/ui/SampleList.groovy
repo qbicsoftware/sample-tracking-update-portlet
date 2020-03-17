@@ -37,6 +37,9 @@ class SampleList extends VerticalLayout{
     void refreshList() {
         if(this.samples) {
             this.sampleGrid.setItems(this.samples)
+        } else {
+            log.warn("There are no samples to be displayed. Clearing sample grid.")
+            this.sampleGrid.setItems(new ArrayList<Sample>())
         }
     }
 }
