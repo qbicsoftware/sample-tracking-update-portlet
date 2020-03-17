@@ -19,7 +19,7 @@ class QuerySampleTrackingInfo implements SampleLocation{
     @Override
     def currentLocation(String sampleId, SampleStatusOutput output) {
         try {
-            Location location = sampleTrackingInformation.currentLocationForSample(sampleId)
+            Location location = sampleTrackingInformation.currentSampleLocation(sampleId)
             output.updateCurrentLocation(location)
         } catch (SampleTrackingQueryException e) {
             log.error e

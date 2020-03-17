@@ -43,7 +43,7 @@ class SampleTracker {
         }
 
         @Override
-        Location currentLocationForSample(String sampleId) throws SampleTrackingQueryException{
+        Location currentSampleLocation(String sampleId) throws SampleTrackingQueryException{
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
 
@@ -65,7 +65,7 @@ class SampleTracker {
         }
 
         @Override
-        List<Location> availableLocationsForPersonWithEmail(String emailAdress) {
+        List<Location> availableLocationsForPerson(String emailAdress) {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAdress")
 
@@ -88,7 +88,7 @@ class SampleTracker {
 
 
         @Override
-        def updateLocationForSample(Location updatedLocation, String sampleId) throws SampleTrackingUpdateException {
+        def updateSampleLocation(String sampleId, Location updatedLocation) throws SampleTrackingUpdateException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updateLocationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation")
 
@@ -106,7 +106,7 @@ class SampleTracker {
         }
 
         @Override
-        def updateStatusForSample(Status updatedStatus, String sampleId) throws SampleTrackingUpdateException {
+        def updateSampleStatus(String sampleId, Status updatedStatus) throws SampleTrackingUpdateException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updatedStatusUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/$updatedStatus")
 

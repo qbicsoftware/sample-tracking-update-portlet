@@ -4,7 +4,7 @@ import life.qbic.datamodel.samples.Location
 
 interface SampleTrackingInformation {
 
-    Location currentLocationForSample(String sampleId)
+    Location currentSampleLocation(String sampleId)
 
     List<Location> availableLocationsForPerson(String emailAdress)
 

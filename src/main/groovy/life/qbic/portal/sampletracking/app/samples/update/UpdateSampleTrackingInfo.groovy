@@ -21,9 +21,9 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
     }
 
     @Override
-    def setSampleStatusForSample(Status sampleStatus, String sampleId) {
+    def setSampleStatus(String sampleId, Status sampleStatus) {
         try {
-            this.sampleTrackingUpdate.updateStatusForSample(sampleStatus, sampleId)
+            this.sampleTrackingUpdate.updateSampleStatus(sampleId, sampleStatus)
         } catch (SampleTrackingUpdateException e) {
             log.error e
             output.invokeOnError"Could not update status for sample $sampleId."
@@ -31,9 +31,9 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
     }
 
     @Override
-    def setCurrentLocationForSample(Location location, String sampleId) {
+    def setCurrentSampleLocation(String sampleId, Location location) {
        try {
-           this.sampleTrackingUpdate.updateLocationForSample(location, sampleId)
+           this.sampleTrackingUpdate.updateSampleLocation(sampleId, location)
        } catch (SampleTrackingUpdateException e) {
            log.error e
            output.invokeOnError "Could not update location for sample $sampleId."
