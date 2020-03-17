@@ -1,4 +1,4 @@
-package life.qbic.portal.sampletracking.app.samples
+package life.qbic.portal.sampletracking.app.samples.update
 
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status

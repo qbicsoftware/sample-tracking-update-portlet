@@ -1,4 +1,4 @@
-package life.qbic.portal.sampletracking.app.samples
+package life.qbic.portal.sampletracking.app.samples.update
 
 class SampleTrackingUpdateException extends RuntimeException{
 

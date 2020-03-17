@@ -6,10 +6,10 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
-import life.qbic.portal.sampletracking.app.samples.SampleTrackingInformation
-import life.qbic.portal.sampletracking.app.samples.SampleTrackingQueryException
-import life.qbic.portal.sampletracking.app.samples.SampleTrackingUpdate
-import life.qbic.portal.sampletracking.app.samples.SampleTrackingUpdateException
+import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingInformation
+import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryException
+import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdate
+import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateException
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.services.Service
 

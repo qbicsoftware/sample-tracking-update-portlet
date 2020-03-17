@@ -1,4 +1,4 @@
-package life.qbic.portal.sampletracking.app.samples
+package life.qbic.portal.sampletracking.app.samples.query
 
 import life.qbic.datamodel.samples.Location
 

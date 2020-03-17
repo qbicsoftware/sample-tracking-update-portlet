@@ -1,4 +1,4 @@
-package life.qbic.portal.sampletracking.app.samples
+package life.qbic.portal.sampletracking.app.samples.query
 
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
