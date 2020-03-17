@@ -4,9 +4,9 @@ import life.qbic.datamodel.samples.Location
 
 interface SampleStatusOutput {
 
-    def availableLocations(List<Location> locations)
+    def updateAvailableLocations(List<Location> locations)
 
-    def currentLocation(Location location)
+    def updateCurrentLocation(Location location)
 
     def invokeOnError(String msg)
 

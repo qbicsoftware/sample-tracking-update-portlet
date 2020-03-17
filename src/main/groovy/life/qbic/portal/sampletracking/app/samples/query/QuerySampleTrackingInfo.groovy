@@ -20,7 +20,7 @@ class QuerySampleTrackingInfo implements SampleLocation{
     def currentLocation(String sampleId, SampleStatusOutput output) {
         try {
             Location location = sampleTrackingInformation.currentLocationForSample(sampleId)
-            output.currentLocation(location)
+            output.updateCurrentLocation(location)
         } catch (SampleTrackingQueryException e) {
             log.error e
             output.invokeOnError "Could not get current location for sample $sampleId"
@@ -31,8 +31,8 @@ class QuerySampleTrackingInfo implements SampleLocation{
     @Override
     def availableLocationsForPerson(String email, SampleStatusOutput output) {
         try {
-            List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPersonWithEmail(email)
-            output.availableLocations(locationsForPerson)
+            List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPerson(email)
+            output.updateAvailableLocations(locationsForPerson)
         } catch (SampleTrackingQueryException e) {
             log.error e
             output.invokeOnError "Could not get available locations for person $email"
