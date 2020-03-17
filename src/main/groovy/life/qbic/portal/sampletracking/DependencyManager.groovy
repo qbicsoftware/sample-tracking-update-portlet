@@ -35,6 +35,7 @@ class DependencyManager {
     }
 
     private void initializeDependencies() {
+
         configManager = ConfigurationManagerFactory.getInstance()
         serviceUser = configManager.getServiceUser()
 

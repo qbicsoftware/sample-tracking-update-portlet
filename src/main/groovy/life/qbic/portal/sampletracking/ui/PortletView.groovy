@@ -1,13 +1,14 @@
 package life.qbic.portal.sampletracking.ui
 
 import com.vaadin.ui.GridLayout
+import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Upload.Receiver
 import life.qbic.datamodel.samples.Location
 import life.qbic.portal.sampletracking.app.PortletController
 import life.qbic.portal.sampletracking.app.samples.query.SampleStatusOutput
 import life.qbic.portal.sampletracking.app.samples.update.SampleUpdateOutput
 
-class PortletView extends GridLayout implements SampleStatusOutput, SampleUpdateOutput{
+class PortletView extends HorizontalLayout implements SampleStatusOutput, SampleUpdateOutput{
     private PortletController controller
     private Receiver receiver
 
