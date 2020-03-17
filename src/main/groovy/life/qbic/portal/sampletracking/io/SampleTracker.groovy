@@ -31,7 +31,7 @@ class SampleTracker {
         new SampleTrackingCenter(service, serviceUser)
     }
 
-    static class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
+    private static class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
 
         private final ServiceUser user
 

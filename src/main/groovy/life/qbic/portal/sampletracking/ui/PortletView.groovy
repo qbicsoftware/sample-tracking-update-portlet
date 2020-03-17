@@ -2,9 +2,12 @@ package life.qbic.portal.sampletracking.ui
 
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.Upload.Receiver
+import life.qbic.datamodel.samples.Location
 import life.qbic.portal.sampletracking.app.PortletController
+import life.qbic.portal.sampletracking.app.samples.query.SampleStatusOutput
+import life.qbic.portal.sampletracking.app.samples.update.SampleUpdateOutput
 
-class PortletView extends GridLayout {
+class PortletView extends GridLayout implements SampleStatusOutput, SampleUpdateOutput{
     private PortletController controller
     private Receiver receiver
 
@@ -20,5 +23,20 @@ class PortletView extends GridLayout {
         SampleModifyControls sampleControls= new SampleModifyControls(this.controller)
         SampleImport sampleImport = new SampleImport(this.controller, this.receiver)
         this.addComponents(sampleImport, sampleList, sampleControls)
+    }
+
+    @Override
+    def updateAvailableLocations(List<Location> locations) {
+        return null
+    }
+
+    @Override
+    def updateCurrentLocation(Location location) {
+        return null
+    }
+
+    @Override
+    def invokeOnError(String msg) {
+        return null
     }
 }

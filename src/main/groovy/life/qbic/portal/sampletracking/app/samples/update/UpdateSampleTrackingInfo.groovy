@@ -9,19 +9,17 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
 
     final SampleTrackingUpdate sampleTrackingUpdate
 
-    final SampleUpdateOutput output
-
     UpdateSampleTrackingInfo(){
         new AssertionError()
     }
 
-    UpdateSampleTrackingInfo(SampleTrackingUpdate sampleTrackingUpdate, SampleUpdateOutput output) {
+    UpdateSampleTrackingInfo(SampleTrackingUpdate sampleTrackingUpdate) {
         this.sampleTrackingUpdate = sampleTrackingUpdate
         this.output = output
     }
 
     @Override
-    def setSampleStatus(String sampleId, Status sampleStatus) {
+    def setSampleStatus(String sampleId, Status sampleStatus, SampleUpdateOutput output) {
         try {
             this.sampleTrackingUpdate.updateSampleStatus(sampleId, sampleStatus)
         } catch (SampleTrackingUpdateException e) {
@@ -31,7 +29,7 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
     }
 
     @Override
-    def setCurrentSampleLocation(String sampleId, Location location) {
+    def setCurrentSampleLocation(String sampleId, Location location, SampleUpdateOutput output) {
        try {
            this.sampleTrackingUpdate.updateSampleLocation(sampleId, location)
        } catch (SampleTrackingUpdateException e) {
