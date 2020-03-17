@@ -22,11 +22,22 @@ class UpdateSampleTrackingInfo implements SampleUpdate{
 
     @Override
     def setSampleStatusForSample(Status sampleStatus, String sampleId) {
-        return null
+        try {
+            this.sampleTrackingUpdate.updateStatusForSample(sampleStatus, sampleId)
+        } catch (SampleTrackingUpdateException e) {
+            log.error e
+            output.invokeOnError"Could not update status for sample $sampleId."
+        }
     }
 
     @Override
     def setCurrentLocationforSample(Location location, String sampleId) {
-        return null
+       try {
+           this.sampleTrackingUpdate.updateLocationForSample(location, sampleId)
+       } catch (SampleTrackingUpdateException e) {
+           log.error e
+           output.invokeOnError "Could not update location for sample $sampleId."
+
+       }
     }
 }

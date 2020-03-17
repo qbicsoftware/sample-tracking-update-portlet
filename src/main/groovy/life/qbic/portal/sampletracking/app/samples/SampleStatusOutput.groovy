@@ -8,4 +8,6 @@ interface SampleStatusOutput {
 
     currentLocation(Location location)
 
+    invokeOnError(String msg)
+
 }
