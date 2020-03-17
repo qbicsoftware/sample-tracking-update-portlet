@@ -23,8 +23,9 @@ class SampleList extends VerticalLayout{
         this.sampleGrid.setWidth("100%");
         this.sampleGrid.setHeight("30%");
         try {
-            this.sampleGrid.addColumn({ sample -> sample.getCode() }).setCaption("Code")
+            this.sampleGrid.addColumn({ sample -> sample.getCode() }).setCaption("Id")
             this.sampleGrid.addColumn({ sample -> sample.getCurrentLocation() }).setCaption("Current Location");
+            this.sampleGrid.addColumn({sample -> sample.getCurrentLocation().getStatus()}).setCaption("Status")
         } catch (Exception e) {
             log.error("Unexpected exception in building the sample Grid", e)
         }
