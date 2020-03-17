@@ -16,11 +16,13 @@ class QuerySampleTrackingInfo implements SampleLocation{
 
     @Override
     def currentLocation(String sampleId, SampleStatusOutput output) {
-        return null
+        Location location = sampleTrackingInformation.currentLocationForSample(sampleId)
+        output.currentLocation(location)
     }
 
     @Override
     def availableLocationsForPersonWithEmail(String email, SampleStatusOutput output) {
-        return null
+        List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPersonWithEmail(email)
+        output.availableLocations(locationsForPerson)
     }
 }
