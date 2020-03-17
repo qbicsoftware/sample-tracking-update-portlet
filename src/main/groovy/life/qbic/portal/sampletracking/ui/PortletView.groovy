@@ -37,6 +37,9 @@ class PortletView extends GridLayout implements SampleStatusOutput, SampleUpdate
 
     @Override
     def invokeOnError(String msg) {
+        // The use cases classes will call this method,
+        // if something goes wrong with the sample tracking
+        // So make a notification message for the user here
         return null
     }
 }
