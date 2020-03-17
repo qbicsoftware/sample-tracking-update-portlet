@@ -12,6 +12,7 @@ import life.qbic.portal.sampletracking.ui.PortletView
 import life.qbic.portal.sampletracking.ui.SampleFileReceiver
 import life.qbic.portal.sampletracking.app.SampleTrackingPortletController
 import life.qbic.portal.utils.ConfigurationManager
+import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.Service
 import life.qbic.services.ServiceConnector
@@ -63,13 +64,18 @@ class DependencyManager {
     }
 
     private void setupSampleTrackingService() {
-        URL serviceURL = new URL(configManager.getServicesRegistryUrl())
-        ServiceConnector connector = new ConsulConnector(serviceURL)
-        ConsulServiceFactory factory = new ConsulServiceFactory(connector)
-        trackingServices.addAll(factory.getServicesOfType(ServiceType.SAMPLE_TRACKING))
+        try {
+            URL serviceURL = new URL(configManager.getServicesRegistryUrl())
+            ServiceConnector connector = new ConsulConnector(serviceURL)
+            ConsulServiceFactory factory = new ConsulServiceFactory(connector)
+            trackingServices.addAll(factory.getServicesOfType(ServiceType.SAMPLE_TRACKING))
 
-        if (trackingServices.isEmpty()) {
-            log.error("No sample tracking service instance found.")
+            if (trackingServices.isEmpty()) {
+                log.error("No sample tracking service instance found.")
+            }
+        } catch (Exception e) {
+            log.error("Unexpected error during setup of sample tracking service. {}", e.getMessage(), e)
+            throw e
         }
     }
 
