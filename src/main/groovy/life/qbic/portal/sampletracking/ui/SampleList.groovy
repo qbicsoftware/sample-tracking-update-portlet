@@ -23,7 +23,7 @@ class SampleList extends VerticalLayout{
         super()
         this.samples = new ArrayList<Sample>()
 
-        /*
+
 
         //TODO: remove
         Sample testSample = new Sample()
@@ -36,9 +36,9 @@ class SampleList extends VerticalLayout{
 
         this.samples.add(testSample)
 
-         */
+
         initLayout()
-        refreshList()
+        registerListeners()
     }
 
     private def initLayout() {
@@ -71,17 +71,13 @@ class SampleList extends VerticalLayout{
         this.clearButton.addClickListener({ event -> clearList() })
     }
 
-    // Refresh samples in grid
-    void refreshList() {
-        if(this.samples) {
-            this.sampleGrid.setItems(this.samples)
-        } else {
-            log.warn("There are no samples to be displayed. Clearing sample grid.")
-            clearList();
-        }
+    // Refresh sample display in grid
+    void refreshView() {
+        this.sampleGrid.getDataProvider().refreshAll()
     }
     // clear samples in grid
     void clearList() {
-        this.sampleGrid.setItems(new ArrayList<Sample>())
+        this.samples.clear()
+        refreshView()
     }
 }
