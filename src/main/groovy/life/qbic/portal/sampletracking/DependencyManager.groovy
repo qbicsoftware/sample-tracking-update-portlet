@@ -1,6 +1,8 @@
 package life.qbic.portal.sampletracking
 
 import groovy.util.logging.Log4j2
+import io.micronaut.http.client.exceptions.HttpClientException
+import io.micronaut.http.exceptions.HttpException
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.app.PortletController
 import life.qbic.portal.sampletracking.app.samples.query.QuerySampleTrackingInfo
@@ -39,15 +41,18 @@ class DependencyManager {
         configManager = ConfigurationManagerFactory.getInstance()
         serviceUser = configManager.getServiceUser()
 
-        // Set up tracking service components first
-        setupSampleTrackingService()
+        try {
+            // Set up tracking service components first
+            setupSampleTrackingService()
 
-        SampleTrackingInformation trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
-        SampleTrackingUpdate trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
+            SampleTrackingInformation trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
+            SampleTrackingUpdate trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
 
-        def queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
-        def updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
-
+            def queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
+            def updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
+        } catch (HttpClientException e){
+            log.error("Could not connect to sample tracking service.", e)
+        }
         // Todo
         PortletController controller = new SampleTrackingPortletController()
         SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
@@ -56,11 +61,6 @@ class DependencyManager {
 
         //make view available for UI class
         this.portletView = view
-
-
-
-
-
 
     }
 
