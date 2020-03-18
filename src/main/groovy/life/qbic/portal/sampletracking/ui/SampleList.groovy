@@ -12,10 +12,8 @@ import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 
 @Log4j2
-class SampleList extends VerticalLayout{
+class SampleList extends VerticalLayout implements ListViewModel{
     private List<Sample> samples
-
-    // TODO initiate Grid!!
     private Grid<Sample> sampleGrid
     private Button clearButton
 
@@ -23,12 +21,9 @@ class SampleList extends VerticalLayout{
         super()
         this.samples = new ArrayList<Sample>()
 
-
-
         //TODO: remove
         Sample testSample = new Sample()
         Location testLocation = new Location()
-
         testLocation.setName("Nowhere")
         testLocation.setStatus(Status.PROCESSING)
         testSample.setCode("ABCDE")
@@ -78,6 +73,23 @@ class SampleList extends VerticalLayout{
     // clear samples in grid
     void clearList() {
         this.samples.clear()
+    }
+
+    @Override
+    void addSamples(Sample... samples) {
+        this.samples.addAll(samples)
+        refreshView()
+    }
+
+    @Override
+    void removeSamples(Sample... samples) {
+        this.samples.removeAll(samples)
+        refreshView()
+    }
+
+    @Override
+    void clear() {
+        this.clearList()
         refreshView()
     }
 }
