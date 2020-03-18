@@ -40,13 +40,13 @@ class DependencyManager {
         serviceUser = configManager.getServiceUser()
 
         // Set up tracking service components first
-        setupSampleTrackingService()
+        // setupSampleTrackingService()
 
-        SampleTrackingInformation trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
-        SampleTrackingUpdate trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
+        // SampleTrackingInformation trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
+        // SampleTrackingUpdate trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
 
-        def queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
-        def updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
+        // def queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
+        // def updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
 
         // Todo
         PortletController controller = new SampleTrackingPortletController()
