@@ -12,5 +12,5 @@
 
     
 
-    <inherits name="life.qbic.portal.portlet.AppWidgetSet" />
+    
 </module>

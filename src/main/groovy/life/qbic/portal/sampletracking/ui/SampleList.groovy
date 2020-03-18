@@ -3,16 +3,15 @@ package life.qbic.portal.sampletracking.ui
 import com.vaadin.data.provider.ListDataProvider
 import com.vaadin.ui.Button
 import com.vaadin.ui.Grid
-import com.vaadin.ui.Label
-import com.vaadin.ui.Notification
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
+import life.qbic.portal.sampletracking.app.samples.selection.ModifySampleSelectionOutput
 
 @Log4j2
-class SampleList extends VerticalLayout implements ListViewModel{
+class SampleList extends VerticalLayout implements ModifySampleSelectionOutput{
     private List<Sample> samples
     private Grid<Sample> sampleGrid
     private Button clearButton
@@ -63,7 +62,7 @@ class SampleList extends VerticalLayout implements ListViewModel{
     }
 
     private void registerListeners() {
-        this.clearButton.addClickListener({ event -> clearList() })
+        this.clearButton.addClickListener({ event -> clearSamples() })
     }
 
     // Refresh sample display in grid
@@ -88,7 +87,7 @@ class SampleList extends VerticalLayout implements ListViewModel{
     }
 
     @Override
-    void clear() {
+    void clearSamples() {
         this.clearList()
         refreshView()
     }
