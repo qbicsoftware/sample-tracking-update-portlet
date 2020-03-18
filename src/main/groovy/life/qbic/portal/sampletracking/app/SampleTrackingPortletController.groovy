@@ -13,25 +13,28 @@ class SampleTrackingPortletController implements PortletController {
 
     private final SampleLocation sampleLocation
 
-    private final PortletView view
-
     SampleTrackingPortletController() {
         new AssertionError()
     }
 
-    SampleTrackingPortletController(SampleUpdate sampleUpdateInput, SampleLocation sampleLocation, PortletView view) {
+    SampleTrackingPortletController(SampleUpdate sampleUpdateInput, SampleLocation sampleLocation) {
         this.sampleUpdateInput = sampleUpdateInput
         this.sampleLocation = sampleLocation
-        this.view = view
-    }
-
-    void queryAllLocationsForPerson() {
-        def email = "fake@gmail.com"  // TODO Implement real email determination from logged in user
-        sampleLocation.availableLocationsForPerson(email, view)
     }
 
     @Override
-    def selectSingleSample(String sampleId) {
-        return null
+    void queryAllLocationsForPerson(String email) {
+        email = "fake@gmail.com"  // TODO Implement real email determination from logged in user
+        sampleLocation.availableLocationsForPerson(email)
+    }
+
+    @Override
+    void selectSamples(Sample... samples) {
+
+    }
+
+    @Override
+    void clearSelection() {
+
     }
 }

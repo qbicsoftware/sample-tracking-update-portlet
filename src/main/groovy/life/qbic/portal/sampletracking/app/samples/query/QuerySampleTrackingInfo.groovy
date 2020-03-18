@@ -8,34 +8,37 @@ class QuerySampleTrackingInfo implements SampleLocation{
 
     final SampleTrackingInformation sampleTrackingInformation
 
+    private SampleStatusOutput sampleStatusOutput;
+
     QuerySampleTrackingInfo(){
         new AssertionError()
     }
 
-    QuerySampleTrackingInfo(SampleTrackingInformation sampleTrackingInformation) {
+    QuerySampleTrackingInfo(SampleTrackingInformation sampleTrackingInformation, SampleStatusOutput sampleStatusOutput) {
         this.sampleTrackingInformation = sampleTrackingInformation
+        this.sampleStatusOutput = sampleStatusOutput
     }
 
     @Override
-    def currentLocation(String sampleId, SampleStatusOutput output) {
+    def currentLocation(String sampleId) {
         try {
             Location location = sampleTrackingInformation.currentSampleLocation(sampleId)
-            output.updateCurrentLocation(location)
+            this.sampleStatusOutput.updateCurrentLocation(sampleId, location)
         } catch (SampleTrackingQueryException e) {
             log.error e
-            output.invokeOnError "Could not get current location for sample $sampleId"
+            this.sampleStatusOutput.invokeOnError "Could not get current location for sample $sampleId"
         }
     }
 
 
     @Override
-    def availableLocationsForPerson(String email, SampleStatusOutput output) {
+    def availableLocationsForPerson(String email) {
         try {
             List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPerson(email)
-            output.updateAvailableLocations(locationsForPerson)
+            this.sampleStatusOutput.updateAvailableLocations(locationsForPerson)
         } catch (SampleTrackingQueryException e) {
             log.error e
-            output.invokeOnError "Could not get available locations for person $email"
+            this.sampleStatusOutput.invokeOnError "Could not get available locations for person $email"
         }
 
     }

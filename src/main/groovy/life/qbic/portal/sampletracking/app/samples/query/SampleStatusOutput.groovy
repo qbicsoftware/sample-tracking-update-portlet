@@ -6,7 +6,7 @@ interface SampleStatusOutput {
 
     def updateAvailableLocations(List<Location> locations)
 
-    def updateCurrentLocation(Location location)
+    def updateCurrentLocation(String sampleId, Location location)
 
     def invokeOnError(String msg)
 

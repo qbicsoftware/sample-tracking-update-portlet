@@ -36,7 +36,7 @@ class PortletView extends HorizontalLayout implements SampleStatusOutput, Sample
     }
 
     @Override
-    def updateCurrentLocation(Location location) {
+    def updateCurrentLocation(String sampleId, Location location) {
         // This method will be called from the use case classes, once they have
         // current location information found
         return null
