@@ -14,6 +14,8 @@ import life.qbic.datamodel.samples.Status
 @Log4j2
 class SampleList extends VerticalLayout{
     private List<Sample> samples
+
+    // TODO initiate Grid!!
     private Grid<Sample> sampleGrid
     private Button clearButton
 
