@@ -2,9 +2,9 @@ package life.qbic.portal.sampletracking
 
 import groovy.util.logging.Log4j2
 import io.micronaut.http.client.exceptions.HttpClientException
-import io.micronaut.http.exceptions.HttpException
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.app.PortletController
+import life.qbic.portal.sampletracking.app.samples.list.ModifySampleList
 import life.qbic.portal.sampletracking.app.samples.query.QuerySampleTrackingInfo
 import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingInformation
 import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdate
@@ -41,6 +41,9 @@ class DependencyManager {
         configManager = ConfigurationManagerFactory.getInstance()
         serviceUser = configManager.getServiceUser()
 
+        def queryInfoInteractor
+        def updateInfoInteractor
+        def sampleListInteractor = new ModifySampleList()
         try {
             // Set up tracking service components first
             setupSampleTrackingService()
@@ -48,15 +51,22 @@ class DependencyManager {
             SampleTrackingInformation trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
             SampleTrackingUpdate trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
 
-            def queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
-            def updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
+            //TODO add output interface implementation. -> the view
+            queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter)
+            updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter)
         } catch (HttpClientException e){
             log.error("Could not connect to sample tracking service.", e)
         }
         // Todo
-        PortletController controller = new SampleTrackingPortletController()
+        PortletController controller = new SampleTrackingPortletController(queryInfoInteractor, updateInfoInteractor, sampleListInteractor)
         SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
         PortletView view = new PortletView(controller, sampleFileReceiver)
+
+        // set output to use cases
+        queryInfoInteractor?.injectSampleUpdateOutput(view)
+        updateInfoInteractor?.injectSampleStatusOutput(view)
+        sampleListInteractor?.injectSampleListOutput(view)
+
 
 
         //make view available for UI class

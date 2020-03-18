@@ -6,4 +6,6 @@ interface SampleLocation {
 
     def availableLocationsForPerson(String email)
 
+    void injectSampleStatusOutput(SampleStatusOutput sampleStatusOutput)
+
 }

@@ -2,6 +2,7 @@ package life.qbic.portal.sampletracking.app
 
 import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.app.PortletController
+import life.qbic.portal.sampletracking.app.samples.list.SampleListModification
 import life.qbic.portal.sampletracking.app.samples.query.SampleLocation
 import life.qbic.portal.sampletracking.app.samples.update.SampleUpdate
 import life.qbic.portal.sampletracking.app.samples.update.SampleUpdateOutput
@@ -13,18 +14,20 @@ class SampleTrackingPortletController implements PortletController {
 
     private final SampleLocation sampleLocation
 
-    SampleTrackingPortletController() {
+    private final SampleListModification sampleListModification
+
+    private SampleTrackingPortletController() {
         new AssertionError()
     }
 
-    SampleTrackingPortletController(SampleUpdate sampleUpdateInput, SampleLocation sampleLocation) {
+    SampleTrackingPortletController(SampleUpdate sampleUpdateInput, SampleLocation sampleLocation, SampleListModification sampleListModification) {
         this.sampleUpdateInput = sampleUpdateInput
         this.sampleLocation = sampleLocation
+        this.sampleListModification = sampleListModification
     }
 
     @Override
     void queryAllLocationsForPerson(String email) {
-        email = "fake@gmail.com"  // TODO Implement real email determination from logged in user
         sampleLocation.availableLocationsForPerson(email)
     }
 
@@ -35,6 +38,6 @@ class SampleTrackingPortletController implements PortletController {
 
     @Override
     void clearSelection() {
-
+        this.sampleListModification.clearSelection()
     }
 }

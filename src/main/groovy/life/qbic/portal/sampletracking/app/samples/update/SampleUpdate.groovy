@@ -5,8 +5,9 @@ import life.qbic.datamodel.samples.Status
 
 interface SampleUpdate {
 
-    def setSampleStatus(String sampleId, Status sampleStatus, SampleUpdateOutput output)
+    def setSampleStatus(String sampleId, Status sampleStatus)
 
-    def setCurrentSampleLocation(String sampleId, Location location, SampleUpdateOutput output)
+    def setCurrentSampleLocation(String sampleId, Location location)
 
+    void injectSampleUpdateOutput(SampleUpdateOutput sampleUpdateOutput)
 }
