@@ -1,7 +1,9 @@
 package life.qbic.portal.sampletracking.ui
 
+import com.vaadin.server.Page
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
+import com.vaadin.ui.Notification
 import com.vaadin.ui.Upload.Receiver
 import life.qbic.datamodel.samples.Location
 import life.qbic.portal.sampletracking.app.PortletController
@@ -45,6 +47,8 @@ class PortletView extends HorizontalLayout implements SampleStatusOutput, Sample
         // The use cases classes will call this method,
         // if something goes wrong with the sample tracking
         // So make a notification message for the user here
+        StyledNotification notification = new StyledNotification("Ooooops something went wrong!", msg, Notification.Type.ERROR_MESSAGE)
+        notification.show(Page.getCurrent())
         return null
     }
 }
