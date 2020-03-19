@@ -1,6 +1,8 @@
 package life.qbic.portal.sampletracking.app
 
+import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
+import life.qbic.datamodel.samples.Status
 
 interface PortletController {
 
@@ -13,4 +15,5 @@ interface PortletController {
 
     void clearSelection()
 
+    void updateSamples(String sampleIds, Location desiredLocation, Status desiredStatus)
 }
