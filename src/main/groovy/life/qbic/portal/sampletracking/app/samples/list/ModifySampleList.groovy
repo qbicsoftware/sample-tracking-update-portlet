@@ -4,7 +4,7 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Sample
 
 @Log4j2
-class ModifySampleList implements SampleListModification {
+class ModifySampleList implements ModifySampleListInput {
 
     ModifySampleListOutput output
 

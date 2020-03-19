@@ -3,7 +3,7 @@ package life.qbic.portal.sampletracking.ui
 import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 
-class StyledNotification extends Notification{
+class StyledNotification extends Notification {
     StyledNotification(String caption) {
         super(caption)
         setNotifProperties()

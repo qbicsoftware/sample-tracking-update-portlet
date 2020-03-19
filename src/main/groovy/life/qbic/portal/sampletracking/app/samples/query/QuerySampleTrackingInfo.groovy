@@ -2,20 +2,20 @@ package life.qbic.portal.sampletracking.app.samples.query
 
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
-import life.qbic.portal.sampletracking.app.samples.update.SampleUpdateOutput
 
 @Log4j2
-class QuerySampleTrackingInfo implements SampleLocation{
+class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
 
-    final SampleTrackingInformation sampleTrackingInformation
+    final SampleTrackingQueryDataSource sampleTrackingInformation
 
-    private SampleStatusOutput sampleStatusOutput;
+    private SampleTrackingQueryOutput sampleStatusOutput
 
-    QuerySampleTrackingInfo(){
-        new AssertionError()
+    private QuerySampleTrackingInfo() {
+        // prevent default constructor
+        throw new AssertionError()
     }
 
-    QuerySampleTrackingInfo(SampleTrackingInformation sampleTrackingInformation, SampleStatusOutput sampleStatusOutput) {
+    QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleTrackingQueryOutput sampleStatusOutput) {
         this.sampleTrackingInformation = sampleTrackingInformation
         this.sampleStatusOutput = sampleStatusOutput
     }
@@ -31,6 +31,10 @@ class QuerySampleTrackingInfo implements SampleLocation{
         }
     }
 
+    @Override
+    def getSampleById(String sampleId) {
+        return null
+    }
 
     @Override
     def availableLocationsForPerson(String email) {
@@ -42,14 +46,5 @@ class QuerySampleTrackingInfo implements SampleLocation{
             this.sampleStatusOutput.invokeOnError "Could not get available locations for person $email"
         }
 
-    }
-
-    @Override
-    void injectSampleStatusOutput(SampleStatusOutput sampleStatusOutput) {
-        if(this.sampleStatusOutput) {
-            log.warn("Tried to overwrite {}. Skipping.", this.sampleStatusOutput)
-        } else {
-            this.sampleStatusOutput = sampleStatusOutput
-        }
     }
 }

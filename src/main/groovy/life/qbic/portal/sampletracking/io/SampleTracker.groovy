@@ -6,32 +6,32 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingInformation
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryException
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdate
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateException
 import life.qbic.datamodel.services.ServiceUser
+import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryException
+import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateDataSource
+import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateException
 import life.qbic.services.Service
 
 // Noninstantiable utility class
 class SampleTracker {
 
     // Suppress default constructor for noninstantiability
-    private SampleTracker(){
+    private SampleTracker() {
         throw new AssertionError()
     }
 
-    static SampleTrackingUpdate createSampleTrackingUpdate(Service service,
-                                                           ServiceUser serviceUser) {
-        new SampleTrackingCenter(service, serviceUser)
-    }
-
-    static SampleTrackingInformation createSampleTrackingInformation(Service service,
+    static SampleTrackingUpdateDataSource createSampleTrackingUpdate(Service service,
                                                                      ServiceUser serviceUser) {
         new SampleTrackingCenter(service, serviceUser)
     }
 
-    private static class SampleTrackingCenter implements SampleTrackingInformation, SampleTrackingUpdate {
+    static SampleTrackingQueryDataSource createSampleTrackingInformation(Service service,
+                                                                         ServiceUser serviceUser) {
+        new SampleTrackingCenter(service, serviceUser)
+    }
+
+    private static class SampleTrackingCenter implements SampleTrackingQueryDataSource, SampleTrackingUpdateDataSource {
 
         private final ServiceUser user
 
@@ -43,7 +43,7 @@ class SampleTracker {
         }
 
         @Override
-        Location currentSampleLocation(String sampleId) throws SampleTrackingQueryException{
+        Location currentSampleLocation(String sampleId) throws SampleTrackingQueryException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
 
@@ -65,9 +65,9 @@ class SampleTracker {
         }
 
         @Override
-        List<Location> availableLocationsForPerson(String emailAdress) {
+        List<Location> availableLocationsForPerson(String emailAddress) {
             HttpClient client = RxHttpClient.create(service.rootUrl)
-            URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAdress")
+            URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAddress")
 
             HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(user.name, user.password)
             HttpResponse<List> response

@@ -1,6 +1,6 @@
 package life.qbic.portal.sampletracking.app.samples.query
 
-class SampleTrackingQueryException extends RuntimeException{
+class SampleTrackingQueryException extends RuntimeException {
 
     SampleTrackingQueryException() {
         super()

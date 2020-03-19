@@ -8,6 +8,9 @@ interface PortletController {
     void queryAllLocationsForPerson(String email)
     //selection
     void selectSamples(Sample... samples)
+
+    void selectSamples(String... sampleIds)
+
     void clearSelection()
 
 }

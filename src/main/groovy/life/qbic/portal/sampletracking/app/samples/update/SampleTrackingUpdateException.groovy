@@ -1,8 +1,8 @@
 package life.qbic.portal.sampletracking.app.samples.update
 
-class SampleTrackingUpdateException extends RuntimeException{
+class SampleTrackingUpdateException extends RuntimeException {
 
-    SampleTrackingUpdateException(){
+    SampleTrackingUpdateException() {
         super()
     }
 
@@ -10,7 +10,7 @@ class SampleTrackingUpdateException extends RuntimeException{
         super(msg)
     }
 
-    SampleTrackingUpdateException(Throwable t){
+    SampleTrackingUpdateException(Throwable t) {
         super(t)
     }
 }

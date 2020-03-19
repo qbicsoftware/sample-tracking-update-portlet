@@ -7,7 +7,6 @@ import com.vaadin.ui.Layout
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.portal.portlet.QBiCPortletUI
-import life.qbic.portal.sampletracking.ui.PortletView
 import life.qbic.portal.sampletracking.ui.StyledNotification
 
 @Widgetset("life.qbic.portal.sampletracking.AppWidgetSet")
@@ -33,7 +32,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
         def layout
         log.info "Generating content for class {}", SampleUpdatePortlet.getCanonicalName()
         try {
-            layout = this.dependencyManager.getPortletView();
+            layout = this.dependencyManager.getPortletView()
         } catch (Exception e) {
             log.error("Failed generatind content for class {}", SampleUpdatePortlet.getCanonicalName())
             log.error(e)
@@ -43,7 +42,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
             initializationErrorNotification.show(Page.getCurrent())
             layout = new VerticalLayout()
         }
-        log.info"Finished content generation for class {}", SampleUpdatePortlet.getCanonicalName()
+        log.info "Finished content generation for class {}", SampleUpdatePortlet.getCanonicalName()
         return layout
     }
 }

@@ -1,22 +1,17 @@
 package life.qbic.portal.sampletracking.ui
 
-import com.vaadin.ui.Label
+import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.app.PortletController
 
-import com.vaadin.ui.Button
-import com.vaadin.ui.DateField
-import com.vaadin.ui.NativeSelect
-import com.vaadin.ui.TextField
-import com.vaadin.ui.VerticalLayout
-
 @Log4j2
-class SampleModifyControls extends VerticalLayout{
+class SampleModifyControls extends VerticalLayout {
 
-    private PortletController controller
+
+    final private PortletController controller
+    final private SampleModifyControlsModel modifyControlsModel
     private Label userEmailField
     private Button clearButton
     private Button updateSampleButton
@@ -25,13 +20,10 @@ class SampleModifyControls extends VerticalLayout{
     private DateField dateChooser
 
 
-    private SampleModifyControls() {
-        // disable default constructor
-    }
-
-    SampleModifyControls(PortletController portletController) {
+    SampleModifyControls(PortletController portletController, SampleModifyControlsModel modifyControlsModel) {
         super()
         this.controller = portletController
+        this.modifyControlsModel = modifyControlsModel
         initLayout()
         registerListeners()
     }

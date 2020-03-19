@@ -1,23 +1,23 @@
 package life.qbic.portal.sampletracking.ui
 
-import com.vaadin.ui.Notification
+
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.app.samples.list.ModifySampleListOutput
-import life.qbic.portal.sampletracking.app.samples.query.SampleStatusOutput
-import life.qbic.portal.sampletracking.app.samples.update.SampleUpdateOutput
+import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryOutput
+import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateOutput
 
 //TODO: rename class to something other than implementation
-class ViewModel implements SampleStatusOutput, SampleUpdateOutput, ModifySampleListOutput,
-        SampleImportModel, SampleListModel, SampleModifyControlsModel, PortletViewModel{
+class ViewModel implements SampleTrackingQueryOutput, SampleTrackingUpdateOutput, ModifySampleListOutput,
+        SampleImportModel, SampleListModel, SampleModifyControlsModel, PortletViewModel {
     final private ObservableList samples
     final private ObservableList availableLocations
     final private ObservableList notifications
 
-    ViewModel(ObservableList samples, ObservableList availableLocations, ObservableList notifications) {
-        this.samples = samples
-        this.availableLocations = availableLocations
-        this.notifications = notifications
+    ViewModel(List<Sample> samples, List<Location> availableLocations, List<String> notifications) {
+        this.samples = new ObservableList(samples)
+        this.availableLocations = new ObservableList(availableLocations)
+        this.notifications = new ObservableList(notifications)
     }
 
     @Override
