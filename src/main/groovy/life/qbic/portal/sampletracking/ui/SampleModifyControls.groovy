@@ -1,5 +1,6 @@
 package life.qbic.portal.sampletracking.ui
 
+import groovy.util.logging.Log4j2
 import life.qbic.portal.sampletracking.app.PortletController
 
 import com.vaadin.ui.Button
@@ -10,6 +11,7 @@ import com.vaadin.ui.VerticalLayout
 
 import java.time.LocalDate
 
+@Log4j2
 class SampleModifyControls extends VerticalLayout{
 
     private PortletController controller
@@ -20,6 +22,10 @@ class SampleModifyControls extends VerticalLayout{
     private NativeSelect<String> sampleSelectMenu
     private DateField dateSelectMenu
 
+
+    private SampleModifyControls() {
+        // disable default constructor
+    }
 
     SampleModifyControls(PortletController portletController) {
         super()
