@@ -23,7 +23,7 @@ class PortletView extends HorizontalLayout implements SampleStatusOutput, Sample
 
     PortletView(PortletController portletController, Receiver receiver) {
         super()
-        this.samples = new ArrayList<>()
+        this.samples = new ObservableList()
         this.controller = portletController
         this.receiver = receiver
         initLayout()

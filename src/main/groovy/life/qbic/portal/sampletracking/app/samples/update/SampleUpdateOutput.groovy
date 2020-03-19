@@ -1,7 +1,7 @@
 package life.qbic.portal.sampletracking.app.samples.update
 
-interface SampleUpdateOutput {
+import life.qbic.portal.sampletracking.app.samples.UseCaseOutput
 
-    def invokeOnError(String msg)
+interface SampleUpdateOutput extends UseCaseOutput{
 
 }
