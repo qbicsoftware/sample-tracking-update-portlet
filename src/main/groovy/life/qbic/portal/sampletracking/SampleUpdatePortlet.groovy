@@ -42,7 +42,6 @@ class SampleUpdatePortlet extends QBiCPortletUI {
             initializationErrorNotification.show(Page.getCurrent())
             layout = new VerticalLayout()
         }
-        log.info "Finished content generation for class {}", SampleUpdatePortlet.getCanonicalName()
         return layout
     }
 }
