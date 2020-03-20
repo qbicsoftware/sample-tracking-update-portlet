@@ -16,15 +16,18 @@ class SampleUpdatePortlet extends QBiCPortletUI {
 
     SampleUpdatePortlet() {
         super()
-        init()
+        // The constructor MUST NOT fail since the user does not get any feedback otherwise.
+        try {
+            init()
+        } catch (Exception e) {
+            log.error("Could not initialize {}", SampleUpdatePortlet.getCanonicalName(), e)
+        } catch (Error error) {
+            log.error("Unexpected runtime error.", error)
+        }
     }
 
     private def init() {
-        try {
-            this.dependencyManager = new DependencyManager()
-        } catch (Exception e) {
-            log.error("Could not initialize {}", SampleUpdatePortlet.getCanonicalName(), e)
-        }
+        this.dependencyManager = new DependencyManager()
     }
 
     @Override

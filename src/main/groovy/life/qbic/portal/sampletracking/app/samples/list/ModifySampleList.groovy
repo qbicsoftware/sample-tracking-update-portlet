@@ -14,7 +14,6 @@ class ModifySampleList implements ModifySampleListInput {
     }
 
     ModifySampleList(ModifySampleListOutput output) {
-        this()
         this.injectSampleListOutput(output)
     }
 
