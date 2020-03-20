@@ -38,7 +38,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
             log.error(e)
             String errorCaption = "Application not available"
             String errorMessage = "We apologize for any inconveniences. Please inform us via email to support@qbic.zendesk.com."
-            StyledNotification initializationErrorNotification = new StyledNotification(eCaption, eMessage)
+            StyledNotification initializationErrorNotification = new StyledNotification(errorCaption, errorMessage)
             initializationErrorNotification.show(Page.getCurrent())
             layout = new VerticalLayout()
         }
