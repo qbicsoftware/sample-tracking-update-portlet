@@ -8,8 +8,9 @@ class ModifySampleList implements ModifySampleListInput {
 
     ModifySampleListOutput output
 
-    ModifySampleList() {
-
+    private ModifySampleList() {
+        // prevents accidental calls to the default constructor
+        throw new AssertionError()
     }
 
     ModifySampleList(ModifySampleListOutput output) {
