@@ -11,7 +11,7 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
     private SampleTrackingUpdateOutput sampleUpdateOutput
 
     private UpdateSampleTrackingInfo() {
-        // prevent default constructor
+        // Prevents accidental call from inside the class
         throw new AssertionError()
     }
 
