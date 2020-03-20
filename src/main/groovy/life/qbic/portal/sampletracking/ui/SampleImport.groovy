@@ -23,7 +23,7 @@ class SampleImport extends VerticalLayout {
     private def initLayout() {
 
         FormLayout formLayout = new FormLayout()
-        additionalSampleId = new TextField("Sample ID")
+        this.additionalSampleId = new TextField("Sample ID")
         this.additionalSampleId.setPlaceholder("QABCD004AO")
         this.singleSampleAddButton = new Button("Add Sample")
 
