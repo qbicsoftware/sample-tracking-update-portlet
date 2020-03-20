@@ -12,7 +12,8 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
 
     private QuerySampleTrackingInfo() {
         // prevent default constructor
-        throw new AssertionError()
+        // Avoids accidently default constructor call from within the class
+        throw new AssertionError() 
     }
 
     QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleTrackingQueryOutput sampleStatusOutput) {
