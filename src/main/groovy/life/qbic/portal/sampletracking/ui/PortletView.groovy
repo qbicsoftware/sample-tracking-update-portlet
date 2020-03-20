@@ -23,16 +23,6 @@ class PortletView extends HorizontalLayout {
     }
 
     private def initLayout() {
-        /*
-        //TODO remove
-        Sample testSample = new Sample()
-        Location testLocation = new Location()
-        testLocation.setName("Nowhere")
-        testLocation.setStatus(Status.PROCESSING)
-        testSample.setCode("ABCDE")
-        testSample.setCurrentLocation(testLocation)
-        this.samples.add(testSample)*/
-
         this.addComponents(this.sampleImport, this.sampleList, this.sampleControls)
     }
 }
