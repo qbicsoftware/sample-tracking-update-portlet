@@ -72,7 +72,7 @@ class SampleModifyControls extends VerticalLayout {
         // Add listener to update button to upload Sample changes selected in view
 
         //ToDo Determine how Samples from Samplelist can be connected to user selected location, date and Status
-        def selectedSampleIdArray = ViewModel.requestSampleList().collect { it.getCode }
+        def selectedSampleIds = viewModel.requestSampleList()
 
         //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
         this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIdArray, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
