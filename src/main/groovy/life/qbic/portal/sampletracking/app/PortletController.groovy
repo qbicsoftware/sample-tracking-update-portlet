@@ -15,5 +15,5 @@ interface PortletController {
 
     void clearSelection()
 
-    void updateSamples(String sampleIds, Location desiredLocation, Status desiredStatus)
+    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus)
 }
