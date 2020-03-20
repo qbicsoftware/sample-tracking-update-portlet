@@ -37,7 +37,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
             log.error("Failed generatind content for class {}", SampleUpdatePortlet.getCanonicalName())
             log.error(e)
             String errorCaption = "Application not available"
-            String eMessage = "This portlet is currently not available. Please contact the site administrator."
+            String errorMessage = "We apologize for any inconveniences. Please inform us via email to support@qbic.zendesk.com."
             StyledNotification initializationErrorNotification = new StyledNotification(eCaption, eMessage)
             initializationErrorNotification.show(Page.getCurrent())
             layout = new VerticalLayout()
