@@ -46,7 +46,7 @@ class SampleTrackingPortletController implements PortletController {
     }
 
     @Override
-    void updateSamples(String sampleIds, Location desiredLocation, Status desiredStatus) {
+    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus) {
         this.sampleUpdateInput.setCurrentSampleLocation(sampleIds, desiredLocation)
         this.sampleUpdateInput.setSampleStatus(sampleIds, desiredStatus)
     }
