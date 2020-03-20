@@ -16,7 +16,7 @@ class SampleTrackingPortletController implements PortletController {
     private final ModifySampleListInput sampleListModification
 
     private SampleTrackingPortletController() {
-        new AssertionError()
+        throw new AssertionError()
     }
 
     SampleTrackingPortletController(SampleTrackingUpdateInput sampleUpdateInput, SampleTrackingQueryInput sampleLocation, ModifySampleListInput sampleListModification) {
