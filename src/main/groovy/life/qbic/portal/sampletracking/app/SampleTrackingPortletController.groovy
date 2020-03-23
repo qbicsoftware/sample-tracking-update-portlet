@@ -37,7 +37,12 @@ class SampleTrackingPortletController implements PortletController {
 
     @Override
     void selectSamples(String... sampleIds) {
-// TODO: implement
+// TODO: Is this method still relevant if so --> implement
+    }
+
+    @Override
+    void querySampleById(String sampleId) {
+        sampleLocation.querySampleById(sampleId)
     }
 
     @Override

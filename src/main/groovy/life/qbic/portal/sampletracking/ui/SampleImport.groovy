@@ -34,7 +34,7 @@ class SampleImport extends VerticalLayout {
 
     private def registerListeners() {
         this.singleSampleAddButton.addClickListener({ event ->
-            this.controller.selectSamples(this.additionalSampleId.getValue())
+            this.controller.querySampleById(this.additionalSampleId.getValue())
         })
     }
 }

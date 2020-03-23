@@ -13,6 +13,8 @@ interface PortletController {
 
     void selectSamples(String... sampleIds)
 
+    void querySampleById(String sampleId)
+
     void clearSelection()
 
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus)
