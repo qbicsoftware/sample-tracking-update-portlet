@@ -5,6 +5,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
 import life.qbic.datamodel.samples.Location
+import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
@@ -121,6 +122,30 @@ class SampleTracker {
                 throw new SampleTrackingUpdateException("Request for update location status for sample $sampleId failed.")
             }
 
+        }
+
+        @Override
+        Sample queriedSample(String sampleId) throws SampleTrackingQueryException {
+            HttpClient client = RxHttpClient.create(service.rootUrl)
+            // ToDo Check if that URI returns a valid sample by sample id
+
+            URI SampleUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/")
+
+            HttpRequest request = HttpRequest.GET(SampleUri).basicAuth(user.name, user.password)
+            HttpResponse<Sample> response
+
+            client.withCloseable {
+                response = it.toBlocking().exchange(request)
+            }
+
+            if (response?.status?.code != 200) {
+                throw new SampleTrackingQueryException("Request for current sample failed.")
+            }
+            if (!response?.body() instanceof Sample) {
+                throw new SampleTrackingQueryException("Did not receive a valid sample response.")
+            }
+
+            return response?.body()
         }
     }
 
