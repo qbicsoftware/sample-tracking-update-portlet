@@ -9,6 +9,6 @@ interface SampleTrackingQueryDataSource {
 
     List<Location> availableLocationsForPerson(String emailAddress)
 
-    Sample queriedSample(String sampleId)
+    Sample retrieveCurrentSample(String sampleId)
 
 }
