@@ -26,7 +26,7 @@ class ViewModel implements SampleTrackingQueryOutput, SampleTrackingUpdateOutput
     }
 
     @Override
-    def querySampleById(Sample sample) {
+    def addSampleToList(Sample sample) {
         this.samples.add(sample)
     }
 

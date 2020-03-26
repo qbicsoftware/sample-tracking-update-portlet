@@ -10,5 +10,5 @@ interface SampleTrackingQueryOutput extends UseCaseOutput {
 
     def updateCurrentLocation(String sampleId, Location location)
 
-    def querySampleById(Sample sample)
+    def addSampleToList(Sample sample)
 }
