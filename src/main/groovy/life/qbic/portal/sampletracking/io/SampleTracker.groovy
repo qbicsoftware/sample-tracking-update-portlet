@@ -124,8 +124,8 @@ class SampleTracker {
 
         }
 
-        @Override
-        Sample queriedSample(String sampleId) throws SampleTrackingQueryException {
+
+        Sample retrieveCurrentSample(String sampleId) throws SampleTrackingQueryException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             // ToDo Check if that URI returns a valid sample by sample id
 

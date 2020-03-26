@@ -38,7 +38,7 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
     @Override
     def querySampleById(String sampleId) {
         try {
-            Sample sample = sampleTrackingInformation.queriedSample(sampleId)
+            Sample sample = sampleTrackingInformation.retrieveCurrentSample(sampleId)
             this.sampleStatusOutput.querySampleById(sample)
         } catch (SampleTrackingQueryException e) {
             log.error("Query ${sampleId} failed.", e)
