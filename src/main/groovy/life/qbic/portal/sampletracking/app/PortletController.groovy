@@ -13,6 +13,8 @@ interface PortletController {
 
     void selectSampleById(String sampleId)
 
+    void selectSamplesFromFile(FileOutputStream uploadedFile)
+
     void clearSelection()
 
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus)
