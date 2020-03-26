@@ -9,11 +9,9 @@ interface PortletController {
     //query
     void queryAllLocationsForPerson(String email)
     //selection
-    void selectSamples(Sample... samples)
+    void selectSamplesById(List<String> sampleIds)
 
-    void selectSamples(String... sampleIds)
-
-    void querySampleById(String sampleId)
+    void selectSampleById(String sampleId)
 
     void clearSelection()
 
