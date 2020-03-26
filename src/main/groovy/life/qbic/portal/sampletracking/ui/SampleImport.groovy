@@ -1,13 +1,14 @@
 package life.qbic.portal.sampletracking.ui
 
 import com.vaadin.server.Page
-import com.vaadin.shared.Position
+
 import com.vaadin.ui.Button
 import com.vaadin.ui.FormLayout
-import com.vaadin.ui.Notification
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.Notification
+
 import life.qbic.portal.components.Uploader
 import life.qbic.portal.sampletracking.app.PortletController
 
@@ -53,20 +54,14 @@ class SampleImport extends VerticalLayout {
     }
 
     private def registerListeners() {
-        // Add listener to add sample button
         this.singleSampleAddButton.addClickListener({ event ->
             // Get value from user input in textField
             String sampleIdInput = this.additionalSampleId.getValue()
             try {
-                this.controller.querySampleById(sampleIdInput)
+                this.controller.selectSampleFromId(sampleIdInput)
                 // if sample was found show success notification
-                Notification notification = new Notification
-                        (
-                                "Success", "Sample Id: $sampleIdInput was added to Sample List",
-                                Notification.Type.HUMANIZED_MESSAGE)
-                notification.setDelayMsec(3000)
-                notification.setPosition(Position.TOP_CENTER)
-                notification.show(Page.getCurrent())
+                StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
+                uploadIdSuccessNotification.show(Page.getCurrent())
 
                 //ToDo style notification e.g.
                 // make notification background color for clearer distinction between
@@ -76,25 +71,13 @@ class SampleImport extends VerticalLayout {
             catch (Exception e) {
                 // show notification if user input a sample id but it couldn't be found
                 if (sampleIdInput) {
-                    Notification notification = new Notification
-                            (
-                                    "Sample Id Error", "Sample Id: $sampleIdInput could not be found in database",
-                                    Notification.Type.ERROR_MESSAGE)
-                    notification.setDelayMsec(3000)
-                    notification.setPosition(Position.TOP_CENTER)
-                    notification.show(Page.getCurrent())
-
+                    StyledNotification noSampleIdFoundNotification = new StyledNotification("Sample Id Error", "Sample ID: $sampleIdInput could not be found in database", Notification.Type.ERROR_MESSAGE)
+                    noSampleIdFoundNotification.show(Page.getCurrent())
                 }
                 //show notification if no sample id was provided
                 else {
-                    Notification notification = new Notification
-                            (
-                                    "No Sample Id Input", "Please Input a Sample Id",
-                                    Notification.Type.ERROR_MESSAGE)
-                    notification.setDelayMsec(3000)
-                    notification.setPosition(Position.TOP_CENTER)
-                    notification.show(Page.getCurrent())
-
+                    StyledNotification noSampleIdProvidedNotification = new StyledNotification("No Sample Id Input", "Please Input a Sample Id", Notification.Type.WARNING_MESSAGE)
+                    noSampleIdProvidedNotification.show(Page.getCurrent())
                 }
 
             }
@@ -104,46 +87,32 @@ class SampleImport extends VerticalLayout {
 
             Upload.Receiver receiver = this.fileSampleAddUpload.getReceiver()
             FileOutputStream uploadedFileStream = receiver.receiveUpload("temp", ".csv")
-            // display notification if file upload and addition to sample list was successful
+
 
             //ToDo check if uploadedfileStream is empty
             // to avoid success notification to user when no file was selected
-
 
             if (uploadedFileStream) {
 
                 //ToDo implement controller access of uploaded file here,
                 // should an outputStream be provided as File or should the samples be extracted here into List of Samples?
 
-                Notification notification = new Notification
-                        (
-                                "Upload successful", "File could be uploaded successfully",
-                                Notification.Type.HUMANIZED_MESSAGE)
-                notification.setDelayMsec(3000)
-                notification.setPosition(Position.TOP_CENTER)
-                notification.show(Page.getCurrent())
+                // display notification if file upload and addition to sample list was successful
+               StyledNotification uploadFileSuccessNotification = new StyledNotification("Upload successful, File could be uploaded successfully")
+                uploadFileSuccessNotification.show(Page.getCurrent())
             }
             // display notification if user has not selected a file to upload
             else {
-                Notification notification = new Notification
-                        (
-                                "No File selected", "Please specify a file to upload",
-                                Notification.Type.ERROR_MESSAGE)
-                notification.setDelayMsec(3000)
-                notification.setPosition(Position.TOP_CENTER)
-                notification.show(Page.getCurrent())
+                StyledNotification noFileProvidedNotification = new StyledNotification("No File selected", "Please specify a file to upload", Notification.Type.WARNING_MESSAGE)
+                noFileProvidedNotification.show(Page.getCurrent())
+
             }
         })
 
         // display notification if file upload has failed
         this.fileSampleAddUpload.addFailedListener({ event ->
-            Notification notification = new Notification
-                    (
-                            "Upload failed", "File upload failed",
-                            Notification.Type.ERROR_MESSAGE)
-            notification.setDelayMsec(3000)
-            notification.setPosition(Position.TOP_CENTER)
-            notification.show(Page.getCurrent())
+            StyledNotification uploadFileFailedNotification = new StyledNotification("Upload failed", "File upload failed", Notification.Type.ERROR_MESSAGE)
+            uploadFileFailedNotification.show(Page.getCurrent())
         })
     }
 }
