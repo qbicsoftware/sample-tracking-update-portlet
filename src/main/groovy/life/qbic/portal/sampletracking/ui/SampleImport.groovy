@@ -6,6 +6,7 @@ import com.vaadin.ui.Button
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Upload
+import com.vaadin.ui.Upload.Receiver
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Notification
 
@@ -13,17 +14,19 @@ import life.qbic.portal.components.Uploader
 import life.qbic.portal.sampletracking.app.PortletController
 
 class SampleImport extends VerticalLayout {
-    private PortletController controller
-    private SampleImportModel sampleImportModel
+    final private PortletController controller
+    final private SampleImportModel sampleImportModel
+    final private Receiver uploadReceiver
 
     private Button singleSampleAddButton
     private TextField additionalSampleId
     private Upload fileSampleAddUpload
 
-    SampleImport(PortletController controller, SampleImportModel sampleImportModel) {
+    SampleImport(PortletController controller, SampleImportModel sampleImportModel, Receiver uploadReceiver) {
         super()
         this.controller = controller
         this.sampleImportModel = sampleImportModel
+        this.uploadReceiver = uploadReceiver
         initLayout()
         registerListeners()
     }
