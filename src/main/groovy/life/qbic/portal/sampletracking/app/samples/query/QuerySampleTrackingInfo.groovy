@@ -41,7 +41,7 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
             Sample sample = sampleTrackingInformation.queriedSample(sampleId)
             this.sampleStatusOutput.querySampleById(sample)
         } catch (SampleTrackingQueryException e) {
-            log.error e
+            log.error("Query ${sampleId} failed.", e)
             this.sampleStatusOutput.invokeOnError "Could not locate Sample $sampleId in QBiC database"
         }
     }
