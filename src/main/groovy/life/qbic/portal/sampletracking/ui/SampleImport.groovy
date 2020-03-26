@@ -61,7 +61,7 @@ class SampleImport extends VerticalLayout {
             // Get value from user input in textField
             String sampleIdInput = this.additionalSampleId.getValue()
             try {
-                this.controller.selectSampleFromId(sampleIdInput)
+                this.controller.selectSampleById(sampleIdInput)
                 // if sample was found show success notification
                 StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
                 uploadIdSuccessNotification.show(Page.getCurrent())
