@@ -9,10 +9,11 @@ import com.vaadin.ui.Upload
 import com.vaadin.ui.Upload.Receiver
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Notification
-
+import groovy.util.logging.Log4j2
 import life.qbic.portal.components.Uploader
 import life.qbic.portal.sampletracking.app.PortletController
 
+@Log4j2
 class SampleImport extends VerticalLayout {
     final private PortletController controller
     final private SampleImportModel sampleImportModel
@@ -72,19 +73,14 @@ class SampleImport extends VerticalLayout {
 
             }
             catch (Exception e) {
-                // show notification if user input a sample id but it couldn't be found
-                if (sampleIdInput) {
-                    StyledNotification noSampleIdFoundNotification = new StyledNotification("Sample Id Error", "Sample ID: $sampleIdInput could not be found in database", Notification.Type.ERROR_MESSAGE)
-                    noSampleIdFoundNotification.show(Page.getCurrent())
-                }
-                //show notification if no sample id was provided
-                else {
-                    StyledNotification noSampleIdProvidedNotification = new StyledNotification("No Sample Id Input", "Please Input a Sample Id", Notification.Type.WARNING_MESSAGE)
-                    noSampleIdProvidedNotification.show(Page.getCurrent())
-                }
 
+                log.error("Unexpected error trying to add sampleid $sampleIdInput")
+                StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
+                couldNotSelectSampleNotification.show(Page.getCurrent())
+                throw e
             }
         })
+
         // display notification that file upload was successful and samples were added to grid
         this.fileSampleAddUpload.addSucceededListener({ event ->
 
