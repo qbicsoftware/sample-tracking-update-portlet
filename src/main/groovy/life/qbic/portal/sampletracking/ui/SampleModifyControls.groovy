@@ -12,6 +12,7 @@ class SampleModifyControls extends VerticalLayout {
 
     final private PortletController controller
     final private SampleModifyControlsModel modifyControlsModel
+    final private ViewModel viewModel
 
     private Label userEmailField
     private Button clearButton
@@ -72,10 +73,10 @@ class SampleModifyControls extends VerticalLayout {
         // Add listener to update button to upload Sample changes selected in view
 
         //ToDo Determine how Samples from Samplelist can be connected to user selected location, date and Status
-        def selectedSampleIds = viewModel.requestSampleList()
+     //   def selectedSampleIds = viewModel.requestSampleList()
 
         //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
-        this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIdArray, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
+      //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
         //Add listener to clear button to remove add samples to SampleList
         this.clearButton.addClickListener({ event -> controller.clearSelection() })
 

@@ -4,7 +4,7 @@ interface SampleTrackingQueryInput {
 
     def currentLocation(String sampleId)
 
-    def getSampleById(String sampleId)
+    def querySampleById(String sampleId)
 
     def availableLocationsForPerson(String email)
 

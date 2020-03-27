@@ -1,5 +1,6 @@
 package life.qbic.portal.sampletracking
 
+import com.vaadin.ui.Upload
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
@@ -130,7 +131,8 @@ class DependencyManager {
     private void setupViews() {
         SampleImport sampleImport
         try {
-            sampleImport = new SampleImport(this.portletController, this.viewModel as SampleImportModel)
+            SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
+            sampleImport = new SampleImport(this.portletController, this.viewModel as SampleImportModel, sampleFileReceiver as Upload.Receiver)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e

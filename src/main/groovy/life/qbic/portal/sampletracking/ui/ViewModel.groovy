@@ -26,6 +26,11 @@ class ViewModel implements SampleTrackingQueryOutput, SampleTrackingUpdateOutput
     }
 
     @Override
+    def addSampleToList(Sample sample) {
+        this.samples.add(sample)
+    }
+
+    @Override
     void removeSamples(Sample... samples) {
         this.samples.removeAll(samples)
     }
@@ -61,6 +66,7 @@ class ViewModel implements SampleTrackingQueryOutput, SampleTrackingUpdateOutput
     ObservableList requestAvailableLocations() {
         return this.availableLocations
     }
+
 
     @Override
     ObservableList requestNotifications() {

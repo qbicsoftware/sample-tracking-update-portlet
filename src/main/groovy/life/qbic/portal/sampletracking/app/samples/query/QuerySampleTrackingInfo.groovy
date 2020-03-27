@@ -2,6 +2,7 @@ package life.qbic.portal.sampletracking.app.samples.query
 
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
+import life.qbic.datamodel.samples.Sample
 
 @Log4j2
 class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
@@ -33,8 +34,14 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
     }
 
     @Override
-    def getSampleById(String sampleId) {
-        return null
+    def querySampleById(String sampleId) {
+        try {
+            Sample sample = sampleTrackingInformation.retrieveCurrentSample(sampleId)
+            this.sampleStatusOutput.addSampleToList(sample)
+        } catch (SampleTrackingQueryException e) {
+            log.error("Query ${sampleId} failed.", e)
+            this.sampleStatusOutput.invokeOnError "Could not locate Sample $sampleId in QBiC database"
+        }
     }
 
     @Override
