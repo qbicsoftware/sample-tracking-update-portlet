@@ -110,7 +110,7 @@ class DependencyManager {
         }
 
         try {
-            final def presenter = new SampleListPresenter(this.viewModel)
+            final def presenter = new SampleListPresenter(viewModel)
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
             this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
         } catch (Exception e) {
@@ -118,7 +118,8 @@ class DependencyManager {
         }
 
         try {
-            this.modifySampleListInteractor = new ModifySampleList(this.viewModel as ModifySampleListOutput)
+            final def presenter = new SampleImportPresenter(viewModel)
+            this.modifySampleListInteractor = new ModifySampleList(presenter)
         } catch (Exception e) {
             log.error("Could not setup ${ModifySampleList.getSimpleName()} use case", e)
         }
@@ -133,7 +134,7 @@ class DependencyManager {
         SampleImport sampleImport
         try {
             SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
-            sampleImport = new SampleImport(this.portletController, this.viewModel as SampleImportModel, sampleFileReceiver as Upload.Receiver)
+            sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e

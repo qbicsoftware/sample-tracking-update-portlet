@@ -16,17 +16,15 @@ import life.qbic.portal.sampletracking.app.PortletController
 @Log4j2
 class SampleImport extends VerticalLayout {
     final private PortletController controller
-    final private SampleImportModel sampleImportModel
     final private Receiver uploadReceiver
 
     private Button singleSampleAddButton
     private TextField additionalSampleId
     private Upload fileSampleAddUpload
 
-    SampleImport(PortletController controller, SampleImportModel sampleImportModel, Receiver uploadReceiver) {
+    SampleImport(PortletController controller, Receiver uploadReceiver) {
         super()
         this.controller = controller
-        this.sampleImportModel = sampleImportModel
         this.uploadReceiver = uploadReceiver
         initLayout()
         registerListeners()
