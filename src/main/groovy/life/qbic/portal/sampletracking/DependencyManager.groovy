@@ -12,8 +12,14 @@ import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQ
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
-import life.qbic.portal.sampletracking.io.SampleTracker
-import life.qbic.portal.sampletracking.ui.*
+import life.qbic.portal.sampletracking.datasources.SampleTracker
+import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.presenters.SampleImportPresenter
+import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
+import life.qbic.portal.sampletracking.web.views.ControlElements
+import life.qbic.portal.sampletracking.web.views.PortletView
+import life.qbic.portal.sampletracking.web.views.SampleImport
+import life.qbic.portal.sampletracking.web.views.SampleList
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
