@@ -9,7 +9,7 @@ import life.qbic.datamodel.samples.Sample
 @Log4j2
 class SampleList extends VerticalLayout {
     SampleListModel viewModel
-    private Grid<Sample> sampleGrid
+    Grid<Sample> sampleGrid
     // Suppress default constructor. Instantiation without parameters not desired.
     private SampleList() {
         // prevents accidental call from inside the class
@@ -47,6 +47,7 @@ class SampleList extends VerticalLayout {
         this.addComponent(this.sampleGrid)
     }
 
+
     private void setupDataProvider() {
         this.sampleGrid.setDataProvider(new ListDataProvider<Sample>(this.viewModel.requestSampleList()))
     }
@@ -55,7 +56,7 @@ class SampleList extends VerticalLayout {
 
     }
 
-    // Refresh sample display in grid
+
     void refreshView() {
         this.sampleGrid.getDataProvider().refreshAll()
     }
