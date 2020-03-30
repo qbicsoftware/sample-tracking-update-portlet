@@ -31,14 +31,4 @@ class ControlElementsPresenter implements SampleTrackingQueryOutput {
     def invokeOnError(String msg) {
         return null
     }
-
-    @Override
-    ObservableList requestAvailableLocations() {
-        return null
-    }
-
-    @Override
-    ObservableList requestSampleList() {
-        return null
-    }
 }

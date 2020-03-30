@@ -136,7 +136,7 @@ class DependencyManager {
      */
     private void setupViews() {
 
-        final SampleImport sampleImport
+        SampleImport sampleImport
         try {
             SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
             sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
@@ -145,7 +145,7 @@ class DependencyManager {
             throw e
         }
 
-        final SampleList sampleList
+        SampleList sampleList
         try {
             sampleList = new SampleList(this.viewModel)
         } catch (Exception e) {
@@ -153,7 +153,7 @@ class DependencyManager {
             throw e
         }
 
-        final ControlElements sampleModifyControls
+        ControlElements sampleModifyControls
         try {
             sampleModifyControls = new ControlElements(this.portletController, this.viewModel)
         } catch (Exception e) {
@@ -161,7 +161,7 @@ class DependencyManager {
             throw e
         }
 
-        final PortletView portletView
+        PortletView portletView
         try {
             portletView = new PortletView(this.portletController, this.viewModel, sampleList, sampleModifyControls, sampleImport)
             this.portletView = portletView

@@ -8,10 +8,10 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 import life.qbic.datamodel.services.ServiceUser
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryException
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateDataSource
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateException
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryException
+import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
+import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateException
 import life.qbic.services.Service
 
 // Noninstantiable utility class
