@@ -8,8 +8,9 @@ import life.qbic.datamodel.samples.Sample
 
 @Log4j2
 class SampleList extends VerticalLayout {
-    SampleListModel viewModel
-    Grid<Sample> sampleGrid
+
+    public ViewModel viewModel
+    public Grid<Sample> sampleGrid
 
     // Suppress default constructor. Instantiation without parameters not desired.
     private SampleList() {
@@ -17,7 +18,7 @@ class SampleList extends VerticalLayout {
         throw new AssertionError()
     }
 
-    SampleList(SampleListModel viewModel) {
+    SampleList(ViewModel viewModel) {
         super()
         this.viewModel = Objects.requireNonNull(viewModel, "View model must not be null")
         initLayout()
@@ -50,7 +51,7 @@ class SampleList extends VerticalLayout {
 
 
     private void setupDataProvider() {
-        this.sampleGrid.setDataProvider(new ListDataProvider<Sample>(this.viewModel.requestSampleList()))
+        this.sampleGrid.setDataProvider(new ListDataProvider<Sample>(this.viewModel.samples))
     }
 
     private void registerListeners() {

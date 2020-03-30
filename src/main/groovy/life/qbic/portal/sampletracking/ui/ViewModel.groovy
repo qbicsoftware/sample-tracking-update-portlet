@@ -4,8 +4,8 @@ package life.qbic.portal.sampletracking.ui
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 
-//TODO: rename class to something other than implementation
 class ViewModel {
+
     final ObservableList samples
     final ObservableList availableLocations
     final ObservableList notifications

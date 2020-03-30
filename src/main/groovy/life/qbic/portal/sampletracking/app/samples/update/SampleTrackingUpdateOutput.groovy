@@ -4,6 +4,6 @@ import life.qbic.portal.sampletracking.app.samples.UseCaseOutput
 
 interface SampleTrackingUpdateOutput extends UseCaseOutput {
 
-    def updateFinished()
+    void updateFinished()
 
 }

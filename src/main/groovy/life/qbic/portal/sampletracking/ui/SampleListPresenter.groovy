@@ -18,11 +18,11 @@ class SampleListPresenter implements SampleTrackingUpdateOutput{
 
     @Override
     def invokeOnError(String msg) {
-
+        sampleList.viewModel.notifications.add(msg)
     }
 
     @Override
-    def updateFinished() {
-        sampleList.viewModel.requestSampleList().clear()
+    void updateFinished() {
+        sampleList.viewModel.samples.clear()
     }
 }
