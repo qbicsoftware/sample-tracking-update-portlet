@@ -7,7 +7,7 @@ import com.vaadin.ui.Layout
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.portal.portlet.QBiCPortletUI
-import life.qbic.portal.sampletracking.ui.StyledNotification
+import life.qbic.portal.sampletracking.web.StyledNotification
 
 @Widgetset("life.qbic.portal.sampletracking.AppWidgetSet")
 @Log4j2
