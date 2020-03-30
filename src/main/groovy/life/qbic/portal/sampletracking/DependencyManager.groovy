@@ -110,8 +110,9 @@ class DependencyManager {
         }
 
         try {
+            final def presenter = new SampleListPresenter(this.viewModel)
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
-            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, this.viewModel as SampleTrackingUpdateOutput)
+            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }
@@ -140,7 +141,7 @@ class DependencyManager {
 
         SampleList sampleList
         try {
-            sampleList = new SampleList(this.viewModel as SampleListModel)
+            sampleList = new SampleList(this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleList.getSimpleName()} view.", e)
             throw e

@@ -2,6 +2,8 @@ package life.qbic.portal.sampletracking.ui
 
 import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateOutput
 
+import javax.swing.text.View
+
 /**
  * <add class description here>
  *
@@ -9,20 +11,20 @@ import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateOu
  */
 class SampleListPresenter implements SampleTrackingUpdateOutput{
 
-    private final SampleList sampleList
+    private final ViewModel viewModel
 
-    SampleListPresenter(SampleList sampleList) {
-        this.sampleList = sampleList
+    SampleListPresenter(ViewModel viewModel) {
+        this.viewModel = viewModel
     }
 
 
     @Override
     def invokeOnError(String msg) {
-        sampleList.viewModel.notifications.add(msg)
+        viewModel.notifications.add(msg)
     }
 
     @Override
     void updateFinished() {
-        sampleList.viewModel.samples.clear()
+        viewModel.samples.clear()
     }
 }
