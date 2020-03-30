@@ -7,12 +7,10 @@ import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.app.SampleTrackingPortletController
 import life.qbic.portal.sampletracking.app.samples.list.ModifySampleList
-import life.qbic.portal.sampletracking.app.samples.list.ModifySampleListOutput
 import life.qbic.portal.sampletracking.app.samples.query.QuerySampleTrackingInfo
 import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
 import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryOutput
 import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateDataSource
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateOutput
 import life.qbic.portal.sampletracking.app.samples.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.io.SampleTracker
 import life.qbic.portal.sampletracking.ui.*
@@ -149,11 +147,11 @@ class DependencyManager {
             throw e
         }
 
-        final SampleModifyControls sampleModifyControls
+        final ControlElementsView sampleModifyControls
         try {
-            sampleModifyControls = new SampleModifyControls(this.portletController, this.viewModel as SampleModifyControlsModel)
+            sampleModifyControls = new ControlElementsView(this.portletController, this.viewModel as SampleModifyControlsModel)
         } catch (Exception e) {
-            log.error("Could not create ${SampleModifyControls.getSimpleName()} view.", e)
+            log.error("Could not create ${ControlElementsView.getSimpleName()} view.", e)
             throw e
         }
 

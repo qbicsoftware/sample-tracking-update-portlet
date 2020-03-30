@@ -7,7 +7,7 @@ import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.app.PortletController
 
 @Log4j2
-class SampleModifyControls extends VerticalLayout {
+class ControlElementsView extends VerticalLayout {
 
 
     final private PortletController controller
@@ -22,7 +22,7 @@ class SampleModifyControls extends VerticalLayout {
     private DateField dateChooser
 
 
-    SampleModifyControls(PortletController portletController, SampleModifyControlsModel modifyControlsModel) {
+    ControlElementsView(PortletController portletController, SampleModifyControlsModel modifyControlsModel) {
         super()
         this.controller = portletController
         this.modifyControlsModel = modifyControlsModel
