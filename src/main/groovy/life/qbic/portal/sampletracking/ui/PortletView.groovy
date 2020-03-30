@@ -8,11 +8,11 @@ class PortletView extends HorizontalLayout {
     final private PortletViewModel portletViewModel
 
     private SampleList sampleList
-    private ControlElementsView sampleControls
+    private ControlElements sampleControls
     private SampleImport sampleImport
 
     PortletView(PortletController portletController, PortletViewModel portletViewModel,
-                SampleList sampleList, ControlElementsView sampleModifyControls, SampleImport sampleImport) {
+                SampleList sampleList, ControlElements sampleModifyControls, SampleImport sampleImport) {
         super()
         this.controller = portletController
         this.portletViewModel = portletViewModel

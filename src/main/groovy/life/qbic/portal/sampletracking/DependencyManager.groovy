@@ -147,11 +147,11 @@ class DependencyManager {
             throw e
         }
 
-        final ControlElementsView sampleModifyControls
+        final ControlElements sampleModifyControls
         try {
-            sampleModifyControls = new ControlElementsView(this.portletController, this.viewModel as SampleModifyControlsModel)
+            sampleModifyControls = new ControlElements(this.portletController, this.viewModel as SampleModifyControlsModel)
         } catch (Exception e) {
-            log.error("Could not create ${ControlElementsView.getSimpleName()} view.", e)
+            log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e
         }
 
