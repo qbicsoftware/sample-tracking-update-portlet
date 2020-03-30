@@ -5,13 +5,13 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
-import life.qbic.portal.sampletracking.app.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.app.samples.list.ModifySampleList
-import life.qbic.portal.sampletracking.app.samples.query.QuerySampleTrackingInfo
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryOutput
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateDataSource
-import life.qbic.portal.sampletracking.app.samples.update.UpdateSampleTrackingInfo
+import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
+import life.qbic.portal.sampletracking.trackinginformation.list.ModifySampleList
+import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
+import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
+import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.io.SampleTracker
 import life.qbic.portal.sampletracking.ui.*
 import life.qbic.portal.utils.ConfigurationManager
@@ -149,7 +149,7 @@ class DependencyManager {
 
         final ControlElements sampleModifyControls
         try {
-            sampleModifyControls = new ControlElements(this.portletController, this.viewModel as SampleModifyControlsModel)
+            sampleModifyControls = new ControlElements(this.portletController, this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e
