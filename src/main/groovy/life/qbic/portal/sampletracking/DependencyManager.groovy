@@ -131,7 +131,8 @@ class DependencyManager {
      * Exceptions are thrown since view generation should not fail.
      */
     private void setupViews() {
-        SampleImport sampleImport
+
+        final SampleImport sampleImport
         try {
             SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
             sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
@@ -140,7 +141,7 @@ class DependencyManager {
             throw e
         }
 
-        SampleList sampleList
+        final SampleList sampleList
         try {
             sampleList = new SampleList(this.viewModel)
         } catch (Exception e) {
@@ -148,7 +149,7 @@ class DependencyManager {
             throw e
         }
 
-        SampleModifyControls sampleModifyControls
+        final SampleModifyControls sampleModifyControls
         try {
             sampleModifyControls = new SampleModifyControls(this.portletController, this.viewModel as SampleModifyControlsModel)
         } catch (Exception e) {
@@ -156,7 +157,7 @@ class DependencyManager {
             throw e
         }
 
-        PortletView portletView
+        final PortletView portletView
         try {
             portletView = new PortletView(this.portletController, this.viewModel, sampleList, sampleModifyControls, sampleImport)
             this.portletView = portletView
