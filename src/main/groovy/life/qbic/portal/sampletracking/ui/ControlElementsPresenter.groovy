@@ -9,7 +9,7 @@ import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryOutp
  *
  * @author: Sven Fillinger
  */
-class SampleModifyControlsPresenter implements SampleTrackingQueryOutput, SampleModifyControlsModel {
+class ControlElementsPresenter implements SampleTrackingQueryOutput, SampleModifyControlsModel {
 
 
     @Override
