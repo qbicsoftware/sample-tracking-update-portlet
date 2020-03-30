@@ -18,12 +18,12 @@ class ModifySampleList implements ModifySampleListInput {
     }
 
     @Override
-    void selectSamples(Sample... samples) {
+    void selectSamples(List<Sample> samples) {
         this.output.addSamples(samples)
     }
 
     @Override
-    void deselectSamples(Sample... samples) {
+    void deselectSamples(List<Sample> samples) {
         this.output.removeSamples(samples)
     }
 

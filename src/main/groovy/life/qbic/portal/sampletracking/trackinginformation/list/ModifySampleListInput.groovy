@@ -3,9 +3,9 @@ package life.qbic.portal.sampletracking.trackinginformation.list
 import life.qbic.datamodel.samples.Sample
 
 interface ModifySampleListInput {
-    void selectSamples(Sample... samples)
+    void selectSamples(List<Sample> samples)
 
-    void deselectSamples(Sample... samples)
+    void deselectSamples(List<Sample> samples)
 
     void clearSelection()
 
