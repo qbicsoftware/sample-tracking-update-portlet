@@ -1,7 +1,7 @@
 package life.qbic.portal.sampletracking.trackinginformation.list
 
 import life.qbic.datamodel.samples.Sample
-import life.qbic.portal.sampletracking.app.samples.UseCaseOutput
+import life.qbic.portal.sampletracking.trackinginformation.UseCaseOutput
 
 interface ModifySampleListOutput extends UseCaseOutput {
 

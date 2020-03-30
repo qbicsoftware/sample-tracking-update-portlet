@@ -1,6 +1,6 @@
 package life.qbic.portal.sampletracking.trackinginformation.update
 
-import life.qbic.portal.sampletracking.app.samples.UseCaseOutput
+import life.qbic.portal.sampletracking.trackinginformation.UseCaseOutput
 
 interface SampleTrackingUpdateOutput extends UseCaseOutput {
 
