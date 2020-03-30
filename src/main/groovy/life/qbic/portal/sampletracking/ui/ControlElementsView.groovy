@@ -11,7 +11,6 @@ class ControlElementsView extends VerticalLayout {
 
 
     final private PortletController controller
-    final private SampleModifyControlsModel modifyControlsModel
     final private ViewModel viewModel
 
     private Label userEmailField
@@ -22,10 +21,10 @@ class ControlElementsView extends VerticalLayout {
     private DateField dateChooser
 
 
-    ControlElementsView(PortletController portletController, SampleModifyControlsModel modifyControlsModel) {
+    ControlElementsView(PortletController portletController, ViewModel viewModel) {
         super()
         this.controller = portletController
-        this.modifyControlsModel = modifyControlsModel
+        this.viewModel = viewModel
         initLayout()
         registerListeners()
     }
@@ -37,7 +36,8 @@ class ControlElementsView extends VerticalLayout {
         userEmailField.setValue("You are not logged in.")
 
         // Add menu allowing location picking for new sample
-        locationSelectMenu = new NativeSelect<>("Select Sample Location")
+        locationSelectMenu = new NativeSelect<>()
+        locationSelectMenu.setItems(viewModel.availableLocations)
         /* For Test purposes
         //TODO remove in release
         locationSelectMenu.setItems("QBiC", "Home Office", "Laboratory", "Shipping")
