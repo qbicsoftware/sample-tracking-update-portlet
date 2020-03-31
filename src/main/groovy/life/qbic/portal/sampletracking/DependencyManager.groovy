@@ -13,6 +13,7 @@ import life.qbic.portal.sampletracking.trackinginformation.update.SampleTracking
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.presenters.ControlElementsPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
@@ -103,17 +104,26 @@ class DependencyManager {
      * All Exceptions are handled and logged. Skips use cases where instantiation fails.
      */
     private void setupUseCaseInteractors() {
+        def sampleListPresenter
+        def controlElementsPresenter
+        try {
+            sampleListPresenter = new SampleListPresenter(this.viewModel)
+            controlElementsPresenter = new ControlElementsPresenter(this.viewModel)
+        } catch (NullPointerException e){
+            log.error("Could not setup presenters. Nullpointer detected.", e)
+        } catch (Exception e) {
+            log.error("Unexpected exception during presenter setup.", e)
+        }
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
-            this.queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter, this.viewModel as SampleListOutput)
+            this.queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter, sampleListPresenter, controlElementsPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${QuerySampleTrackingInfo.getSimpleName()} use case", e)
         }
 
         try {
-            final def presenter = new SampleListPresenter(viewModel)
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
-            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
+            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }

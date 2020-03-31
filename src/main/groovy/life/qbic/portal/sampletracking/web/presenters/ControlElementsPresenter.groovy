@@ -4,6 +4,7 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.trackinginformation.query.AvailableLocationsOutput
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleListOutput
+import life.qbic.portal.sampletracking.web.ViewModel
 
 /**
  * <add class description here>
@@ -12,6 +13,14 @@ import life.qbic.portal.sampletracking.trackinginformation.query.SampleListOutpu
  */
 class ControlElementsPresenter implements AvailableLocationsOutput {
 
+    final private ViewModel viewModel
+    private ControlElementsPresenter() {
+        throw new AssertionError("Default constructor cannot be instantiated.")
+    }
+
+    ControlElementsPresenter(ViewModel viewModel) {
+        this.viewModel = viewModel
+    }
 
     @Override
     def updateAvailableLocations(List<Location> locations) {

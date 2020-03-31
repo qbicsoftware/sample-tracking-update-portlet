@@ -10,6 +10,7 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
     final SampleTrackingQueryDataSource sampleTrackingInformation
 
     private SampleListOutput sampleStatusOutput
+    private AvailableLocationsOutput availableLocationsOutput
 
     private QuerySampleTrackingInfo() {
         // prevent default constructor
@@ -17,9 +18,10 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
         throw new AssertionError() 
     }
 
-    QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleListOutput sampleStatusOutput) {
+    QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleListOutput sampleStatusOutput, AvailableLocationsOutput availableLocationsOutput) {
         this.sampleTrackingInformation = sampleTrackingInformation
         this.sampleStatusOutput = sampleStatusOutput
+        this.availableLocationsOutput = availableLocationsOutput
     }
 
     @Override
@@ -37,10 +39,10 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
     def availableLocationsForPerson(String email) {
         try {
             List<Location> locationsForPerson = sampleTrackingInformation.availableLocationsForPerson(email)
-            this.sampleStatusOutput.updateAvailableLocations(locationsForPerson)
+            this.availableLocationsOutput.updateAvailableLocations(locationsForPerson)
         } catch (SampleTrackingQueryException e) {
             log.error e
-            this.sampleStatusOutput.invokeOnError "Could not get available locations for person $email"
+            this.availableLocationsOutput.invokeOnError "Could not get available locations for person $email"
         }
 
     }
