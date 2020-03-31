@@ -12,7 +12,7 @@ import life.qbic.portal.sampletracking.web.ViewModel
  */
 class SampleImportPresenter implements ModifySampleListOutput{
 
-    final ViewModel viewModel
+    final private ViewModel viewModel
 
     SampleImportPresenter(ViewModel viewModel) {
         this.viewModel = Objects.requireNonNull(viewModel, "ViewModel must not be null")
