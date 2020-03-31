@@ -6,7 +6,6 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.list.ModifySampleList
 import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
@@ -14,7 +13,6 @@ import life.qbic.portal.sampletracking.trackinginformation.update.SampleTracking
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.web.*
-import life.qbic.portal.sampletracking.web.presenters.SampleImportPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
@@ -40,7 +38,6 @@ class DependencyManager {
     private ConfigurationManager configManager
     private QuerySampleTrackingInfo queryInfoInteractor
     private UpdateSampleTrackingInfo updateInfoInteractor
-    private ModifySampleList modifySampleListInteractor
     private ViewModel viewModel
 
     DependencyManager() {
@@ -121,12 +118,6 @@ class DependencyManager {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }
 
-        try {
-            final def presenter = new SampleImportPresenter(viewModel)
-            this.modifySampleListInteractor = new ModifySampleList(presenter)
-        } catch (Exception e) {
-            log.error("Could not setup ${ModifySampleList.getSimpleName()} use case", e)
-        }
     }
 
     /**
