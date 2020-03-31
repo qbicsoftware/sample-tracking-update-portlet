@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Notification
 import groovy.util.logging.Log4j2
 import life.qbic.portal.components.Uploader
+import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.StyledNotification
 
@@ -18,14 +19,16 @@ import life.qbic.portal.sampletracking.web.StyledNotification
 class SampleImport extends VerticalLayout {
     final private PortletController controller
     final private Receiver uploadReceiver
+    final private ViewModel viewModel
 
     private Button singleSampleAddButton
     private TextField additionalSampleId
     private Upload fileSampleAddUpload
 
-    SampleImport(PortletController controller, Receiver uploadReceiver) {
+    SampleImport(PortletController controller, ViewModel viewModel, Receiver uploadReceiver) {
         super()
         this.controller = controller
+        this.viewModel = viewModel
         this.uploadReceiver = uploadReceiver
         initLayout()
         registerListeners()
@@ -60,19 +63,20 @@ class SampleImport extends VerticalLayout {
         this.singleSampleAddButton.addClickListener({ event ->
             // Get value from user input in textField
             String sampleIdInput = this.additionalSampleId.getValue()
+            if (sampleIdInput.isEmpty()) {
+                StyledNotification emptyId = new StyledNotification("Empty ID" ,"Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
+                emptyId.show(Page.getCurrent())
+                return
+            }
+
             try {
                 this.controller.selectSampleById(sampleIdInput)
                 // if sample was found show success notification
                 StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
                 uploadIdSuccessNotification.show(Page.getCurrent())
 
-                //ToDo style notification e.g.
-                // make notification background color for clearer distinction between
-                // success and failed sample registration attempt or change Sample Id to be bold and italic
-
             }
             catch (Exception e) {
-
                 log.error("Unexpected error trying to add sampleid $sampleIdInput")
                 StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
                 couldNotSelectSampleNotification.show(Page.getCurrent())
