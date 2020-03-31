@@ -23,17 +23,6 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
     }
 
     @Override
-    def currentLocation(String sampleId) {
-        try {
-            Location location = sampleTrackingInformation.currentSampleLocation(sampleId)
-            this.sampleStatusOutput.updateCurrentLocation(sampleId, location)
-        } catch (SampleTrackingQueryException e) {
-            log.error e
-            this.sampleStatusOutput.invokeOnError "Could not get current location for sample $sampleId"
-        }
-    }
-
-    @Override
     def querySampleById(String sampleId) {
         try {
             Sample sample = sampleTrackingInformation.retrieveCurrentSample(sampleId)

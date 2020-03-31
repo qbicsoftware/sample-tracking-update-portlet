@@ -18,11 +18,6 @@ class ControlElementsPresenter implements SampleTrackingQueryOutput {
     }
 
     @Override
-    def updateCurrentLocation(String sampleId, Location location) {
-        return null
-    }
-
-    @Override
     def addSampleToList(Sample sample) {
         return null
     }
