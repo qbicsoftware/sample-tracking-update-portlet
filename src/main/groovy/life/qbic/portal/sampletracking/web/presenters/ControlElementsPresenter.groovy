@@ -3,6 +3,7 @@ package life.qbic.portal.sampletracking.web.presenters
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
+import life.qbic.portal.sampletracking.web.ViewModel
 
 /**
  * <add class description here>
@@ -11,6 +12,11 @@ import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQ
  */
 class ControlElementsPresenter implements SampleTrackingQueryOutput {
 
+    private final ViewModel viewModel
+
+    ControlElementsPresenter(ViewModel viewModel) {
+        this.viewModel = viewModel
+    }
 
     @Override
     def updateAvailableLocations(List<Location> locations) {
@@ -29,6 +35,6 @@ class ControlElementsPresenter implements SampleTrackingQueryOutput {
 
     @Override
     def invokeOnError(String msg) {
-        return null
+        viewModel.notifications.add(msg)
     }
 }
