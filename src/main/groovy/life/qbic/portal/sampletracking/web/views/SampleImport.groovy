@@ -63,19 +63,20 @@ class SampleImport extends VerticalLayout {
         this.singleSampleAddButton.addClickListener({ event ->
             // Get value from user input in textField
             String sampleIdInput = this.additionalSampleId.getValue()
+            if (sampleIdInput.isEmpty()) {
+                StyledNotification emptyId = new StyledNotification("Empty ID" ,"Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
+                emptyId.show(Page.getCurrent())
+                return
+            }
+
             try {
                 this.controller.selectSampleById(sampleIdInput)
                 // if sample was found show success notification
                 StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
                 uploadIdSuccessNotification.show(Page.getCurrent())
 
-                //ToDo style notification e.g.
-                // make notification background color for clearer distinction between
-                // success and failed sample registration attempt or change Sample Id to be bold and italic
-
             }
             catch (Exception e) {
-
                 log.error("Unexpected error trying to add sampleid $sampleIdInput")
                 StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
                 couldNotSelectSampleNotification.show(Page.getCurrent())
