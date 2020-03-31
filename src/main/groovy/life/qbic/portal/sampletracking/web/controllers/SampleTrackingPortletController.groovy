@@ -1,16 +1,17 @@
 package life.qbic.portal.sampletracking.web.controllers
 
+import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryInput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateInput
-import life.qbic.portal.sampletracking.web.controllers.PortletController
 
+@Log4j2
 class SampleTrackingPortletController implements PortletController {
 
     private final SampleTrackingUpdateInput sampleUpdateInput
 
-    private final SampleTrackingQueryInput sampleLocation
+    private final SampleTrackingQueryInput sampleQueryInput
 
     private SampleTrackingPortletController() {
         throw new AssertionError()
@@ -18,22 +19,24 @@ class SampleTrackingPortletController implements PortletController {
 
     SampleTrackingPortletController(SampleTrackingUpdateInput sampleUpdateInput, SampleTrackingQueryInput sampleLocation) {
         this.sampleUpdateInput = sampleUpdateInput
-        this.sampleLocation = sampleLocation
+        this.sampleQueryInput = sampleLocation
     }
 
     @Override
     void queryAllLocationsForPerson(String email) {
-        sampleLocation.availableLocationsForPerson(email)
+        sampleQueryInput.availableLocationsForPerson(email)
     }
 
     @Override
     void selectSamplesById(List<String> samples) {
-// TODO: implement
+        for (sampleId in samples) {
+            selectSampleById(sampleId)
+        }
     }
 
     @Override
     void selectSampleById(String sampleId) {
-// TODO: implement
+        this.sampleQueryInput.querySampleById(sampleId)
     }
 
     @Override
@@ -43,7 +46,7 @@ class SampleTrackingPortletController implements PortletController {
 
     @Override
     void clearSelection() {
-// TODO implement
+        // This is now handled directly by the view itself.
     }
 
     @Override
