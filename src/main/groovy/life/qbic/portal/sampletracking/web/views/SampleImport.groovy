@@ -64,22 +64,18 @@ class SampleImport extends VerticalLayout {
             // Get value from user input in textField
             String sampleIdInput = this.additionalSampleId.getValue()
             if (sampleIdInput.isEmpty()) {
-                StyledNotification emptyId = new StyledNotification("Empty ID" ,"Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
-                emptyId.show(Page.getCurrent())
+                invokeOnError("Empty ID" ,"Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
                 return
             }
 
             try {
                 this.controller.selectSampleById(sampleIdInput)
                 // if sample was found show success notification
-                StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
-                uploadIdSuccessNotification.show(Page.getCurrent())
-
+                invokeOnSuccess("Success", "Added $sampleIdInput")
             }
             catch (Exception e) {
                 log.error("Unexpected error trying to add sampleid $sampleIdInput")
-                StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
-                couldNotSelectSampleNotification.show(Page.getCurrent())
+                invokeOnError("Could not select sample $sampleIdInput", "Please enter a valid ID and try again.", Notification.Type.ERROR_MESSAGE)
                 throw e
             }
         })
@@ -90,7 +86,6 @@ class SampleImport extends VerticalLayout {
             Upload.Receiver receiver = this.fileSampleAddUpload.getReceiver()
             FileOutputStream uploadedFileStream = receiver.receiveUpload("temp", ".csv")
 
-
             //ToDo check if uploadedfileStream is empty
             // to avoid success notification to user when no file was selected
 
@@ -100,21 +95,26 @@ class SampleImport extends VerticalLayout {
                 // should an outputStream be provided as File or should the samples be extracted here into List of Samples?
 
                 // display notification if file upload and addition to sample list was successful
-               StyledNotification uploadFileSuccessNotification = new StyledNotification("Upload successful, File could be uploaded successfully")
-                uploadFileSuccessNotification.show(Page.getCurrent())
+               invokeOnSuccess("Upload successful", "File could be uploaded successfully")
+
             }
             // display notification if user has not selected a file to upload
             else {
-                StyledNotification noFileProvidedNotification = new StyledNotification("No File selected", "Please specify a file to upload", Notification.Type.WARNING_MESSAGE)
-                noFileProvidedNotification.show(Page.getCurrent())
+                invokeOnError("No File selected", "Please specify a file to upload", Notification.Type.WARNING_MESSAGE)
 
             }
         })
 
         // display notification if file upload has failed
         this.fileSampleAddUpload.addFailedListener({ event ->
-            StyledNotification uploadFileFailedNotification = new StyledNotification("Upload failed", "File upload failed", Notification.Type.ERROR_MESSAGE)
-            uploadFileFailedNotification.show(Page.getCurrent())
+            invokeOnError("Upload failed", "File upload failed", Notification.Type.ERROR_MESSAGE)
         })
+
+    }
+    private def invokeOnError(String caption, String description, Notification.Type type) {
+        viewModel.notifications.add([caption, description, type])
+    }
+    private def invokeOnSuccess(String caption, String description) {
+        viewModel.notifications.add([caption, description])
     }
 }
