@@ -139,7 +139,7 @@ class DependencyManager {
         SampleImport sampleImport
         try {
             SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
-            sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
+            sampleImport = new SampleImport(this.portletController, this.viewModel, sampleFileReceiver as Upload.Receiver)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e

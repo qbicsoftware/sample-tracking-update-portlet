@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Notification
 import groovy.util.logging.Log4j2
 import life.qbic.portal.components.Uploader
+import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.StyledNotification
 
@@ -18,14 +19,16 @@ import life.qbic.portal.sampletracking.web.StyledNotification
 class SampleImport extends VerticalLayout {
     final private PortletController controller
     final private Receiver uploadReceiver
+    final private ViewModel viewModel
 
     private Button singleSampleAddButton
     private TextField additionalSampleId
     private Upload fileSampleAddUpload
 
-    SampleImport(PortletController controller, Receiver uploadReceiver) {
+    SampleImport(PortletController controller, ViewModel viewModel, Receiver uploadReceiver) {
         super()
         this.controller = controller
+        this.viewModel = viewModel
         this.uploadReceiver = uploadReceiver
         initLayout()
         registerListeners()
