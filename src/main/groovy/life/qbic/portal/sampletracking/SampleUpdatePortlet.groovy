@@ -7,7 +7,7 @@ import com.vaadin.ui.Layout
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.portal.portlet.QBiCPortletUI
-import life.qbic.portal.sampletracking.ui.StyledNotification
+import life.qbic.portal.sampletracking.web.StyledNotification
 
 @Widgetset("life.qbic.portal.sampletracking.AppWidgetSet")
 @Log4j2
@@ -37,7 +37,7 @@ class SampleUpdatePortlet extends QBiCPortletUI {
         try {
             layout = this.dependencyManager.getPortletView()
         } catch (Exception e) {
-            log.error("Failed generatind content for class {}", SampleUpdatePortlet.getCanonicalName())
+            log.error("Failed generating content for class {}", SampleUpdatePortlet.getCanonicalName())
             log.error(e)
             String errorCaption = "Application not available"
             String errorMessage = "We apologize for any inconveniences. Please inform us via email to support@qbic.zendesk.com."

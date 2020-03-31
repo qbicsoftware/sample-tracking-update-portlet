@@ -1,20 +1,25 @@
 package life.qbic.portal.sampletracking
 
+import com.vaadin.ui.Upload
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
-import life.qbic.portal.sampletracking.app.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.app.samples.list.ModifySampleList
-import life.qbic.portal.sampletracking.app.samples.list.ModifySampleListOutput
-import life.qbic.portal.sampletracking.app.samples.query.QuerySampleTrackingInfo
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.app.samples.query.SampleTrackingQueryOutput
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateDataSource
-import life.qbic.portal.sampletracking.app.samples.update.SampleTrackingUpdateOutput
-import life.qbic.portal.sampletracking.app.samples.update.UpdateSampleTrackingInfo
-import life.qbic.portal.sampletracking.io.SampleTracker
-import life.qbic.portal.sampletracking.ui.*
+import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
+import life.qbic.portal.sampletracking.trackinginformation.list.ModifySampleList
+import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
+import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
+import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
+import life.qbic.portal.sampletracking.datasources.SampleTracker
+import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.presenters.SampleImportPresenter
+import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
+import life.qbic.portal.sampletracking.web.views.ControlElements
+import life.qbic.portal.sampletracking.web.views.PortletView
+import life.qbic.portal.sampletracking.web.views.SampleImport
+import life.qbic.portal.sampletracking.web.views.SampleList
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
@@ -109,14 +114,16 @@ class DependencyManager {
         }
 
         try {
+            final def presenter = new SampleListPresenter(viewModel)
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
-            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, this.viewModel as SampleTrackingUpdateOutput)
+            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }
 
         try {
-            this.modifySampleListInteractor = new ModifySampleList(this.viewModel as ModifySampleListOutput)
+            final def presenter = new SampleImportPresenter(viewModel)
+            this.modifySampleListInteractor = new ModifySampleList(presenter)
         } catch (Exception e) {
             log.error("Could not setup ${ModifySampleList.getSimpleName()} use case", e)
         }
@@ -128,9 +135,11 @@ class DependencyManager {
      * Exceptions are thrown since view generation should not fail.
      */
     private void setupViews() {
+
         SampleImport sampleImport
         try {
-            sampleImport = new SampleImport(this.portletController, this.viewModel as SampleImportModel)
+            SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
+            sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e
@@ -138,17 +147,17 @@ class DependencyManager {
 
         SampleList sampleList
         try {
-            sampleList = new SampleList(this.viewModel as SampleListModel)
+            sampleList = new SampleList(this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleList.getSimpleName()} view.", e)
             throw e
         }
 
-        SampleModifyControls sampleModifyControls
+        ControlElements sampleModifyControls
         try {
-            sampleModifyControls = new SampleModifyControls(this.portletController, this.viewModel as SampleModifyControlsModel)
+            sampleModifyControls = new ControlElements(this.portletController, this.viewModel)
         } catch (Exception e) {
-            log.error("Could not create ${SampleModifyControls.getSimpleName()} view.", e)
+            log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e
         }
 
