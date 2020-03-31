@@ -55,7 +55,11 @@ class SampleTracker {
                 response = it.toBlocking().exchange(request)
             }
 
-            if (response?.status?.code != 200) {
+            if (response?.status?.code == 400) {
+                throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
+            } else if (response?.status?.code == 404) {
+                throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
+            } else if (response?.status?.code != 200) {
                 throw new SampleTrackingQueryException("Request for current location failed.")
             }
             if (!response?.body() instanceof Location) {
@@ -122,37 +126,6 @@ class SampleTracker {
                 throw new SampleTrackingUpdateException("Request for update location status for sample $sampleId failed.")
             }
 
-        }
-
-        @Override
-        Sample retrieveCurrentSample(String sampleId) throws SampleTrackingQueryException {
-            HttpClient client = RxHttpClient.create(service.rootUrl)
-            // ToDo Check if that URI returns a valid sample by sample id
-
-            URI SampleUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
-
-            HttpRequest request = HttpRequest.GET(SampleUri).basicAuth(user.name, user.password)
-            HttpResponse<Sample> response
-
-            client.withCloseable {
-                response = it.toBlocking().exchange(request)
-            }
-
-            if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current sample $sampleId failed.")
-            }
-            else if (response?.status?.code != 400) {
-                throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
-            }
-            else if (response?.status?.code != 404) {
-                throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
-            }
-
-            if (!response?.body() instanceof Sample) {
-                throw new SampleTrackingQueryException("Did not receive a valid sample response for ID $sampleId.")
-            }
-
-            return response?.body()
         }
     }
 

@@ -3,7 +3,8 @@ package life.qbic.portal.sampletracking.web.controllers
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryInput
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocationsInput
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySampleInput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateInput
 
 @Log4j2
@@ -11,20 +12,22 @@ class SampleTrackingPortletController implements PortletController {
 
     private final SampleTrackingUpdateInput sampleUpdateInput
 
-    private final SampleTrackingQueryInput sampleQueryInput
+    private final QueryAvailableLocationsInput queryAvailableLocationsInput
+    private final QuerySampleInput querySampleInput
 
     private SampleTrackingPortletController() {
         throw new AssertionError()
     }
 
-    SampleTrackingPortletController(SampleTrackingUpdateInput sampleUpdateInput, SampleTrackingQueryInput sampleLocation) {
+    SampleTrackingPortletController(SampleTrackingUpdateInput sampleUpdateInput, QueryAvailableLocationsInput queryAvailableLocationsInput, QuerySampleInput querySampleInput) {
         this.sampleUpdateInput = sampleUpdateInput
-        this.sampleQueryInput = sampleLocation
+        this.queryAvailableLocationsInput = queryAvailableLocationsInput
+        this.querySampleInput = querySampleInput
     }
 
     @Override
     void queryAllLocationsForPerson(String email) {
-        sampleQueryInput.availableLocationsForPerson(email)
+        queryAvailableLocationsInput.availableLocationsForPerson(email)
     }
 
     @Override
@@ -36,7 +39,7 @@ class SampleTrackingPortletController implements PortletController {
 
     @Override
     void selectSampleById(String sampleId) {
-        this.sampleQueryInput.querySampleById(sampleId)
+        this.querySampleInput.querySampleById(sampleId)
     }
 
     @Override
@@ -45,13 +48,10 @@ class SampleTrackingPortletController implements PortletController {
     }
 
     @Override
-    void clearSelection() {
-        // This is now handled directly by the view itself.
-    }
-
-    @Override
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus) {
-        this.sampleUpdateInput.setCurrentSampleLocation(sampleIds, desiredLocation)
-        this.sampleUpdateInput.setSampleStatus(sampleIds, desiredStatus)
+        for (sampleId in sampleIds) {
+            this.sampleUpdateInput.setCurrentSampleLocation(sampleId, desiredLocation)
+            this.sampleUpdateInput.setSampleStatus(sampleId, desiredStatus)
+        }
     }
 }

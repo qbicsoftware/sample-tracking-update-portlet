@@ -5,14 +5,15 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.presenters.ControlElementsPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
@@ -36,7 +37,8 @@ class DependencyManager {
     private ServiceUser serviceUser
 
     private ConfigurationManager configManager
-    private QuerySampleTrackingInfo queryInfoInteractor
+    private QueryAvailableLocations queryAvailableLocationsInteractor
+    private QuerySample querySampleInteractor
     private UpdateSampleTrackingInfo updateInfoInteractor
     private ViewModel viewModel
 
@@ -70,7 +72,7 @@ class DependencyManager {
 
         // setup controllers
         try {
-            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryInfoInteractor, this.modifySampleListInteractor)
+            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryAvailableLocationsInteractor)
         } catch (Exception e) {
             log.error("Unexpected exception during ${SampleTrackingPortletController.getSimpleName()} setup.", e)
         }
@@ -103,17 +105,33 @@ class DependencyManager {
      * All Exceptions are handled and logged. Skips use cases where instantiation fails.
      */
     private void setupUseCaseInteractors() {
+        def sampleListPresenter
+        def controlElementsPresenter
+        try {
+            sampleListPresenter = new SampleListPresenter(this.viewModel)
+            controlElementsPresenter = new ControlElementsPresenter(this.viewModel)
+        } catch (NullPointerException e){
+            log.error("Could not setup presenters. NullPointer detected.", e)
+        } catch (Exception e) {
+            log.error("Unexpected exception during presenter setup.", e)
+        }
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
-            this.queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter, this.viewModel as SampleTrackingQueryOutput)
+            this.queryAvailableLocationsInteractor = new QueryAvailableLocations(trackingInfoCenter, controlElementsPresenter)
         } catch (Exception e) {
-            log.error("Could not setup ${QuerySampleTrackingInfo.getSimpleName()} use case", e)
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
 
         try {
-            final def presenter = new SampleListPresenter(viewModel)
+            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
+        } catch (Exception e) {
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
+        }
+
+        try {
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
-            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
+            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }
