@@ -4,7 +4,6 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryInput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateInput
-import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 class SampleTrackingPortletController implements PortletController {
 
