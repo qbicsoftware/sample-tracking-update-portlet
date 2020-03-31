@@ -42,11 +42,6 @@ class SampleTrackingPortletController implements PortletController {
     }
 
     @Override
-    void clearSelection() {
-// TODO implement
-    }
-
-    @Override
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus) {
         this.sampleUpdateInput.setCurrentSampleLocation(sampleIds, desiredLocation)
         this.sampleUpdateInput.setSampleStatus(sampleIds, desiredStatus)
