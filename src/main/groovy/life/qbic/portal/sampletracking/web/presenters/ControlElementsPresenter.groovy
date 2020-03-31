@@ -1,9 +1,7 @@
 package life.qbic.portal.sampletracking.web.presenters
 
 import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
-import life.qbic.portal.sampletracking.trackinginformation.query.AvailableLocationsOutput
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleListOutput
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocationsOutput
 import life.qbic.portal.sampletracking.web.ViewModel
 
 /**
@@ -11,7 +9,7 @@ import life.qbic.portal.sampletracking.web.ViewModel
  *
  * @author: Sven Fillinger
  */
-class ControlElementsPresenter implements AvailableLocationsOutput {
+class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
     final private ViewModel viewModel
     private ControlElementsPresenter() {

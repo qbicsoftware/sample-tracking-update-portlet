@@ -59,25 +59,24 @@ class SampleImport extends VerticalLayout {
     private def registerListeners() {
         this.singleSampleAddButton.addClickListener({ event ->
             // Get value from user input in textField
-            String sampleIdInput = this.additionalSampleId.getValue()
-            if (sampleIdInput.isEmpty()) {
-                StyledNotification emptyId = new StyledNotification("Empty ID" ,"Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
-                emptyId.show(Page.getCurrent())
-                return
-            }
-
+            String sampleIdInput = additionalSampleId.getValue()
             try {
-                this.controller.selectSampleById(sampleIdInput)
-                // if sample was found show success notification
-                StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
-                uploadIdSuccessNotification.show(Page.getCurrent())
+                if (sampleIdInput?.trim()) {
 
-            }
-            catch (Exception e) {
-                log.error("Unexpected error trying to add sampleid $sampleIdInput")
+                    controller.selectSampleById(sampleIdInput)
+                    // if sample was found show success notification
+                    StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
+                    uploadIdSuccessNotification.show(Page.getCurrent())
+
+                } else {
+                    StyledNotification emptyId = new StyledNotification("Empty ID", "Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
+                    emptyId.show(Page.getCurrent())
+
+                }
+            } catch (Exception e) {
+                log.error("Unexpected error trying to add sample by id $sampleIdInput", e)
                 StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
                 couldNotSelectSampleNotification.show(Page.getCurrent())
-                throw e
             }
         })
 

@@ -1,10 +1,8 @@
 package life.qbic.portal.sampletracking.web.presenters
 
 import groovy.util.logging.Log4j2
-import life.qbic.datamodel.identifiers.TooManySamplesException
-import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleListOutput
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySampleOutput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateOutput
 import life.qbic.portal.sampletracking.web.ViewModel
 
@@ -14,7 +12,7 @@ import life.qbic.portal.sampletracking.web.ViewModel
  * @author: Sven Fillinger
  */
 @Log4j2
-class SampleListPresenter implements SampleTrackingUpdateOutput, SampleListOutput{
+class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutput{
 
     private final ViewModel viewModel
 
@@ -34,7 +32,7 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, SampleListOutpu
     }
 
     @Override
-    def addSampleToList(Sample sample) {
+    def publishSample(Sample sample) {
         this.viewModel.samples.add(sample)
     }
 }

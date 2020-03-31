@@ -5,10 +5,10 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleListOutput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.datasources.SampleTracker
@@ -37,7 +37,8 @@ class DependencyManager {
     private ServiceUser serviceUser
 
     private ConfigurationManager configManager
-    private QuerySampleTrackingInfo queryInfoInteractor
+    private QueryAvailableLocations queryAvailableLocationsInteractor
+    private QuerySample querySampleInteractor
     private UpdateSampleTrackingInfo updateInfoInteractor
     private ViewModel viewModel
 
@@ -71,7 +72,7 @@ class DependencyManager {
 
         // setup controllers
         try {
-            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryInfoInteractor)
+            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryAvailableLocationsInteractor)
         } catch (Exception e) {
             log.error("Unexpected exception during ${SampleTrackingPortletController.getSimpleName()} setup.", e)
         }
@@ -116,9 +117,16 @@ class DependencyManager {
         }
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
-            this.queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter, sampleListPresenter, controlElementsPresenter)
+            this.queryAvailableLocationsInteractor = new QueryAvailableLocations(trackingInfoCenter, controlElementsPresenter)
         } catch (Exception e) {
-            log.error("Could not setup ${QuerySampleTrackingInfo.getSimpleName()} use case", e)
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
+        }
+
+        try {
+            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
+        } catch (Exception e) {
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
 
         try {
