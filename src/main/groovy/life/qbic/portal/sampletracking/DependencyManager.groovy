@@ -110,7 +110,7 @@ class DependencyManager {
             sampleListPresenter = new SampleListPresenter(this.viewModel)
             controlElementsPresenter = new ControlElementsPresenter(this.viewModel)
         } catch (NullPointerException e){
-            log.error("Could not setup presenters. Nullpointer detected.", e)
+            log.error("Could not setup presenters. NullPointer detected.", e)
         } catch (Exception e) {
             log.error("Unexpected exception during presenter setup.", e)
         }
