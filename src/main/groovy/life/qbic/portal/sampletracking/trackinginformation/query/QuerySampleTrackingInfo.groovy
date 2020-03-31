@@ -9,7 +9,7 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
 
     final SampleTrackingQueryDataSource sampleTrackingInformation
 
-    private SampleTrackingQueryOutput sampleStatusOutput
+    private SampleListOutput sampleStatusOutput
 
     private QuerySampleTrackingInfo() {
         // prevent default constructor
@@ -17,7 +17,7 @@ class QuerySampleTrackingInfo implements SampleTrackingQueryInput {
         throw new AssertionError() 
     }
 
-    QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleTrackingQueryOutput sampleStatusOutput) {
+    QuerySampleTrackingInfo(SampleTrackingQueryDataSource sampleTrackingInformation, SampleListOutput sampleStatusOutput) {
         this.sampleTrackingInformation = sampleTrackingInformation
         this.sampleStatusOutput = sampleStatusOutput
     }
