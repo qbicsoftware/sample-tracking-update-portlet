@@ -7,6 +7,9 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.web.ViewModel
 
+import java.beans.PropertyChangeEvent
+import java.beans.PropertyChangeListener
+
 @Log4j2
 class SampleList extends VerticalLayout {
 
@@ -56,7 +59,13 @@ class SampleList extends VerticalLayout {
     }
 
     private void registerListeners() {
-
+        // just to make sure the grid displays valid information at all times
+        this.viewModel.samples.addPropertyChangeListener( new PropertyChangeListener() {
+            @Override
+            void propertyChange(PropertyChangeEvent evt) {
+                refreshView()
+            }
+        })
     }
 
 
