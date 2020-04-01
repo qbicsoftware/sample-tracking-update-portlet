@@ -67,7 +67,7 @@ class SampleTracker {
                 throw new SampleTrackingQueryException("Request for current location failed.")
             }
             if (!response?.body() instanceof Sample) {
-                throw new SampleTrackingQueryException("Did not receive a valid Location response.")
+                throw new SampleTrackingQueryException("Did not receive a valid Sample response.")
             }
 
             Optional<Sample> sample
@@ -75,6 +75,11 @@ class SampleTracker {
                 sample = response.getBody()
             } catch (Exception e) {
                 log.error("Could not get sample object for sample with id " + sampleId, e)
+                throw new SampleTrackingQueryException("The request for the current sample failed.")
+            }
+
+            if (sample.isEmpty()) {
+                log.error("Could not get sample information for sample with id " + sampleId)
                 throw new SampleTrackingQueryException("The request for the current sample failed.")
             }
 
