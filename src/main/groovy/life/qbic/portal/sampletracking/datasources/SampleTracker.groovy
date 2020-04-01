@@ -1,5 +1,7 @@
 package life.qbic.portal.sampletracking.datasources
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.util.logging.Log4j2
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
@@ -13,8 +15,10 @@ import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQ
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateException
 import life.qbic.services.Service
+import org.apache.http.util.EntityUtils
 
 // Noninstantiable utility class
+@Log4j2
 class SampleTracker {
 
     // Suppress default constructor for noninstantiability
@@ -46,10 +50,10 @@ class SampleTracker {
         @Override
         Location currentSampleLocation(String sampleId) throws SampleTrackingQueryException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
-            URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
+            URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
-            HttpResponse<Location> response
+            HttpResponse<Sample> response
 
             client.withCloseable {
                 response = it.toBlocking().exchange(request)
@@ -66,7 +70,15 @@ class SampleTracker {
                 throw new SampleTrackingQueryException("Did not receive a valid Location response.")
             }
 
-            return response?.body()
+            Optional<Sample> sample
+            try {
+                sample = response.getBody()
+            } catch (Exception e) {
+                log.error("Could not get sample object for sample with id " + sampleId, e)
+                throw new SampleTrackingQueryException("The request for the current sample failed.")
+            }
+
+            return sample.get().currentLocation
         }
 
         @Override
