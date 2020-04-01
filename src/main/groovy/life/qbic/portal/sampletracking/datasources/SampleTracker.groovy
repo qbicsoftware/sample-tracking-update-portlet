@@ -53,37 +53,13 @@ class SampleTracker {
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
-            HttpResponse<Sample> response
+            Sample sample
 
             client.withCloseable {
-                response = it.toBlocking().exchange(request)
+                sample = it.toBlocking().retrieve(request, Sample)
             }
 
-            if (response?.status?.code == 400) {
-                throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
-            } else if (response?.status?.code == 404) {
-                throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
-            } else if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed.")
-            }
-            if (!response?.body() instanceof Sample) {
-                throw new SampleTrackingQueryException("Did not receive a valid Sample response.")
-            }
-
-            Optional<Sample> sample
-            try {
-                sample = response.getBody()
-            } catch (Exception e) {
-                log.error("Could not get sample object for sample with id " + sampleId, e)
-                throw new SampleTrackingQueryException("The request for the current sample failed.")
-            }
-
-            if (sample.isEmpty()) {
-                log.error("Could not get sample information for sample with id " + sampleId)
-                throw new SampleTrackingQueryException("The request for the current sample failed.")
-            }
-
-            return sample.get().currentLocation
+            return sample?.currentLocation
         }
 
         @Override
