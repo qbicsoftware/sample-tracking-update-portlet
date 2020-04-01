@@ -66,7 +66,7 @@ class SampleTracker {
             } else if (response?.status?.code != 200) {
                 throw new SampleTrackingQueryException("Request for current location failed.")
             }
-            if (!response?.body() instanceof Location) {
+            if (!response?.body() instanceof Sample) {
                 throw new SampleTrackingQueryException("Did not receive a valid Location response.")
             }
 
