@@ -32,7 +32,7 @@ class DependencyManager {
     private SampleTrackingPortletController portletController
     private PortletView portletView
 
-    private final List<Service> trackingServices
+    private final List<Service> trackingServices = new ArrayList<>()
 
     private ServiceUser serviceUser
 
