@@ -72,7 +72,7 @@ class DependencyManager {
 
         // setup controllers
         try {
-            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryAvailableLocationsInteractor)
+            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryAvailableLocationsInteractor, this.querySampleInteractor)
         } catch (Exception e) {
             log.error("Unexpected exception during ${SampleTrackingPortletController.getSimpleName()} setup.", e)
         }
