@@ -22,11 +22,11 @@ class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
     @Override
     def updateAvailableLocations(List<Location> locations) {
-        return null
+        this.viewModel.availableLocations.addAll(locations)
     }
 
     @Override
     def invokeOnError(String msg) {
-        return null
+        this.viewModel.failureNotifications << msg
     }
 }

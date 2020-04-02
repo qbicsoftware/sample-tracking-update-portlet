@@ -21,6 +21,7 @@ import life.qbic.portal.sampletracking.web.views.SampleImport
 import life.qbic.portal.sampletracking.web.views.SampleList
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
+import life.qbic.portal.utils.PortalUtils
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.Service
 import life.qbic.services.ServiceConnector
@@ -61,7 +62,8 @@ class DependencyManager {
 
         // setup view models
         try {
-            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>())
+            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(),
+                                           new ArrayList<String>(), new ArrayList<String>())
         } catch (Exception e) {
             log.error("Unexpected excpetion during ${ViewModel.getSimpleName()} view model setup.", e)
             throw e
@@ -165,7 +167,8 @@ class DependencyManager {
 
         ControlElements sampleModifyControls
         try {
-            sampleModifyControls = new ControlElements(this.portletController, this.viewModel)
+            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in."
+            sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
         } catch (Exception e) {
             log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e

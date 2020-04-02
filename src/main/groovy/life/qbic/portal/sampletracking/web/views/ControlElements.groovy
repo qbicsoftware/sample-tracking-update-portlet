@@ -20,21 +20,23 @@ class ControlElements extends VerticalLayout {
     private NativeSelect<Location> locationSelectMenu
     private NativeSelect<Status> statusSelectMenu
     private DateField dateChooser
+    private String userEmail
 
-
-    ControlElements(PortletController portletController, ViewModel viewModel) {
+    ControlElements(PortletController portletController, ViewModel viewModel, String userEmail) {
         super()
         this.controller = portletController
         this.viewModel = viewModel
+        this.userEmail = userEmail
         initLayout()
         registerListeners()
+        portletController.queryAllLocationsForPerson(userEmail)
     }
 
     private def initLayout() {
 
         // Add textfield showing email address of portal user
         userEmailField = new Label()
-        userEmailField.setValue("You are not logged in.")
+        userEmailField.setValue(userEmail)
 
         // Add menu allowing location picking for new sample
         locationSelectMenu = new NativeSelect<>()
