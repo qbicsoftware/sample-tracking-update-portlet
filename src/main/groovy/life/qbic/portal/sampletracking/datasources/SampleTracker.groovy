@@ -54,11 +54,10 @@ class SampleTracker {
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
 
-            HttpResponse<Sample> response
 
-            client.withCloseable {
-                response = it.toBlocking().exchange(request, Sample)
-            }
+
+            HttpResponse<Sample> response = client.withCloseable {
+                                                it.toBlocking().exchange(request, Sample)}
 
             if (response?.status?.code == 400) {
                 throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
