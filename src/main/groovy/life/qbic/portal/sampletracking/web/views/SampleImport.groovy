@@ -58,26 +58,7 @@ class SampleImport extends VerticalLayout {
 
     private def registerListeners() {
         this.singleSampleAddButton.addClickListener({ event ->
-            // Get value from user input in textField
-            String sampleIdInput = additionalSampleId.getValue()
-            try {
-                if (sampleIdInput?.trim()) {
-
-                    controller.selectSampleById(sampleIdInput)
-                    // if sample was found show success notification
-                    StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
-                    uploadIdSuccessNotification.show(Page.getCurrent())
-
-                } else {
-                    StyledNotification emptyId = new StyledNotification("Empty ID", "Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
-                    emptyId.show(Page.getCurrent())
-
-                }
-            } catch (Exception e) {
-                log.error("Unexpected error trying to add sample by id $sampleIdInput", e)
-                StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
-                couldNotSelectSampleNotification.show(Page.getCurrent())
-            }
+            selectSampleFromTextfield()
         })
 
         // display notification that file upload was successful and samples were added to grid
@@ -112,5 +93,32 @@ class SampleImport extends VerticalLayout {
             StyledNotification uploadFileFailedNotification = new StyledNotification("Upload failed", "File upload failed", Notification.Type.ERROR_MESSAGE)
             uploadFileFailedNotification.show(Page.getCurrent())
         })
+    }
+
+    /**
+     * Retrieves the value of the TextField. Sends a request to add the sample to the controller
+     * @return
+     */
+    private def selectSampleFromTextfield() {
+        // Get value from user input in textField
+        String sampleIdInput = additionalSampleId.getValue()
+        try {
+            if (sampleIdInput?.trim()) {
+
+                controller.selectSampleById(sampleIdInput)
+                // if sample was found show success notification
+                StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
+                uploadIdSuccessNotification.show(Page.getCurrent())
+
+            } else {
+                StyledNotification emptyId = new StyledNotification("Empty ID", "Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
+                emptyId.show(Page.getCurrent())
+
+            }
+        } catch (Exception e) {
+            log.error("Unexpected error trying to add sample by id $sampleIdInput", e)
+            StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
+            couldNotSelectSampleNotification.show(Page.getCurrent())
+        }
     }
 }
