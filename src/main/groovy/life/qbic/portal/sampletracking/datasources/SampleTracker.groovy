@@ -6,6 +6,7 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
@@ -54,21 +55,21 @@ class SampleTracker {
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
 
-
-
-            HttpResponse<Sample> response = client.withCloseable {
-                                                it.toBlocking().exchange(request, Sample)}
-
-            if (response?.status?.code == 400) {
-                throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
-            } else if (response?.status?.code == 404) {
-                throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
-            } else if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed.")
+            HttpResponse<Sample> response
+            try {
+                response = client.withCloseable { rxClient ->
+                                                    rxClient.toBlocking().exchange(request, Sample)}
+            } catch (HttpClientResponseException e) {
+                log.error("Response code was greater or equal to 400.", e)
+                if (response?.status?.code == 400) {
+                    throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
+                } else if (response?.status?.code == 404) {
+                    throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
+                } else if (response?.status?.code != 200) {
+                    throw new SampleTrackingQueryException("Request for current location failed.")
+                }
             }
-
             final Sample sample = response.getBody().get()
-
             return sample?.currentLocation
         }
 
