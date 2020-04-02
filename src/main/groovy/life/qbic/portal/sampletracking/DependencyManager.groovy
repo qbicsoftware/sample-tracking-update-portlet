@@ -149,7 +149,7 @@ class DependencyManager {
 
         SampleImport sampleImport
         try {
-            sampleImport = new SampleImport(this.portletController)
+            sampleImport = new SampleImport(this.portletController, this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e

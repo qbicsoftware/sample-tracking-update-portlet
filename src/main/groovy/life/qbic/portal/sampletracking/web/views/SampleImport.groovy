@@ -1,24 +1,29 @@
 package life.qbic.portal.sampletracking.web.views
 
 
-import com.vaadin.server.Page
-import com.vaadin.ui.*
+import com.vaadin.ui.Button
+import com.vaadin.ui.FormLayout
+import com.vaadin.ui.TextField
+import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
-import life.qbic.portal.sampletracking.web.StyledNotification
+import life.qbic.datamodel.samples.Sample
+import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.views.samplefile.UploadComponent
 
 @Log4j2
 class SampleImport extends VerticalLayout {
     final private PortletController controller
+    final private ViewModel viewModel
 
     private Button singleSampleAddButton
     private TextField additionalSampleId
     private UploadComponent uploadComponent
 
-    SampleImport(PortletController controller) {
+    SampleImport(PortletController controller, ViewModel viewModel) {
         super()
         this.controller = controller
+        this.viewModel = viewModel
         initLayout()
         registerListeners()
     }
@@ -47,7 +52,7 @@ class SampleImport extends VerticalLayout {
         })
 
         this.uploadComponent.addUploadSucceededListener({ event ->
-            controller.selectSamplesById(event.sampleIds)
+            selectSamplesFromFile(event.sampleIds)
         })
     }
 
@@ -57,25 +62,39 @@ class SampleImport extends VerticalLayout {
      */
     private def selectSampleFromTextfield() {
         // Get value from user input in textField
-        String sampleIdInput = additionalSampleId.getValue()
+        String sampleId = additionalSampleId.getValue()
+        boolean isSampleSelected = viewModel.samples.any { sample -> (sample as Sample)?.getCode() == sampleId }
+
         try {
-            if (sampleIdInput?.trim()) {
-
-                controller.selectSampleById(sampleIdInput)
-                // if sample was found show success notification
-                // TODO: Remove this and add a listener to the notification observable list
-                StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
-                uploadIdSuccessNotification.show(Page.getCurrent())
-
+            if (sampleId?.trim()) {
+                if (isSampleSelected) {
+                    viewModel.failureNotifications.add("You already selected ${sampleId}")
+                    log.warn("Tried to select ${sampleId} multiple times.")
+                } else {
+                    controller.selectSampleById(sampleId)
+                }
             } else {
-                StyledNotification emptyId = new StyledNotification("Empty ID", "Please enter a sample ID and try again.", Notification.Type.ASSISTIVE_NOTIFICATION)
-                emptyId.show(Page.getCurrent())
-
+                viewModel.failureNotifications.add("Please enter a sample ID and try again.")
             }
         } catch (Exception e) {
-            log.error("Unexpected error trying to add sample by id $sampleIdInput", e)
-            StyledNotification couldNotSelectSampleNotification = new StyledNotification("Could not select sample $sampleIdInput", Notification.Type.ERROR_MESSAGE)
-            couldNotSelectSampleNotification.show(Page.getCurrent())
+            log.error("Unexpected error trying to add sample by id $sampleId", e)
+            viewModel.failureNotifications.add("Could not select sample $sampleId")
+        }
+    }
+
+    private selectSamplesFromFile(List<String> sampleIds) {
+        List<String> alreadySelectedIds = viewModel.samples.collect { sample -> (sample as Sample).getCode() }
+        List<String> unselectedIds = sampleIds.findAll { sampleId -> !(sampleId in alreadySelectedIds) }
+        if (unselectedIds.size() < 1) {
+            log.debug("No new sample codes in list.")
+            viewModel.failureNotifications.add("There are no new sample codes in the selected file.")
+        } else {
+            try {
+                controller.selectSamplesById(sampleIds)
+            } catch (Exception e) {
+                log.error("Unexpected error trying to add samples by id $sampleIds", e)
+                viewModel.failureNotifications.add("Could not select new samples from file")
+            }
         }
     }
 }
