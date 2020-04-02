@@ -53,7 +53,6 @@ class SampleTracker {
             URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
-            //Sample sample
 
             HttpResponse<Sample> response
 
