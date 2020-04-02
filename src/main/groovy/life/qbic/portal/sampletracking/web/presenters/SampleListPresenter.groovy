@@ -23,7 +23,7 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutp
 
     @Override
     def invokeOnError(String msg) {
-        viewModel.notifications.add(msg)
+        viewModel.failureNotifications.add(msg)
     }
 
     @Override

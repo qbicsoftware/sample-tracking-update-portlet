@@ -63,6 +63,7 @@ class SampleImport extends VerticalLayout {
 
                 controller.selectSampleById(sampleIdInput)
                 // if sample was found show success notification
+                // TODO: Remove this and add a listener to the notification observable list
                 StyledNotification uploadIdSuccessNotification = new StyledNotification("Success", "Added $sampleIdInput")
                 uploadIdSuccessNotification.show(Page.getCurrent())
 

@@ -8,12 +8,15 @@ class ViewModel {
 
     final ObservableList samples
     final ObservableList availableLocations
-    final ObservableList notifications
+    final ObservableList successNotifications
+    final ObservableList failureNotifications
 
-    ViewModel(List<Sample> samples, List<Location> availableLocations, List<String> notifications) {
+    ViewModel(List<Sample> samples, List<Location> availableLocations, List<String> successNotifications,
+              List<String> failureNotifications) {
         this.samples = new ObservableList(samples)
         this.availableLocations = new ObservableList(availableLocations)
-        this.notifications = new ObservableList(notifications)
+        this.successNotifications = new ObservableList(successNotifications)
+        this.failureNotifications = new ObservableList(failureNotifications)
     }
 
 }

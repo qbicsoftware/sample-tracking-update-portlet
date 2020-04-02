@@ -35,7 +35,8 @@ class QuerySample implements QuerySampleInput {
             this.querySampleOutput.publishSample(sample)
         } catch (SampleTrackingQueryException e) {
             log.error("Query ${sampleId} failed.", e)
-            this.querySampleOutput.invokeOnError "Could not locate Sample $sampleId in QBiC database"
+            // We pass the original error message with a generic notification to the output port
+            this.querySampleOutput.invokeOnError "Could not retrieve information for sample $sampleId. ${e.message}"
         }
     }
 }
