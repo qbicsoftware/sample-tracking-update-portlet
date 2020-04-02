@@ -61,7 +61,7 @@ class DependencyManager {
 
         // setup view models
         try {
-            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>())
+            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>(), new ArrayList<String>())
         } catch (Exception e) {
             log.error("Unexpected excpetion during ${ViewModel.getSimpleName()} view model setup.", e)
             throw e
