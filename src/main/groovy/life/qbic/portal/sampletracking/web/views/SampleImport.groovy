@@ -96,6 +96,6 @@ class SampleImport extends VerticalLayout {
     }
 
     private boolean isSampleSelected(String sampleId) {
-        return viewModel.samples.any { sample -> (sample as Sample)?.getCode() == sampleId }
+        return viewModel.samples.any { it.code  == sampleId }
     }
 }
