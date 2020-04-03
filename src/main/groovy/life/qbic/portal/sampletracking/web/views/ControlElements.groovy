@@ -45,6 +45,7 @@ class ControlElements extends VerticalLayout {
 
         // Add menu allowing location picking for new sample
         locationSelectMenu = new NativeSelect<>()
+        locationSelectMenu.setCaption("Available locations")
         locationSelectMenu.emptySelectionAllowed = false
         locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
         locationSelectMenu.setItemCaptionGenerator({it -> it.name})
