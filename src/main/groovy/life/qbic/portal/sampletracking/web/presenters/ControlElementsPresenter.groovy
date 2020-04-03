@@ -22,7 +22,7 @@ class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
     @Override
     def updateAvailableLocations(List<Location> locations) {
-        this.viewModel.availableLocations.addAll(locations)
+        this.viewModel.availableLocations.addAll(locations ?: [])
     }
 
     @Override
