@@ -79,7 +79,7 @@ class ControlElements extends VerticalLayout {
         //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
       //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
         //Add listener to clear button to remove add samples to SampleList
-        this.clearButton.addClickListener({ event -> controller.clearSelection() })
+        this.clearButton.addClickListener({ event -> this.viewModel.samples.clear() })
 
     }
 }

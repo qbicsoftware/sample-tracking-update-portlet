@@ -1,8 +1,7 @@
 package life.qbic.portal.sampletracking.web.presenters
 
 import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocationsOutput
 import life.qbic.portal.sampletracking.web.ViewModel
 
 /**
@@ -10,9 +9,13 @@ import life.qbic.portal.sampletracking.web.ViewModel
  *
  * @author: Sven Fillinger
  */
-class ControlElementsPresenter implements SampleTrackingQueryOutput {
+class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
-    private final ViewModel viewModel
+    final private ViewModel viewModel
+
+    private ControlElementsPresenter() {
+        throw new AssertionError("Default constructor cannot be instantiated.")
+    }
 
     ControlElementsPresenter(ViewModel viewModel) {
         this.viewModel = viewModel
@@ -24,17 +27,7 @@ class ControlElementsPresenter implements SampleTrackingQueryOutput {
     }
 
     @Override
-    def updateCurrentLocation(String sampleId, Location location) {
-        return null
-    }
-
-    @Override
-    def addSampleToList(Sample sample) {
-        return null
-    }
-
-    @Override
     def invokeOnError(String msg) {
-        viewModel.notifications.add(msg)
+        viewModel.failureNotifications.add(msg)
     }
 }

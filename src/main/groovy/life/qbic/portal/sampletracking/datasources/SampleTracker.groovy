@@ -1,9 +1,11 @@
 package life.qbic.portal.sampletracking.datasources
 
+import groovy.util.logging.Log4j2
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
@@ -15,6 +17,7 @@ import life.qbic.portal.sampletracking.trackinginformation.update.SampleTracking
 import life.qbic.services.Service
 
 // Noninstantiable utility class
+@Log4j2
 class SampleTracker {
 
     // Suppress default constructor for noninstantiability
@@ -46,23 +49,27 @@ class SampleTracker {
         @Override
         Location currentSampleLocation(String sampleId) throws SampleTrackingQueryException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
-            URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation/")
+            URI locationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
 
             HttpRequest request = HttpRequest.GET(locationUri).basicAuth(user.name, user.password)
-            HttpResponse<Location> response
 
-            client.withCloseable {
-                response = it.toBlocking().exchange(request)
+            HttpResponse<?> response
+            try {
+                response = client.withCloseable { rxClient ->
+                                                    rxClient.toBlocking().exchange(request, Sample)}
+            } catch (HttpClientResponseException e) {
+                response = e.response
+                log.error("Response code was greater or equal to 400.", e)
+                if (response?.status?.code == 400) {
+                    throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
+                } else if (response?.status?.code == 404) {
+                    throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
+                } else if (response?.status?.code != 200) {
+                    throw new SampleTrackingQueryException("Request for current location failed.")
+                }
             }
-
-            if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed.")
-            }
-            if (!response?.body() instanceof Location) {
-                throw new SampleTrackingQueryException("Did not receive a valid Location response.")
-            }
-
-            return response?.body()
+            final Sample sample = response.getBody().get()
+            return sample?.currentLocation
         }
 
         @Override
@@ -122,37 +129,6 @@ class SampleTracker {
                 throw new SampleTrackingUpdateException("Request for update location status for sample $sampleId failed.")
             }
 
-        }
-
-        @Override
-        Sample retrieveCurrentSample(String sampleId) throws SampleTrackingQueryException {
-            HttpClient client = RxHttpClient.create(service.rootUrl)
-            // ToDo Check if that URI returns a valid sample by sample id
-
-            URI SampleUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId")
-
-            HttpRequest request = HttpRequest.GET(SampleUri).basicAuth(user.name, user.password)
-            HttpResponse<Sample> response
-
-            client.withCloseable {
-                response = it.toBlocking().exchange(request)
-            }
-
-            if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current sample $sampleId failed.")
-            }
-            else if (response?.status?.code != 400) {
-                throw new SampleTrackingQueryException("Invalid sample ID $sampleId requested.")
-            }
-            else if (response?.status?.code != 404) {
-                throw new SampleTrackingQueryException("Sample with requested ID $sampleId could not be found.")
-            }
-
-            if (!response?.body() instanceof Sample) {
-                throw new SampleTrackingQueryException("Did not receive a valid sample response for ID $sampleId.")
-            }
-
-            return response?.body()
         }
     }
 

@@ -15,7 +15,5 @@ interface PortletController {
 
     void selectSamplesFromFile(FileOutputStream uploadedFile)
 
-    void clearSelection()
-
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus)
 }

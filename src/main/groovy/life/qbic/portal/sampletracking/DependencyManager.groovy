@@ -5,19 +5,21 @@ import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.query.QuerySampleTrackingInfo
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
-import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryOutput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
 import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.presenters.ControlElementsPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
 import life.qbic.portal.sampletracking.web.views.SampleImport
 import life.qbic.portal.sampletracking.web.views.SampleList
+
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
@@ -31,12 +33,13 @@ class DependencyManager {
     private SampleTrackingPortletController portletController
     private PortletView portletView
 
-    private final List<Service> trackingServices
+    private final List<Service> trackingServices = new ArrayList<>()
 
     private ServiceUser serviceUser
 
     private ConfigurationManager configManager
-    private QuerySampleTrackingInfo queryInfoInteractor
+    private QueryAvailableLocations queryAvailableLocationsInteractor
+    private QuerySample querySampleInteractor
     private UpdateSampleTrackingInfo updateInfoInteractor
     private ViewModel viewModel
 
@@ -59,7 +62,7 @@ class DependencyManager {
 
         // setup view models
         try {
-            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>())
+            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>(), new ArrayList<String>())
         } catch (Exception e) {
             log.error("Unexpected excpetion during ${ViewModel.getSimpleName()} view model setup.", e)
             throw e
@@ -70,9 +73,10 @@ class DependencyManager {
 
         // setup controllers
         try {
-            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryInfoInteractor, this.modifySampleListInteractor)
+            this.portletController = new SampleTrackingPortletController(this.updateInfoInteractor, this.queryAvailableLocationsInteractor, this.querySampleInteractor)
         } catch (Exception e) {
             log.error("Unexpected exception during ${SampleTrackingPortletController.getSimpleName()} setup.", e)
+            throw e
         }
         // setup views
         setupViews()
@@ -103,17 +107,33 @@ class DependencyManager {
      * All Exceptions are handled and logged. Skips use cases where instantiation fails.
      */
     private void setupUseCaseInteractors() {
+        def sampleListPresenter
+        def controlElementsPresenter
+        try {
+            sampleListPresenter = new SampleListPresenter(this.viewModel)
+            controlElementsPresenter = new ControlElementsPresenter(this.viewModel)
+        } catch (NullPointerException e){
+            log.error("Could not setup presenters. NullPointer detected.", e)
+        } catch (Exception e) {
+            log.error("Unexpected exception during presenter setup.", e)
+        }
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
-            this.queryInfoInteractor = new QuerySampleTrackingInfo(trackingInfoCenter, this.viewModel as SampleTrackingQueryOutput)
+            this.queryAvailableLocationsInteractor = new QueryAvailableLocations(trackingInfoCenter, controlElementsPresenter)
         } catch (Exception e) {
-            log.error("Could not setup ${QuerySampleTrackingInfo.getSimpleName()} use case", e)
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
 
         try {
-            final def presenter = new SampleListPresenter(viewModel)
+            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
+        } catch (Exception e) {
+            log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
+        }
+
+        try {
             SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
-            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, presenter)
+            this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
         }
@@ -129,8 +149,7 @@ class DependencyManager {
 
         SampleImport sampleImport
         try {
-            SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
-            sampleImport = new SampleImport(this.portletController, this.viewModel, sampleFileReceiver as Upload.Receiver)
+            sampleImport = new SampleImport(this.portletController, this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e

@@ -31,6 +31,7 @@ class PortletView extends HorizontalLayout {
     }
 
     private def initLayout() {
+        this.setWidth("100%")
         this.addComponents(this.sampleImport, this.sampleList, this.sampleControls)
 
     }

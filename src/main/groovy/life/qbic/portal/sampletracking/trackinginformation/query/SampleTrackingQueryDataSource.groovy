@@ -8,7 +8,4 @@ interface SampleTrackingQueryDataSource {
     Location currentSampleLocation(String sampleId)
 
     List<Location> availableLocationsForPerson(String emailAddress)
-
-    Sample retrieveCurrentSample(String sampleId)
-
 }
