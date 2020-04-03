@@ -19,6 +19,7 @@ class UploadComponent extends VerticalLayout {
     private FailedListener failedListener
     private Upload upload
     private ByteArrayOutputStream uploadContent
+    public static String mimeType = "text/csv"
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
@@ -37,7 +38,7 @@ class UploadComponent extends VerticalLayout {
         Upload upload = new Upload()
         // start upload after file was selected
         upload.setImmediateMode(true)
-        upload.setAcceptMimeTypes("text/csv")
+        upload.setAcceptMimeTypes(mimeType)
         upload.setButtonCaption("Upload CSV File")
         upload.setReceiver(this.receiver)
         upload.addSucceededListener(this.succeededListener)
