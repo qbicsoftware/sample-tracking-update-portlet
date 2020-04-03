@@ -49,10 +49,6 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.emptySelectionAllowed = false
         locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
         locationSelectMenu.setItemCaptionGenerator({it -> it.name})
-        /* For Test purposes
-        //TODO remove in release
-        locationSelectMenu.setItems("QBiC", "Home Office", "Laboratory", "Shipping")
-        */
 
         // Add menu allowing date picking for new sample
         dateChooser = new DateField("Desired Arrival Date")
@@ -64,10 +60,6 @@ class ControlElements extends VerticalLayout {
         statusSelectMenu.setEmptySelectionAllowed(false)
         statusSelectMenu.setItems(Status.values())
 
-        /* For Test purposes
-        //TODO: remove in release
-        sampleSelectMenu.setItems("Waiting", "Processing", "Processed")
-        */
 
         // Add button enabling sample update to SampleList
         updateSampleButton = new Button("Update Samples")
