@@ -81,8 +81,7 @@ class SampleImport extends VerticalLayout {
     }
 
     private selectSamplesFromFile(List<String> sampleIds) {
-        List<String> alreadySelectedIds = viewModel.samples.collect { sample -> (sample as Sample)?.getCode() }
-        List<String> unselectedIds = sampleIds.findAll { sampleId -> isSampleSelected(sampleId) }
+        List<String> unselectedIds = sampleIds.findAll { sampleId -> ! isSampleSelected(sampleId) }.unique()
         if (unselectedIds.size() < 1) {
             log.debug("No new sample codes in list.")
             viewModel.failureNotifications.add("There are no new sample codes in the selected file.")
