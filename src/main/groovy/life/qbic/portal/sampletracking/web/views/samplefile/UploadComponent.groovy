@@ -19,7 +19,7 @@ class UploadComponent extends VerticalLayout {
     private FailedListener failedListener
     private Upload upload
     private ByteArrayOutputStream uploadContent
-    public static String mimeType = "text/csv"
+    public final static String MIME_TYPE = "text/csv"
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
