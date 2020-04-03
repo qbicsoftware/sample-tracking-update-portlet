@@ -22,6 +22,10 @@ class ControlElements extends VerticalLayout {
     private DateField dateChooser
     private String userEmail
 
+    private ControlElements() {
+        //prevent default constructor initialization
+        throw new AssertionError("${ControlElements.getSimpleName()} cannot be initialized by the its default constructor.")
+    }
     ControlElements(PortletController portletController, ViewModel viewModel, String userEmail) {
         super()
         this.controller = portletController
