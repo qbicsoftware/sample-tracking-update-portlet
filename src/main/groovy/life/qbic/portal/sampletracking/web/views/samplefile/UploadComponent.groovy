@@ -56,7 +56,7 @@ class UploadComponent extends VerticalLayout {
             @Override
             OutputStream receiveUpload(String filename, String mimeType) {
                 try {
-                    tempFile = File.createTempFile(filename, ".csv")
+                    tempFile = File.createTempFile("sample_import_", ".csv")
                     return new FileOutputStream(tempFile)
                 } catch (Exception e) {
                     log.error("Unexpected. Could not upload to temporary file ${tempFile.getAbsolutePath()}.", e.getMessage())
