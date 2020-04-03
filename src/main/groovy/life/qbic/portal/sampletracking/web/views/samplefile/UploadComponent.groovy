@@ -80,13 +80,13 @@ class UploadComponent extends VerticalLayout {
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)
                 } finally {
-                    clearStream()
+                    closeStream()
                 }
             }
         }
     }
 
-    private void clearStream(){
+    private void closeStream(){
         uploadContent.flush()
         uploadContent.close()
     }
@@ -96,7 +96,7 @@ class UploadComponent extends VerticalLayout {
             @Override
             void uploadFailed(FailedEvent event) {
                 log.error("Upload failed.", event.reason)
-                clearStream()
+                closeStream()
             }
         }
     }
