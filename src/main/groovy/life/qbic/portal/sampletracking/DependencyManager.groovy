@@ -1,16 +1,16 @@
 package life.qbic.portal.sampletracking
 
-import com.vaadin.ui.Upload
+
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.services.ServiceUser
-import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
-import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
+import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
-import life.qbic.portal.sampletracking.datasources.SampleTracker
-import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.ViewModel
+import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
 import life.qbic.portal.sampletracking.web.presenters.ControlElementsPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
@@ -61,7 +61,6 @@ class DependencyManager {
         // setup view models
         try {
             this.viewModel = new ViewModel()
-
         } catch (Exception e) {
             log.error("Unexpected excpetion during ${ViewModel.getSimpleName()} view model setup.", e)
             throw e
@@ -148,8 +147,7 @@ class DependencyManager {
 
         SampleImport sampleImport
         try {
-            SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
-            sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
+            sampleImport = new SampleImport(this.portletController, this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e
