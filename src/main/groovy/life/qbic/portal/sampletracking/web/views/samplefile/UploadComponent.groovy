@@ -38,7 +38,7 @@ class UploadComponent extends VerticalLayout {
         Upload upload = new Upload()
         // start upload after file was selected
         upload.setImmediateMode(true)
-        upload.setAcceptMimeTypes(mimeType)
+        upload.setAcceptMimeTypes(MIME_TYPE)
         upload.setButtonCaption("Upload CSV File")
         upload.setReceiver(this.receiver)
         upload.addSucceededListener(this.succeededListener)
