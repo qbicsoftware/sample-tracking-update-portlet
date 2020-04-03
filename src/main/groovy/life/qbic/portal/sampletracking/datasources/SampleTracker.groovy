@@ -1,6 +1,7 @@
 package life.qbic.portal.sampletracking.datasources
 
 import groovy.util.logging.Log4j2
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
@@ -82,7 +83,8 @@ class SampleTracker {
             HttpResponse<?> response
 
             try {
-                response = client.withCloseable { it.toBlocking().exchange(request, List)}
+                response = client.withCloseable { it.toBlocking().exchange(request,
+                                                    Argument.of(List.class, Location.class))}
             }
             catch(HttpClientResponseException e) {
                 response = e.response

@@ -1,5 +1,6 @@
 package life.qbic.portal.sampletracking.web.views
 
+import com.vaadin.data.provider.ListDataProvider
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
@@ -44,7 +45,8 @@ class ControlElements extends VerticalLayout {
 
         // Add menu allowing location picking for new sample
         locationSelectMenu = new NativeSelect<>()
-        locationSelectMenu.setItems(viewModel.availableLocations)
+        locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
+        locationSelectMenu.setItemCaptionGenerator({it -> it.name})
         /* For Test purposes
         //TODO remove in release
         locationSelectMenu.setItems("QBiC", "Home Office", "Laboratory", "Shipping")
