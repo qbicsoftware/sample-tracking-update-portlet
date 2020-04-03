@@ -19,7 +19,6 @@ class UploadComponent extends VerticalLayout {
     private FailedListener failedListener
     private Upload upload
     private File tempFile
-    private String sourceFileName
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
@@ -57,7 +56,6 @@ class UploadComponent extends VerticalLayout {
             @Override
             OutputStream receiveUpload(String filename, String mimeType) {
                 try {
-                    sourceFileName = filename
                     tempFile = File.createTempFile(filename, ".csv")
                     return new FileOutputStream(tempFile)
                 } catch (Exception e) {
