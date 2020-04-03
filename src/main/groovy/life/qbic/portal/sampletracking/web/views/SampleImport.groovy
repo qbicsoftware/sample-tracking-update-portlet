@@ -63,11 +63,9 @@ class SampleImport extends VerticalLayout {
     private def selectSampleFromTextfield() {
         // Get value from user input in textField
         String sampleId = additionalSampleId.getValue()
-        boolean isSampleSelected = viewModel.samples.any { sample -> (sample as Sample)?.getCode() == sampleId }
-
         try {
             if (sampleId?.trim()) {
-                if (isSampleSelected) {
+                if (isSampleSelected(sampleId)) {
                     viewModel.failureNotifications.add("You already selected ${sampleId}")
                     log.warn("Tried to select ${sampleId} multiple times.")
                 } else {
@@ -83,18 +81,22 @@ class SampleImport extends VerticalLayout {
     }
 
     private selectSamplesFromFile(List<String> sampleIds) {
-        List<String> alreadySelectedIds = viewModel.samples.collect { sample -> (sample as Sample).getCode() }
-        List<String> unselectedIds = sampleIds.findAll { sampleId -> !(sampleId in alreadySelectedIds) }
+        List<String> alreadySelectedIds = viewModel.samples.collect { sample -> (sample as Sample)?.getCode() }
+        List<String> unselectedIds = sampleIds.findAll { sampleId -> isSampleSelected(sampleId) }
         if (unselectedIds.size() < 1) {
             log.debug("No new sample codes in list.")
             viewModel.failureNotifications.add("There are no new sample codes in the selected file.")
         } else {
             try {
-                controller.selectSamplesById(sampleIds)
+                controller.selectSamplesById(unselectedIds)
             } catch (Exception e) {
-                log.error("Unexpected error trying to add samples by id $sampleIds", e)
+                log.error("Unexpected error trying to add samples by id $unselectedIds", e)
                 viewModel.failureNotifications.add("Could not select new samples from file")
             }
         }
+    }
+
+    private boolean isSampleSelected(String sampleId) {
+        return viewModel.samples.any { sample -> (sample as Sample)?.getCode() == sampleId }
     }
 }
