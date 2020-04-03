@@ -18,7 +18,7 @@ class UploadComponent extends VerticalLayout {
     private SucceededListener succeededListener
     private FailedListener failedListener
     private Upload upload
-    private File tempFile
+    private ByteArrayOutputStream uploadContent
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
@@ -56,8 +56,8 @@ class UploadComponent extends VerticalLayout {
             @Override
             OutputStream receiveUpload(String filename, String mimeType) {
                 try {
-                    tempFile = File.createTempFile("sample_id_import_", ".csv")
-                    return new FileOutputStream(tempFile)
+                    uploadContent = new ByteArrayOutputStream()
+                    return uploadContent
                 } catch (Exception e) {
                     log.error("Unexpected. Could not upload to temporary file ${tempFile.getAbsolutePath()}.", e.getMessage())
                     throw e
@@ -71,33 +71,41 @@ class UploadComponent extends VerticalLayout {
         return new SucceededListener() {
             @Override
             void uploadSucceeded(SucceededEvent event) {
-                def sampleIds = tempFile.readLines()
-                fireUploadSuccessEvent(sampleIds)
-                cleanup()
+
+                Set<String> sampleIds = [] as Set
+
+                try {
+                    sampleIds = new String(uploadContent.toByteArray()).split("\n") as Set
+                    fireUploadSuccessEvent(sampleIds)
+                } catch (Exception e) {
+                    log.error ("The parsing of the sample ids from the output stream failed", e)
+                } finally {
+                    clearStream()
+                }
             }
         }
+    }
+
+    private void clearStream(){
+        uploadContent.flush()
+        uploadContent.close()
     }
 
     private FailedListener setupFailedListener() {
         return new FailedListener() {
             @Override
             void uploadFailed(FailedEvent event) {
-                log.error("Upload to ${tempFile.getAbsolutePath()} failed.", event.reason)
-                cleanup()
+                log.error("Upload failed.", event.reason)
+                clearStream()
             }
         }
     }
 
-    private def fireUploadSuccessEvent(List<String> sampleIds) {
-        def successEvent =  new UploadSucceededEvent(sampleIds, this.sourceFileName)
+    private def fireUploadSuccessEvent(Set<String> sampleIds) {
+        def successEvent =  new UploadSucceededEvent(sampleIds)
         for (uploadSucceededListener in uploadSucceededListenerList) {
             uploadSucceededListener.uploadSucceeded(successEvent)
         }
-    }
-
-    private def cleanup() {
-        sourceFileName = null
-        tempFile?.delete()
     }
 
     def addUploadSucceededListener(UploadSucceededListener uploadSucceededListener) {
