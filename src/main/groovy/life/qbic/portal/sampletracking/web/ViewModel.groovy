@@ -11,6 +11,10 @@ class ViewModel {
     final ObservableList successNotifications
     final ObservableList failureNotifications
 
+    ViewModel() {
+        this(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>(), new ArrayList<String>())
+    }
+
     ViewModel(List<Sample> samples, List<Location> availableLocations, List<String> successNotifications,
               List<String> failureNotifications) {
         this.samples = new ObservableList(samples)
