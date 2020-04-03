@@ -2,8 +2,6 @@ package life.qbic.portal.sampletracking
 
 import com.vaadin.ui.Upload
 import groovy.util.logging.Log4j2
-import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
