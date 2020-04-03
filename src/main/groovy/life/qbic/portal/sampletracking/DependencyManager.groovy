@@ -19,6 +19,7 @@ import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
 import life.qbic.portal.sampletracking.web.views.SampleImport
 import life.qbic.portal.sampletracking.web.views.SampleList
+
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
@@ -148,8 +149,7 @@ class DependencyManager {
 
         SampleImport sampleImport
         try {
-            SampleFileReceiver sampleFileReceiver = new SampleFileReceiver()
-            sampleImport = new SampleImport(this.portletController, sampleFileReceiver as Upload.Receiver)
+            sampleImport = new SampleImport(this.portletController, this.viewModel)
         } catch (Exception e) {
             log.error("Could not create ${SampleImport.getSimpleName()} view.", e)
             throw e
