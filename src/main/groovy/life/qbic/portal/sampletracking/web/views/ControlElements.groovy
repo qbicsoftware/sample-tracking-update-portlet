@@ -48,9 +48,10 @@ class ControlElements extends VerticalLayout {
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
-        ArrayList<Status> filteredStatusList = new ArrayList<Status>([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
-        ArrayList<Status> selectableStatusList = getSelectableStatusList(filteredStatusList)
-        statusSelectMenu.setItems(selectableStatusList)
+List<Status> selectableStatusOptions = Status.values().findall { status ->
+  !(status in FORBIDDEN_STATUS_OPTIONS)
+}
+statusSelectMenu.setItems(selectableStatusOptions)
 
         // Add button enabling sample update to SampleList
         updateSampleButton = new Button("Update Samples")
