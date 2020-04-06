@@ -25,7 +25,7 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
     def setSampleStatus(String sampleId, Status sampleStatus) {
         try {
             this.sampleTrackingUpdateDataSource.updateSampleStatus(sampleId, sampleStatus)
-            sampleUpdateOutput.updateFinished()
+            sampleUpdateOutput.updateFinished(sampleId)
         } catch (SampleTrackingUpdateException e) {
             log.error e
             this.sampleUpdateOutput.invokeOnError "Could not update status for sample $sampleId."
@@ -36,7 +36,7 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
     def setCurrentSampleLocation(String sampleId, Location location) {
         try {
             this.sampleTrackingUpdateDataSource.updateSampleLocation(sampleId, location)
-            sampleUpdateOutput.updateFinished()
+            sampleUpdateOutput.updateFinished(sampleId)
         } catch (SampleTrackingUpdateException e) {
             log.error e
             this.sampleUpdateOutput.invokeOnError "Could not update location for sample $sampleId."
