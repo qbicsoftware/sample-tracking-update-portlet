@@ -66,7 +66,17 @@ class ControlElements extends VerticalLayout {
         clearButton = new Button("Clear List")
 
         // Add all Vaadin components to layout
-        this.addComponents(userEmailField, locationSelectMenu, dateChooser, statusSelectMenu, updateSampleButton, clearButton)
+        HorizontalLayout row1 = new HorizontalLayout()
+        row1.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+        HorizontalLayout row2 = new HorizontalLayout()
+        row2.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+        HorizontalLayout row3 = new HorizontalLayout()
+        row3.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+
+        row1.addComponentsAndExpand(userEmailField, dateChooser)
+        row2.addComponentsAndExpand(locationSelectMenu, statusSelectMenu)
+        row3.addComponentsAndExpand(updateSampleButton, clearButton)
+        this.addComponents(row1, row2, row3)
     }
 
     private void registerListeners() {
