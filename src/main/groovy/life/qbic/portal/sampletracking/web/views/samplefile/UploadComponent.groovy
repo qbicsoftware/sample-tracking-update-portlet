@@ -3,6 +3,7 @@ package life.qbic.portal.sampletracking.web.views.samplefile
 
 import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.declarative.DesignContext
 import groovy.util.logging.Log4j2
 
 import static com.vaadin.ui.Upload.*
@@ -39,7 +40,7 @@ class UploadComponent extends VerticalLayout {
         // start upload after file was selected
         upload.setImmediateMode(true)
         upload.setAcceptMimeTypes(MIME_TYPE)
-        upload.setButtonCaption("Upload CSV File")
+        upload.setButtonCaption("Select From File")
         upload.setReceiver(this.receiver)
         upload.addSucceededListener(this.succeededListener)
         upload.addFailedListener(this.failedListener)
@@ -48,6 +49,9 @@ class UploadComponent extends VerticalLayout {
     }
 
     private def initLayout() {
+        this.setSpacing(false)
+        this.setMargin(false)
+        this.upload.setSizeFull()
         this.addComponents(this.upload)
     }
 
