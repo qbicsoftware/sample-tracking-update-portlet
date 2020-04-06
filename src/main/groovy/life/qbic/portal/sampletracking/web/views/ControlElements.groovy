@@ -77,6 +77,15 @@ class ControlElements extends VerticalLayout {
 
         //ToDo Determine how Samples from Samplelist can be connected to user selected location, date and Status
      //   def selectedSampleIds = viewModel.requestSampleList()
+        this.updateSampleButton.addClickListener({event ->
+                this.controller.updateSamples(
+                        viewModel.samples.asList(),
+                        locationSelectMenu.getValue(),
+                        statusSelectMenu.getValue(),
+                        dateChooser.getValue()
+                )
+
+        })
 
         //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
       //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
