@@ -48,7 +48,7 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setCaption("Available locations")
         locationSelectMenu.emptySelectionAllowed = false
         locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
-        locationSelectMenu.setItemCaptionGenerator({it -> it.name})
+        locationSelectMenu.setItemCaptionGenerator({it -> it?.name ?: "unknown"})
 
         // Add menu allowing date picking for new sample
         dateChooser = new DateField("Desired Arrival Date")
