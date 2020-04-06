@@ -1,8 +1,10 @@
 package life.qbic.portal.sampletracking.web.views
 
-
+import com.vaadin.shared.ui.MarginInfo
+import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.FormLayout
+import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
@@ -29,8 +31,6 @@ class SampleImport extends VerticalLayout {
     }
 
     private def initLayout() {
-
-        FormLayout formLayout = new FormLayout()
         // Add textfield for sample Id input with placeholder sample id
         this.additionalSampleId = new TextField("Sample ID")
         this.additionalSampleId.setPlaceholder("QABCD004AO")
@@ -41,9 +41,11 @@ class SampleImport extends VerticalLayout {
         // Add Button to add sample
         this.singleSampleAddButton = new Button("Add Sample")
         // Add components to layout
-        formLayout.addComponents(this.additionalSampleId, this.singleSampleAddButton, this.uploadComponent)
+        HorizontalLayout row1 = new HorizontalLayout()
+        row1.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
 
-        this.addComponents(formLayout)
+        row1.addComponentsAndExpand(this.additionalSampleId, this.singleSampleAddButton, this.uploadComponent)
+        this.addComponents(row1)
     }
 
     private def registerListeners() {
