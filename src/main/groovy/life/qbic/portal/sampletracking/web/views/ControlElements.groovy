@@ -52,7 +52,10 @@ class ControlElements extends VerticalLayout {
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
-        statusSelectMenu.setItems(Status.values())
+        ArrayList<Status> filteredStatusList = new ArrayList<Status>([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
+        ArrayList<Status> selectableStatusList = getSelectableStatusList(filteredStatusList)
+        System.out.println(selectableStatusList)
+        statusSelectMenu.setItems(selectableStatusList)
 
         /* For Test purposes
         //TODO: remove in release
@@ -77,6 +80,14 @@ class ControlElements extends VerticalLayout {
         row2.addComponentsAndExpand(locationSelectMenu, statusSelectMenu)
         row3.addComponentsAndExpand(updateSampleButton, clearButton)
         this.addComponents(row1, row2, row3)
+    }
+
+    private ArrayList<Status> getSelectableStatusList(ArrayList<Status> filterList) {
+        ArrayList<Status> selectableStatusList = Status.values()
+        for (item in filterList) {
+            selectableStatusList.removeIf({ n -> (n.toString().toUpperCase() == item.toString().toUpperCase()) })
+        }
+        return selectableStatusList
     }
 
     private void registerListeners() {
