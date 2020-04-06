@@ -31,12 +31,6 @@ class PortletView extends VerticalLayout {
         this.setMargin(false)
         this.setSpacing(false)
         this.addComponentsAndExpand(this.sampleImport, this.sampleList, this.sampleControls)
-        // disable vertical spacing
-        components.forEach({component ->
-            if( component instanceof AbstractOrderedLayout) {
-                //component.setMargin(new MarginInfo(false, true))
-            }
-        })
         this.setSizeFull()
     }
 }
