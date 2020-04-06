@@ -27,6 +27,6 @@ class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
     @Override
     def invokeOnError(String msg) {
-        this.viewModel.failureNotifications << msg
+        this.viewModel.failureNotifications.add(msg)
     }
 }
