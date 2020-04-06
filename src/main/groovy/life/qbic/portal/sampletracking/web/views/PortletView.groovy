@@ -1,14 +1,15 @@
 package life.qbic.portal.sampletracking.web.views
 
-import com.vaadin.shared.ui.MarginInfo
-import com.vaadin.ui.AbstractOrderedLayout
+import com.vaadin.server.Page
 import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.Layout
-import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.Notification
+import groovy.util.logging.Log4j2
+import life.qbic.portal.sampletracking.web.StyledNotification
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 
-class PortletView extends VerticalLayout {
+@Log4j2
+class PortletView extends HorizontalLayout {
     final private PortletController controller
     final private ViewModel portletViewModel
 
@@ -25,6 +26,7 @@ class PortletView extends VerticalLayout {
         this.sampleControls = sampleModifyControls
         this.sampleImport = sampleImport
         initLayout()
+        registerListeners()
     }
 
     private def initLayout() {
@@ -32,5 +34,31 @@ class PortletView extends VerticalLayout {
         this.setSpacing(false)
         this.addComponentsAndExpand(this.sampleImport, this.sampleList, this.sampleControls)
         this.setSizeFull()
+    }
+
+    private def registerListeners() {
+
+        this.portletViewModel.successNotifications.addPropertyChangeListener { evt ->
+            if (evt instanceof ObservableList.ElementAddedEvent) {
+                // show notification
+                showNotification(evt.newValue.toString(), Notification.Type.HUMANIZED_MESSAGE)
+                // remove displayed message
+                portletViewModel.successNotifications.remove(evt.newValue)
+            }
+        }
+
+        this.portletViewModel.failureNotifications.addPropertyChangeListener { evt ->
+            if (evt instanceof ObservableList.ElementAddedEvent) {
+                // show notification
+                showNotification(evt.newValue.toString(), Notification.Type.ERROR_MESSAGE)
+                // remove displayed message
+                portletViewModel.failureNotifications.remove(evt.newValue)
+            }
+        }
+    }
+
+    private static def showNotification(String message, Notification.Type type) {
+        StyledNotification notification = new StyledNotification(message, type)
+        notification.show(Page.getCurrent())
     }
 }
