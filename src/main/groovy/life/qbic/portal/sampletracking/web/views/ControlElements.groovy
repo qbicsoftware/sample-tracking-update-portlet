@@ -37,7 +37,7 @@ class ControlElements extends VerticalLayout {
         userEmailField.setValue("You are not logged in.")
 
         // Add menu allowing location picking for new sample
-        locationSelectMenu = new NativeSelect<>()
+        locationSelectMenu = new NativeSelect<>("New Sample Location")
         locationSelectMenu.setItems(viewModel.availableLocations)
         /* For Test purposes
         //TODO remove in release
@@ -45,12 +45,12 @@ class ControlElements extends VerticalLayout {
         */
 
         // Add menu allowing date picking for new sample
-        dateChooser = new DateField("Desired Arrival Date")
+        dateChooser = new DateField("New Arrival Date")
         dateChooser.setTextFieldEnabled(false)
         //TODO: choose date format to display
 
         // Add menu allowing status selection for new sample
-        statusSelectMenu = new NativeSelect<Status>("Desired Sample Status")
+        statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
         statusSelectMenu.setItems(Status.values())
 
