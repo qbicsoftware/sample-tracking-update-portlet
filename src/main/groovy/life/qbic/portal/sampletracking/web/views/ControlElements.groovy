@@ -32,7 +32,7 @@ class ControlElements extends VerticalLayout {
 
     private def initLayout() {
 
-        // Add textField showing email address of portal user
+        // Add text showing email address of portal user
         userEmailField = new Label()
         userEmailField.setValue("You are not logged in.")
 
