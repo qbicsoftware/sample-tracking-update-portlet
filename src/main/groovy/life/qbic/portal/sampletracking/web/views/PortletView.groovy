@@ -25,8 +25,9 @@ class PortletView extends VerticalLayout {
     }
 
     private def initLayout() {
+        this.setMargin(false)
+        this.setSpacing(false)
+        this.addComponentsAndExpand(this.sampleImport, this.sampleList, this.sampleControls)
         this.setSizeFull()
-
-        this.addComponents(this.sampleImport, this.sampleList, this.sampleControls)
     }
 }
