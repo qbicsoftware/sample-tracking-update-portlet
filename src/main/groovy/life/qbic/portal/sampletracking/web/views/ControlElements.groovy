@@ -73,15 +73,6 @@ statusSelectMenu.setItems(selectableStatusOptions)
         this.addComponents(row1, row2, row3)
     }
 
-    // Method which filters unwanted Status elements from Sample Status enumeration and returns filtered Status list
-    private ArrayList<Status> getSelectableStatusList(ArrayList<Status> filterList) {
-        ArrayList<Status> selectableStatusList = Status.values()
-        for (item in filterList) {
-            selectableStatusList.removeIf({ n -> (n.toString().toUpperCase() == item.toString().toUpperCase()) })
-        }
-        return selectableStatusList
-    }
-
     private void registerListeners() {
 
         // Add listener to update button to upload Sample changes selected in view
