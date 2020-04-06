@@ -25,7 +25,7 @@ class ControlElements extends VerticalLayout {
 
     private ControlElements() {
         //prevent default constructor initialization
-        throw new AssertionError("${ControlElements.getSimpleName()} cannot be initialized by the its default constructor.")
+        throw new AssertionError("${ControlElements.getSimpleName()} cannot be initialized by its default constructor.")
     }
     ControlElements(PortletController portletController, ViewModel viewModel, String userEmail) {
         super()
