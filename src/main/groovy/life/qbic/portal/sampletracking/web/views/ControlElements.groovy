@@ -32,17 +32,13 @@ class ControlElements extends VerticalLayout {
 
     private def initLayout() {
 
-        // Add textfield showing email address of portal user
+        // Add textField showing email address of portal user
         userEmailField = new Label()
         userEmailField.setValue("You are not logged in.")
 
         // Add menu allowing location picking for new sample
         locationSelectMenu = new NativeSelect<>("New Sample Location")
         locationSelectMenu.setItems(viewModel.availableLocations)
-        /* For Test purposes
-        //TODO remove in release
-        locationSelectMenu.setItems("QBiC", "Home Office", "Laboratory", "Shipping")
-        */
 
         // Add menu allowing date picking for new sample
         dateChooser = new DateField("New Arrival Date")
@@ -54,13 +50,7 @@ class ControlElements extends VerticalLayout {
         statusSelectMenu.setEmptySelectionAllowed(false)
         ArrayList<Status> filteredStatusList = new ArrayList<Status>([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
         ArrayList<Status> selectableStatusList = getSelectableStatusList(filteredStatusList)
-        System.out.println(selectableStatusList)
         statusSelectMenu.setItems(selectableStatusList)
-
-        /* For Test purposes
-        //TODO: remove in release
-        sampleSelectMenu.setItems("Waiting", "Processing", "Processed")
-        */
 
         // Add button enabling sample update to SampleList
         updateSampleButton = new Button("Update Samples")
@@ -82,6 +72,7 @@ class ControlElements extends VerticalLayout {
         this.addComponents(row1, row2, row3)
     }
 
+    // Method which filters unwanted Status elements from Sample Status enumeration and returns filtered Status list
     private ArrayList<Status> getSelectableStatusList(ArrayList<Status> filterList) {
         ArrayList<Status> selectableStatusList = Status.values()
         for (item in filterList) {
@@ -93,13 +84,6 @@ class ControlElements extends VerticalLayout {
     private void registerListeners() {
 
         // Add listener to update button to upload Sample changes selected in view
-
-        //ToDo Determine how Samples from Samplelist can be connected to user selected location, date and Status
-     //   def selectedSampleIds = viewModel.requestSampleList()
-
-        //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
-      //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
-        //Add listener to clear button to remove add samples to SampleList
         this.clearButton.addClickListener({ event -> this.viewModel.samples.clear() })
 
     }
