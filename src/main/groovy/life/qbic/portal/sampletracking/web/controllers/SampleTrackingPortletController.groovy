@@ -53,7 +53,8 @@ class SampleTrackingPortletController implements PortletController {
     @Override
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus, LocalDate date) {
         Location location = desiredLocation
-        location.arrivalDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+        location?.arrivalDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())
+        location?.status = desiredStatus
 
         for (sampleId in sampleIds) {
             this.sampleUpdateInput.setCurrentSampleLocation(sampleId, location)

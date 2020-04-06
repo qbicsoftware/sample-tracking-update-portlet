@@ -4,9 +4,12 @@ import com.vaadin.data.provider.ListDataProvider
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
+import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.ViewModel
+
+import java.time.LocalDate
 
 @Log4j2
 class ControlElements extends VerticalLayout {
@@ -53,12 +56,14 @@ class ControlElements extends VerticalLayout {
         // Add menu allowing date picking for new sample
         dateChooser = new DateField("New Arrival Date")
         dateChooser.setTextFieldEnabled(false)
-        //TODO: choose date format to display
+        dateChooser.setValue(LocalDate.now())
 
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
         statusSelectMenu.setItems(Status.values())
+        // Set a default value for the status
+        statusSelectMenu.setValue(Status.WAITING)
 
 
         // Add button enabling sample update to SampleList
@@ -89,13 +94,18 @@ class ControlElements extends VerticalLayout {
      //   def selectedSampleIds = viewModel.requestSampleList()
         this.updateSampleButton.addClickListener({event ->
                 this.controller.updateSamples(
-                        viewModel.samples.asList(),
+                        viewModel.samples.toList().collect { it.code },
                         locationSelectMenu.getValue(),
                         statusSelectMenu.getValue(),
                         dateChooser.getValue()
                 )
 
         })
+
+        this.locationSelectMenu.addAttachListener({event ->
+            this.locationSelectMenu.selectedItem = this.viewModel.availableLocations.get(0) as Location
+        }
+        )
 
         //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
       //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
