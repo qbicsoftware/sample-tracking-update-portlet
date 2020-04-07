@@ -12,6 +12,7 @@ import life.qbic.portal.sampletracking.web.ViewModel
 class ControlElementsPresenter implements QueryAvailableLocationsOutput {
 
     final private ViewModel viewModel
+
     private ControlElementsPresenter() {
         throw new AssertionError("Default constructor cannot be instantiated.")
     }
