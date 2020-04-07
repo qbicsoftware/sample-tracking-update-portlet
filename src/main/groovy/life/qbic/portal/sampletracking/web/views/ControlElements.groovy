@@ -1,24 +1,22 @@
 package life.qbic.portal.sampletracking.web.views
 
 import com.vaadin.data.provider.ListDataProvider
-import com.vaadin.shared.ui.datefield.DateResolution
 import com.vaadin.shared.ui.datefield.DateTimeResolution
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
-import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.ViewModel
+import life.qbic.portal.sampletracking.web.controllers.PortletController
 
-import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Log4j2
 class ControlElements extends VerticalLayout {
 
     final static List<Status> FORBIDDEN_STATUS_OPTIONS = new ArrayList([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
-
+    final static DATE_TIME_PATTERN = "yyyy-MM-ddT hh:mm:ss"
     final private PortletController controller
     final private ViewModel viewModel
 
@@ -54,11 +52,12 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setCaption("New Sample Location")
         locationSelectMenu.emptySelectionAllowed = false
         locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
-        locationSelectMenu.setItemCaptionGenerator({it -> it?.name ?: "unknown"})
+        locationSelectMenu.setItemCaptionGenerator({ it -> it?.name ?: "unknown" })
 
         // Add menu allowing date picking for new sample
         dateChooser = new DateTimeField("New Arrival Date")
-        dateChooser.setTextFieldEnabled(false)
+        dateChooser.setTextFieldEnabled(true)
+        dateChooser.setDateFormat(DATE_TIME_PATTERN)
         dateChooser.setResolution(DateTimeResolution.MINUTE)
         dateChooser.setValue(LocalDateTime.now())
 
