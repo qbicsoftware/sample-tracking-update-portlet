@@ -38,7 +38,6 @@ class ControlElements extends VerticalLayout {
         this.userEmail = userEmail
         initLayout()
         registerListeners()
-        portletController.queryAllLocationsForPerson(userEmail)
     }
 
     private def initLayout() {
@@ -104,13 +103,10 @@ class ControlElements extends VerticalLayout {
         })
 
         this.locationSelectMenu.addAttachListener({event ->
-            this.locationSelectMenu.selectedItem = this.viewModel.availableLocations.get(0) as Location
+            this.locationSelectMenu.selectedItem = this.viewModel.availableLocations?.get(0) as Location
         }
         )
 
-        //ToDo Date and responsible Persons are stored in Location, but arrivalDate gets selected here, how is this resolved?
-      //  this.updateSampleButton.addClickListener({ event -> controller.updateSamples(selectedSampleIds, locationSelectMenu.getValue(), statusSelectMenu.getValue()) })
-        //Add listener to clear button to remove add samples to SampleList
         this.clearButton.addClickListener({ event -> this.viewModel.samples.clear() })
 
     }

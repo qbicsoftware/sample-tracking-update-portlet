@@ -164,6 +164,8 @@ class DependencyManager {
         ControlElements sampleModifyControls
         try {
             def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in."
+            // set the appropriate fields in the view model
+            this.portletController.queryAllLocationsForPerson(userEmail)
             sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
         } catch (Exception e) {
             log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
