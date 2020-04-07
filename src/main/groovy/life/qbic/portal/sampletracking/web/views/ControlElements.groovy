@@ -14,6 +14,7 @@ import java.time.LocalDate
 @Log4j2
 class ControlElements extends VerticalLayout {
 
+    final static List<Status> FORBIDDEN_STATUS_OPTIONS = new ArrayList([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
 
     final private PortletController controller
     final private ViewModel viewModel
@@ -42,7 +43,7 @@ class ControlElements extends VerticalLayout {
 
     private def initLayout() {
 
-        // Add textfield showing email address of portal user
+        // Add text showing email address of portal user
         userEmailField = new Label()
         userEmailField.setValue(userEmail)
 
@@ -61,10 +62,13 @@ class ControlElements extends VerticalLayout {
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
-        statusSelectMenu.setItems(Status.values())
         // Set a default value for the status
         statusSelectMenu.setValue(Status.WAITING)
+        List<Status> selectableStatusOptions = Status.values().findAll { status ->
+            !(status in FORBIDDEN_STATUS_OPTIONS)
+        }
 
+        statusSelectMenu.setItems(selectableStatusOptions)
 
         // Add button enabling sample update to SampleList
         updateSampleButton = new Button("Update Samples")
@@ -89,9 +93,6 @@ class ControlElements extends VerticalLayout {
     private void registerListeners() {
 
         // Add listener to update button to upload Sample changes selected in view
-
-        //ToDo Determine how Samples from Samplelist can be connected to user selected location, date and Status
-     //   def selectedSampleIds = viewModel.requestSampleList()
         this.updateSampleButton.addClickListener({event ->
                 this.controller.updateSamples(
                         viewModel.samples.toList().collect { it.code },

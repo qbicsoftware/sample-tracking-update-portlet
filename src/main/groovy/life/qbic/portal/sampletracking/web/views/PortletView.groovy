@@ -3,13 +3,14 @@ package life.qbic.portal.sampletracking.web.views
 import com.vaadin.server.Page
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Notification
+import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.portal.sampletracking.web.StyledNotification
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 @Log4j2
-class PortletView extends HorizontalLayout {
+class PortletView extends VerticalLayout {
     final private PortletController controller
     final private ViewModel portletViewModel
 
