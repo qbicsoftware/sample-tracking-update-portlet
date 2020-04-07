@@ -1,6 +1,7 @@
 package life.qbic.portal.sampletracking.datasources
 
 import groovy.util.logging.Log4j2
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.HttpClient
@@ -78,29 +79,39 @@ class SampleTracker {
             URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAddress")
 
             HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(user.name, user.password)
-            HttpResponse<List> response
 
-            client.withCloseable {
-                response = it.toBlocking().exchange(request)
+            HttpResponse<?> response
+
+            try {
+                response = client.withCloseable { it.toBlocking().exchange(request,
+                                                    Argument.of(List.class, Location.class))}
+            }
+            catch(HttpClientResponseException e) {
+                response = e.response
+                log.error("Response code was greater or equal to 400.", e)
+                if (response?.status?.code == 400) {
+                    throw new SampleTrackingQueryException("Invalid email $emailAddress requested.")
+                } else if (response?.status?.code == 404) {
+                    throw new SampleTrackingQueryException("Location for requested email address $emailAddress  could not be found.")
+                } else if (response?.status?.code != 200) {
+                    throw new SampleTrackingQueryException("Request for current location failed.")
+                }
             }
 
-            if (response?.status?.code != 200) {
-                throw new SampleTrackingQueryException("Request for current location failed.")
-            }
-            if (!response?.body() instanceof List) {
-                throw new SampleTrackingQueryException("Did not receive a valid List response.")
+            if (response.getBody().empty()) {
+                log.info("No available location for person with email $emailAddress")
             }
 
-            return response?.body()
+            final List<Location> availableLocations = response.getBody().get()
+            return availableLocations
         }
-
 
         @Override
         def updateSampleLocation(String sampleId, Location updatedLocation) throws SampleTrackingUpdateException {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updateLocationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation")
 
-            HttpRequest request = HttpRequest.POST(updateLocationUri, updatedLocation).basicAuth(user.name, user.password)
+            HttpRequest request = HttpRequest.PUT(updateLocationUri, updatedLocation).basicAuth(user.name, user.password)
             HttpResponse response
 
             client.withCloseable {

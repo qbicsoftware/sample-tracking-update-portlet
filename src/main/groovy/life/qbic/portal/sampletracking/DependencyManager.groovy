@@ -1,27 +1,25 @@
 package life.qbic.portal.sampletracking
 
-import com.vaadin.ui.Upload
+
 import groovy.util.logging.Log4j2
-import life.qbic.datamodel.samples.Location
-import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.services.ServiceUser
-import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
-import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
-import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
+import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
+import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
+import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySample
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateDataSource
 import life.qbic.portal.sampletracking.trackinginformation.update.UpdateSampleTrackingInfo
-import life.qbic.portal.sampletracking.datasources.SampleTracker
-import life.qbic.portal.sampletracking.web.*
+import life.qbic.portal.sampletracking.web.ViewModel
+import life.qbic.portal.sampletracking.web.controllers.SampleTrackingPortletController
 import life.qbic.portal.sampletracking.web.presenters.ControlElementsPresenter
 import life.qbic.portal.sampletracking.web.presenters.SampleListPresenter
 import life.qbic.portal.sampletracking.web.views.ControlElements
 import life.qbic.portal.sampletracking.web.views.PortletView
 import life.qbic.portal.sampletracking.web.views.SampleImport
 import life.qbic.portal.sampletracking.web.views.SampleList
-
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
+import life.qbic.portal.utils.PortalUtils
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.Service
 import life.qbic.services.ServiceConnector
@@ -62,7 +60,7 @@ class DependencyManager {
 
         // setup view models
         try {
-            this.viewModel = new ViewModel(new ArrayList<Sample>(), new ArrayList<Location>(), new ArrayList<String>(), new ArrayList<String>())
+            this.viewModel = new ViewModel()
         } catch (Exception e) {
             log.error("Unexpected excpetion during ${ViewModel.getSimpleName()} view model setup.", e)
             throw e
@@ -165,7 +163,10 @@ class DependencyManager {
 
         ControlElements sampleModifyControls
         try {
-            sampleModifyControls = new ControlElements(this.portletController, this.viewModel)
+            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in."
+            // set the appropriate fields in the view model
+            this.portletController.queryAllLocationsForPerson(userEmail)
+            sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
         } catch (Exception e) {
             log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e

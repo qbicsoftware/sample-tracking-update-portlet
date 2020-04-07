@@ -7,6 +7,9 @@ import life.qbic.portal.sampletracking.trackinginformation.query.locations.Query
 import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySampleInput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateInput
 
+import java.time.LocalDate
+import java.time.ZoneId
+
 @Log4j2
 class SampleTrackingPortletController implements PortletController {
 
@@ -48,10 +51,13 @@ class SampleTrackingPortletController implements PortletController {
     }
 
     @Override
-    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus) {
+    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus, LocalDate date) {
+        Location location = desiredLocation
+        location?.arrivalDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())
+        location?.status = desiredStatus
+
         for (sampleId in sampleIds) {
-            this.sampleUpdateInput.setCurrentSampleLocation(sampleId, desiredLocation)
-            this.sampleUpdateInput.setSampleStatus(sampleId, desiredStatus)
+            this.sampleUpdateInput.setCurrentSampleLocation(sampleId, location)
         }
     }
 }

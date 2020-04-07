@@ -27,8 +27,9 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutp
     }
 
     @Override
-    void updateFinished() {
-        viewModel.samples.clear()
+    void updateFinished(String sampleId) {
+        viewModel.successNotifications.add("Sample $sampleId has been updated." )
+        viewModel.samples.removeAll {  sample -> (sample as Sample).code == sampleId }
     }
 
     @Override

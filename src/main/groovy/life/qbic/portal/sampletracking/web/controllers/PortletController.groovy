@@ -4,6 +4,8 @@ import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 
+import java.time.LocalDate
+
 interface PortletController {
 
     //query
@@ -15,5 +17,5 @@ interface PortletController {
 
     void selectSamplesFromFile(FileOutputStream uploadedFile)
 
-    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus)
+    void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus, LocalDate date)
 }

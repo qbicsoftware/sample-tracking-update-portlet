@@ -1,11 +1,15 @@
 package life.qbic.portal.sampletracking.web.views
 
+import com.vaadin.data.provider.ListDataProvider
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
+import life.qbic.datamodel.samples.Sample
 import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.ViewModel
+
+import java.time.LocalDate
 
 @Log4j2
 class ControlElements extends VerticalLayout {
@@ -21,12 +25,17 @@ class ControlElements extends VerticalLayout {
     private NativeSelect<Location> locationSelectMenu
     private NativeSelect<Status> statusSelectMenu
     private DateField dateChooser
+    private String userEmail
 
-
-    ControlElements(PortletController portletController, ViewModel viewModel) {
+    private ControlElements() {
+        //prevent default constructor initialization
+        throw new AssertionError("${ControlElements.getSimpleName()} cannot be initialized by its default constructor.")
+    }
+    ControlElements(PortletController portletController, ViewModel viewModel, String userEmail) {
         super()
         this.controller = portletController
         this.viewModel = viewModel
+        this.userEmail = userEmail
         initLayout()
         registerListeners()
     }
@@ -35,21 +44,25 @@ class ControlElements extends VerticalLayout {
 
         // Add text showing email address of portal user
         userEmailField = new Label()
-        userEmailField.setValue("You are not logged in.")
+        userEmailField.setValue(userEmail)
 
         // Add menu allowing location picking for new sample
-        locationSelectMenu = new NativeSelect<>("New Sample Location")
-        locationSelectMenu.setItems(viewModel.availableLocations)
+        locationSelectMenu = new NativeSelect<>()
+        locationSelectMenu.setCaption("Available locations")
+        locationSelectMenu.emptySelectionAllowed = false
+        locationSelectMenu.setDataProvider(new ListDataProvider<>(viewModel.availableLocations))
+        locationSelectMenu.setItemCaptionGenerator({it -> it?.name ?: "unknown"})
 
         // Add menu allowing date picking for new sample
         dateChooser = new DateField("New Arrival Date")
         dateChooser.setTextFieldEnabled(false)
-        //TODO: choose date format to display
+        dateChooser.setValue(LocalDate.now())
 
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
-
+        // Set a default value for the status
+        statusSelectMenu.setValue(Status.WAITING)
         List<Status> selectableStatusOptions = Status.values().findAll { status ->
             !(status in FORBIDDEN_STATUS_OPTIONS)
         }
@@ -79,6 +92,21 @@ class ControlElements extends VerticalLayout {
     private void registerListeners() {
 
         // Add listener to update button to upload Sample changes selected in view
+        this.updateSampleButton.addClickListener({event ->
+                this.controller.updateSamples(
+                        viewModel.samples.toList().collect { it.code },
+                        locationSelectMenu.getValue(),
+                        statusSelectMenu.getValue(),
+                        dateChooser.getValue()
+                )
+
+        })
+
+        this.locationSelectMenu.addAttachListener({event ->
+            this.locationSelectMenu.selectedItem = this.viewModel.availableLocations?.get(0) as Location
+        }
+        )
+
         this.clearButton.addClickListener({ event -> this.viewModel.samples.clear() })
 
     }
