@@ -9,7 +9,7 @@
 		<version>2.1.0</version>
 	</parent>
 	<artifactId>sample-tracking-update-portlet</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Sample Tracking Update Portlet</name>
 	<url>http://github.com/qbicsoftware/sample-tracking-update-portlet</url>
 	<description>Portlet to update sample status</description>
