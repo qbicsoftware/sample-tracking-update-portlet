@@ -1,6 +1,8 @@
 package life.qbic.portal.sampletracking.web.views
 
 import com.vaadin.data.provider.ListDataProvider
+import com.vaadin.shared.ui.datefield.DateResolution
+import com.vaadin.shared.ui.datefield.DateTimeResolution
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
@@ -10,6 +12,7 @@ import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.ViewModel
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Log4j2
 class ControlElements extends VerticalLayout {
@@ -24,7 +27,7 @@ class ControlElements extends VerticalLayout {
     private Button updateSampleButton
     private NativeSelect<Location> locationSelectMenu
     private NativeSelect<Status> statusSelectMenu
-    private DateField dateChooser
+    private DateTimeField dateChooser
     private String userEmail
 
     private ControlElements() {
@@ -54,9 +57,10 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setItemCaptionGenerator({it -> it?.name ?: "unknown"})
 
         // Add menu allowing date picking for new sample
-        dateChooser = new DateField("New Arrival Date")
+        dateChooser = new DateTimeField("New Arrival Date")
         dateChooser.setTextFieldEnabled(false)
-        dateChooser.setValue(LocalDate.now())
+        dateChooser.setResolution(DateTimeResolution.MINUTE)
+        dateChooser.setValue(LocalDateTime.now())
 
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
