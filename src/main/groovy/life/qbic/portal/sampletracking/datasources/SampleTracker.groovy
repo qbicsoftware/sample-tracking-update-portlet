@@ -111,7 +111,7 @@ class SampleTracker {
             HttpClient client = RxHttpClient.create(service.rootUrl)
             URI updateLocationUri = new URI("${service.rootUrl.toExternalForm()}/samples/$sampleId/currentLocation")
 
-            HttpRequest request = HttpRequest.POST(updateLocationUri, updatedLocation).basicAuth(user.name, user.password)
+            HttpRequest request = HttpRequest.PUT(updateLocationUri, updatedLocation).basicAuth(user.name, user.password)
             HttpResponse response
 
             client.withCloseable {

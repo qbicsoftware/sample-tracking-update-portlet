@@ -58,7 +58,6 @@ class SampleTrackingPortletController implements PortletController {
 
         for (sampleId in sampleIds) {
             this.sampleUpdateInput.setCurrentSampleLocation(sampleId, location)
-            this.sampleUpdateInput.setSampleStatus(sampleId, desiredStatus)
         }
     }
 }
