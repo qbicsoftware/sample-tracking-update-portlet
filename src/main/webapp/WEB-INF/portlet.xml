@@ -15,7 +15,7 @@
 
 		<init-param>
 			<name>UI</name>
-			<value>life.qbic.portal.portlet.SampleTrackingUpdatePortlet</value>
+			<value>life.qbic.portal.sampletracking.SampleUpdatePortlet</value>
 		</init-param>
 
 		<init-param>

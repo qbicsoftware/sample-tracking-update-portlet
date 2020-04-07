@@ -17,7 +17,7 @@
 
 		<init-param>
 			<param-name>UI</param-name>
-			<param-value>life.qbic.portal.portlet.SampleTrackingUpdatePortlet</param-value>
+			<param-value>life.qbic.portal.sampletracking.SampleUpdatePortlet</param-value>
 		</init-param>
 
 	</servlet>
