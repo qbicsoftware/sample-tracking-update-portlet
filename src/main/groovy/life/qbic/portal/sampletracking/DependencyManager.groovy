@@ -1,11 +1,12 @@
 
 package life.qbic.portal.sampletracking
 
-import life.qbic.openbis.openbisclient.OpenBisClient
 import life.qbic.portal.Styles
 import life.qbic.portal.utils.PortalUtils
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.services.ServiceUser
+import life.qbic.portal.sampletracking.datasources.OpenbisDataSource
+import life.qbic.portal.sampletracking.datasources.SampleManagementDataSource
 import life.qbic.portal.sampletracking.datasources.SampleTracker
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleTrackingQueryDataSource
 import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocations
@@ -40,6 +41,8 @@ class DependencyManager {
     private QuerySample querySampleInteractor
     private UpdateSampleTrackingInfo updateInfoInteractor
     private ViewModel viewModel
+    
+    private SampleManagementDataSource sampleManagementDataSource
 
     DependencyManager() {
         initializeDependencies()
@@ -57,6 +60,21 @@ class DependencyManager {
             log.error("Could not setup sample tracking service.", e)
         }
 
+        // set up openBIS connection and data management system object
+        def userID = "not logged in"
+        try {
+            userID = PortalUtils.getScreenName()
+        } catch (NullPointerException e) {
+            log.error("User not logged into Liferay. They won't be able to see samples.")
+        }
+        try {
+            this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
+        } catch (Exception e) {
+            Styles.notification("openBIS connection error",
+                "Could not connect to the data management system.", Styles.NotificationType.ERROR)
+            log.error("Error when trying to connect to openBIS.", e)
+        }
+        
         // setup view models
         try {
             this.viewModel = new ViewModel()
@@ -121,25 +139,7 @@ class DependencyManager {
         } catch (Exception e) {
             log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
-        def userID = "not logged in"
-        try {
-            userID = PortalUtils.getScreenName()
-        } catch (NullPointerException e) {
-            log.error("User not logged into Liferay. They won't be able to see samples.")
-        }
-        OpenBisClient openbis
-        Set<String> spaces = new HashSet<>()
-        try {
-            log.info("Trying to connect to openBIS")
-            openbis = new OpenBisClient(configManager.getDataSourceUser(), configManager.getDataSourcePassword(), configManager.getDataSourceUrl())
-            openbis.login()
-            log.info("Fetching user spaces for " + userID)
-            spaces.addAll(openbis.getUserSpaces(userID))
-        } catch (Exception e) {
-            Styles.notification("openBIS connection error",
-                "Could not connect to the data management system.", Styles.NotificationType.ERROR)
-            log.error("Error when trying to connect to openBIS.", e)
-        }
+        
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
             this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter, openbis, spaces)
