@@ -1,7 +1,6 @@
 
 package life.qbic.portal.sampletracking
 
-import life.qbic.portal.Styles
 import life.qbic.portal.utils.PortalUtils
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.services.ServiceUser
@@ -70,8 +69,6 @@ class DependencyManager {
         try {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
         } catch (Exception e) {
-            Styles.notification("openBIS connection error",
-                "Could not connect to the data management system.", Styles.NotificationType.ERROR)
             log.error("Error when trying to connect to openBIS.", e)
         }
         
