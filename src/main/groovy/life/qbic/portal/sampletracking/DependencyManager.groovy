@@ -1,6 +1,9 @@
+
 package life.qbic.portal.sampletracking
 
-
+import life.qbic.openbis.openbisclient.OpenBisClient
+import life.qbic.portal.Styles
+import life.qbic.portal.utils.PortalUtils
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.services.ServiceUser
 import life.qbic.portal.sampletracking.datasources.SampleTracker
@@ -19,7 +22,6 @@ import life.qbic.portal.sampletracking.web.views.SampleImport
 import life.qbic.portal.sampletracking.web.views.SampleList
 import life.qbic.portal.utils.ConfigurationManager
 import life.qbic.portal.utils.ConfigurationManagerFactory
-import life.qbic.portal.utils.PortalUtils
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.Service
 import life.qbic.services.ServiceConnector
@@ -32,8 +34,6 @@ class DependencyManager {
     private PortletView portletView
 
     private final List<Service> trackingServices = new ArrayList<>()
-
-    private ServiceUser serviceUser
 
     private ConfigurationManager configManager
     private QueryAvailableLocations queryAvailableLocationsInteractor
@@ -49,7 +49,6 @@ class DependencyManager {
 
         // read session information
         configManager = ConfigurationManagerFactory.getInstance()
-        serviceUser = configManager.getServiceUser()
 
         // search for tracking services
         try {
@@ -107,6 +106,7 @@ class DependencyManager {
     private void setupUseCaseInteractors() {
         def sampleListPresenter
         def controlElementsPresenter
+        def serviceUser = configManager.getServiceUser()
         try {
             sampleListPresenter = new SampleListPresenter(this.viewModel)
             controlElementsPresenter = new ControlElementsPresenter(this.viewModel)
@@ -116,21 +116,38 @@ class DependencyManager {
             log.error("Unexpected exception during presenter setup.", e)
         }
         try {
-            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
+            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
             this.queryAvailableLocationsInteractor = new QueryAvailableLocations(trackingInfoCenter, controlElementsPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
-
+        def userID = "not logged in"
         try {
-            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), this.serviceUser)
-            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
+            userID = PortalUtils.getScreenName()
+        } catch (NullPointerException e) {
+            log.error("User not logged into Liferay. They won't be able to see samples.")
+        }
+        OpenBisClient openbis
+        Set<String> spaces = new HashSet<>()
+        try {
+            log.info("Trying to connect to openBIS")
+            openbis = new OpenBisClient(configManager.getDataSourceUser(), configManager.getDataSourcePassword(), configManager.getDataSourceUrl())
+            openbis.login()
+            log.info("Fetching user spaces for " + userID)
+            spaces.addAll(openbis.getUserSpaces(userID))
+        } catch (Exception e) {
+            Styles.notification("openBIS connection error",
+                "Could not connect to the data management system.", Styles.NotificationType.ERROR)
+            log.error("Error when trying to connect to openBIS.", e)
+        }
+        try {
+            SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter, openbis, spaces)
         } catch (Exception e) {
             log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
-
         try {
-            SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), this.serviceUser)
+            SampleTrackingUpdateDataSource trackingUpdateCenter = SampleTracker.createSampleTrackingUpdate(trackingServices.get(0), serviceUser)
             this.updateInfoInteractor = new UpdateSampleTrackingInfo(trackingUpdateCenter, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${UpdateSampleTrackingInfo.getSimpleName()} use case", e)
