@@ -45,8 +45,7 @@ class QuerySample implements QuerySampleInput {
       this.querySampleOutput.publishSample(sample)
     } catch (SampleTrackingQueryException e) {
       log.error("Query ${sampleId} failed.", e)
-      // We pass the original error message with a generic notification to the output port
-      this.querySampleOutput.invokeOnError "Could not retrieve information for sample $sampleId. ${e.message}"
+      this.querySampleOutput.invokeOnError "Could not retrieve information for sample $sampleId."
     } catch (OpenbisAuthorizationException e) {
       log.error(e)
       this.querySampleOutput.invokeOnError "Could not retrieve information for sample $sampleId. You are not part of this project space."
