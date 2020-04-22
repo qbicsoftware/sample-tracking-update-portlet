@@ -36,7 +36,8 @@ class QuerySample implements QuerySampleInput {
   @Override
   def querySampleById(String sampleId) {
     try {
-      sampleManagementDataSource.checkUserAuthorization(sampleId)
+     if (sampleManagementDataSource. isUserAuthorizedForSample(sampleId) {
+
 
       Location sampleLocation = sampleTrackingDataSource.currentSampleLocation(sampleId)
       Sample sample = new Sample()
