@@ -22,14 +22,12 @@ class OpenbisDataSource implements SampleManagementDataSource {
   }
 
   @Override
-  public void checkUserAuthorization(String sampleId) {
+  public boolean isUserAuthorizedForSample(String sampleId) {
     List<Sample> res = openbis.searchSampleByCode(sampleId)
-    if(res.size() == 0) {
+    if(res.size() < 1 ) {
       throw new SampleNotInOpenbisException("User tried searching for $sampleId, but sample does not exist in openBIS. Unable to verify authorization.")
     }
 
-    if(!userSpaces.contains(res.get(0).getSpace().getCode())) {
-      throw new OpenbisAuthorizationException("User tried searching for $sampleId, but user is not allowed to view this project.")
-    }
+    return !userSpaces.contains(res.get(0).getSpace().getCode())
   }
 }
