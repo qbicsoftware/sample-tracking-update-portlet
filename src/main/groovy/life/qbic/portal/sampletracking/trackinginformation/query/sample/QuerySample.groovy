@@ -27,7 +27,7 @@ class QuerySample implements QuerySampleInput {
   QuerySample(SampleTrackingQueryDataSource dataSource, SampleManagementDataSource sampleManagementDataSource, QuerySampleOutput querySampleOutput) {
     this.sampleTrackingDataSource = dataSource
     this.querySampleOutput = querySampleOutput
-    this.sampleManagementDataSource = sampleManagementDataSource;
+    this.sampleManagementDataSource = sampleManagementDataSource
   }
 
   @Override
