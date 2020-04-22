@@ -39,11 +39,14 @@ class QuerySample implements QuerySampleInput {
      if (sampleManagementDataSource. isUserAuthorizedForSample(sampleId) {
 
 
-      Location sampleLocation = sampleTrackingDataSource.currentSampleLocation(sampleId)
-      Sample sample = new Sample()
-      sample.setCurrentLocation(sampleLocation)
-      sample.setCode(sampleId)
-      this.querySampleOutput.publishSample(sample)
+        Location sampleLocation = sampleTrackingDataSource.currentSampleLocation(sampleId)
+        Sample sample = new Sample()
+        sample.setCurrentLocation(sampleLocation)
+        sample.setCode(sampleId)
+        this.querySampleOutput.publishSample(sample)
+      } else {
+        throw new OpenbisAuthorizationException("User tried searching for $sampleId, but user is not allowed to view this project.")
+      }
     } catch (SampleTrackingQueryException e) {
       log.error("Query ${sampleId} failed.", e)
       this.querySampleOutput.invokeOnError "Could not retrieve information for sample $sampleId."
