@@ -3,7 +3,6 @@ package life.qbic.portal.sampletracking.trackinginformation.query.sample
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Sample
-import life.qbic.openbis.openbisclient.OpenBisClient
 import life.qbic.portal.sampletracking.datasources.SampleManagementDataSource
 import life.qbic.portal.sampletracking.trackinginformation.query.OpenbisAuthorizationException
 import life.qbic.portal.sampletracking.trackinginformation.query.SampleNotInOpenbisException
@@ -15,10 +14,8 @@ import life.qbic.portal.sampletracking.trackinginformation.query.locations.Query
 @Log4j2
 class QuerySample implements QuerySampleInput {
 
-  final OpenBisClient openbisClient
   final SampleTrackingQueryDataSource sampleTrackingDataSource
   final SampleManagementDataSource sampleManagementDataSource
-  final Set<String> openbisSpaces
 
   private QuerySampleOutput querySampleOutput
 

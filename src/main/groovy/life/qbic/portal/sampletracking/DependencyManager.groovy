@@ -139,7 +139,7 @@ class DependencyManager {
         
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
-            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter, openbis, spaces)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
