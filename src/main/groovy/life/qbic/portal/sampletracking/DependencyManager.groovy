@@ -64,7 +64,7 @@ class DependencyManager {
         try {
             userID = PortalUtils.getScreenName()
         } catch (NullPointerException e) {
-            log.error("User not logged into Liferay. They won't be able to see samples.")
+            log.error("User not logged into Liferay. They won't be able to see samples.", e)
         }
         try {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
