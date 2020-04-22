@@ -28,7 +28,7 @@ class OpenbisDataSource implements SampleManagementDataSource {
       throw new SampleNotInOpenbisException("User tried searching for $sampleId, but sample does not exist in openBIS. Unable to verify authorization.")
     }
 
-    if(!userSpaces.contains(res.get(0).getSpace())) {
+    if(!userSpaces.contains(res.get(0).getSpace().getCode())) {
       throw new OpenbisAuthorizationException("User tried searching for $sampleId, but user is not allowed to view this project.")
     }
   }
