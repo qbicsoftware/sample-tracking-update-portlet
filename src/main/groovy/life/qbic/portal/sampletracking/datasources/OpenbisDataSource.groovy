@@ -17,11 +17,11 @@ class OpenbisDataSource implements SampleManagementDataSource {
   public OpenbisDataSource(ConfigurationManager configManager, String userID) {
     log.info("Trying to connect to openBIS")
     String url = IApplicationServerApi.SERVICE_URL;
-    println url
     openbis = new OpenBisClient(configManager.getDataSourceUser(), configManager.getDataSourcePassword(), configManager.getDataSourceApiUrl())
     openbis.login()
     log.info("Fetching user spaces for " + userID)
     userSpaces.addAll(openbis.getUserSpaces(userID))
+    println userSpaces
   }
 
   @Override
@@ -31,6 +31,6 @@ class OpenbisDataSource implements SampleManagementDataSource {
       throw new SampleNotInOpenbisException("User tried searching for $sampleId, but sample does not exist in openBIS. Unable to verify authorization.")
     }
 
-    return !userSpaces.contains(res.get(0).getSpace().getCode())
+    return userSpaces.contains(res.get(0).getSpace().getCode())
   }
 }
