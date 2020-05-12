@@ -70,6 +70,7 @@ class DependencyManager {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
         } catch (Exception e) {
             log.error("Error when trying to connect to openBIS.", e)
+            throw e
         }
         
         // setup view models
