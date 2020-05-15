@@ -21,7 +21,6 @@ class OpenbisDataSource implements SampleManagementDataSource {
     openbis.login()
     log.info("Fetching user spaces for " + userID)
     userSpaces.addAll(openbis.getUserSpaces(userID))
-    println userSpaces
   }
 
   @Override
