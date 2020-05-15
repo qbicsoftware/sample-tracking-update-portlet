@@ -69,7 +69,7 @@ class DependencyManager {
         try {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
         } catch (Exception e) {
-            log.error("Error when trying to connect to openBIS.", e)
+            log.error("Error when trying to connect to openBIS.")
             throw e
         }
         
