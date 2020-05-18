@@ -69,7 +69,8 @@ class DependencyManager {
         try {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
         } catch (Exception e) {
-            log.error("Error when trying to connect to openBIS.", e)
+            log.error("Error when trying to connect to openBIS.")
+            throw e
         }
         
         // setup view models
@@ -139,7 +140,7 @@ class DependencyManager {
         
         try {
             SampleTrackingQueryDataSource trackingInfoCenter = SampleTracker.createSampleTrackingInformation(trackingServices.get(0), serviceUser)
-            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleListPresenter)
+            this.querySampleInteractor = new QuerySample(trackingInfoCenter, sampleManagementDataSource, sampleListPresenter)
         } catch (Exception e) {
             log.error("Could not setup ${QueryAvailableLocations.getSimpleName()} use case", e)
         }
