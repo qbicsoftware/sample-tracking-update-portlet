@@ -17,7 +17,7 @@ install:
 before_script: if [ "$VAADIN_CHARTS_LICENSE_CODE" != "" ]; then echo "$VAADIN_CHARTS_LICENSE_CODE"
   > ~/.vaadin.charts.developer.license; fi;
 script: mvn --quiet --activate-profiles !development-build,!release-build --settings
-  .travis.settings.xml clean cobertura:cobertura package
+  .travis.settings.xml clean install
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 deploy:
