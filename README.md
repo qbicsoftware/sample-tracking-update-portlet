@@ -11,7 +11,7 @@ Created by all the [contributors](https://github.com/qbicsoftware/sample-trackin
 A Liferay portlet to update the sample-tracking information of selected samples.
 
 ## Architecture
-![](portlet-architecture.png)
+![](interfaces_sample-tracking-update-portelt.png)
 
 
 ## How to Install
