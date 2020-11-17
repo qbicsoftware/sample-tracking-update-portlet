@@ -55,7 +55,7 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setItemCaptionGenerator({ it -> it?.name ?: "unknown" })
 
         // Add menu allowing date picking for new sample
-        dateChooser = new DateTimeField("New Arrival Date")
+        dateChooser = new DateTimeField("New Arrival Date (${TimeZone.getDefault().getID()})")
         dateChooser.setTextFieldEnabled(true)
         dateChooser.setDateFormat(DATE_TIME_PATTERN)
         dateChooser.setResolution(DateTimeResolution.MINUTE)
