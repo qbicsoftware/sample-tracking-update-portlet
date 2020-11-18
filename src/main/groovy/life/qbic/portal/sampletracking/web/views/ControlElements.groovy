@@ -10,13 +10,14 @@ import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Log4j2
 class ControlElements extends VerticalLayout {
 
     final static List<Status> FORBIDDEN_STATUS_OPTIONS = new ArrayList([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
-    final static DATE_TIME_PATTERN = "yyyy-MM-ddT hh:mm:ss"
+    final static DATE_TIME_PATTERN = "yyyy-MM-dd hh:mm:ss a z"
     final private PortletController controller
     final private ViewModel viewModel
 
@@ -55,7 +56,9 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setItemCaptionGenerator({ it -> it?.name ?: "unknown" })
 
         // Add menu allowing date picking for new sample
-        dateChooser = new DateTimeField("New Arrival Date (${TimeZone.getDefault().getID()})")
+        String timeZone = TimeZone.getDefault().getID()
+        dateChooser = new DateTimeField("New Arrival Date ($timeZone)")
+        dateChooser.setZoneId(ZoneId.of(timeZone))
         dateChooser.setTextFieldEnabled(true)
         dateChooser.setDateFormat(DATE_TIME_PATTERN)
         dateChooser.setResolution(DateTimeResolution.MINUTE)
