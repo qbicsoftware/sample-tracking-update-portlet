@@ -74,9 +74,9 @@ class SampleTracker {
         }
 
         @Override
-        List<Location> availableLocationsForPerson(String emailAddress) {
+        List<Location> availableLocationsForPerson(String email, String username) {
             HttpClient client = RxHttpClient.create(service.rootUrl)
-            URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations/$emailAddress")
+            URI locationsUri = new URI("${service.rootUrl.toExternalForm()}/locations?email=$email&username=$username")
 
             HttpRequest request = HttpRequest.GET(locationsUri).basicAuth(user.name, user.password)
 
@@ -90,16 +90,16 @@ class SampleTracker {
                 response = e.response
                 log.error("Response code was greater or equal to 400.", e)
                 if (response?.status?.code == 400) {
-                    throw new SampleTrackingQueryException("Invalid email $emailAddress requested.")
+                    throw new SampleTrackingQueryException("Invalid email $email.")
                 } else if (response?.status?.code == 404) {
-                    throw new SampleTrackingQueryException("Location for requested email address $emailAddress  could not be found.")
+                    throw new SampleTrackingQueryException("Location for requested email $email or username $username  could not be found.")
                 } else if (response?.status?.code != 200) {
                     throw new SampleTrackingQueryException("Request for current location failed.")
                 }
             }
 
             if (response.getBody().empty()) {
-                log.info("No available location for person with email $emailAddress")
+                log.info("No available location for person with email $email and username $username")
             }
 
             final List<Location> availableLocations = response.getBody().get()

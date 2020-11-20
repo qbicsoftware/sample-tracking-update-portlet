@@ -7,5 +7,5 @@ interface SampleTrackingQueryDataSource {
 
     Location currentSampleLocation(String sampleId)
 
-    List<Location> availableLocationsForPerson(String emailAddress)
+    List<Location> availableLocationsForPerson(String email, String username)
 }

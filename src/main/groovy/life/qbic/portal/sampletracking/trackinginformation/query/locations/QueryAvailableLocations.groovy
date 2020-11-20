@@ -25,13 +25,13 @@ class QueryAvailableLocations implements QueryAvailableLocationsInput {
     }
 
     @Override
-    def availableLocationsForPerson(String email) {
+    def availableLocationsForPerson(String email, String username) {
         try {
-            List<Location> locationsForPerson = sampleTrackingDataSource.availableLocationsForPerson(email)
+            List<Location> locationsForPerson = sampleTrackingDataSource.availableLocationsForPerson(email, username)
             this.availableLocationsOutput.updateAvailableLocations(locationsForPerson)
         } catch (SampleTrackingQueryException e) {
             log.error e
-            this.availableLocationsOutput.invokeOnError "Could not get available locations for person $email"
+            this.availableLocationsOutput.invokeOnError "Could not get available locations for person $username ($email)"
         }
 
     }

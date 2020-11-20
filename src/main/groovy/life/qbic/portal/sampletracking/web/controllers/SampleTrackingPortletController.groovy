@@ -30,8 +30,8 @@ class SampleTrackingPortletController implements PortletController {
     }
 
     @Override
-    void queryAllLocationsForPerson(String email) {
-        queryAvailableLocationsInput.availableLocationsForPerson(email)
+    void queryAllLocationsForPerson(String email, String username) {
+        queryAvailableLocationsInput.availableLocationsForPerson(email, username)
     }
 
     @Override

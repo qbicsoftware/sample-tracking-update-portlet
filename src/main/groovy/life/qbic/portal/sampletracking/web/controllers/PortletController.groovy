@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 interface PortletController {
 
     //query
-    void queryAllLocationsForPerson(String email)
+    void queryAllLocationsForPerson(String email, String username)
     //selection
     void selectSamplesById(List<String> sampleIds)
 
