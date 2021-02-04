@@ -76,11 +76,13 @@ class UploadComponent extends VerticalLayout {
         return new SucceededListener() {
             @Override
             void uploadSucceeded(SucceededEvent event) {
-
                 Set<String> sampleIds = [] as Set
-
+                String separator = ","
                 try {
-                    sampleIds = new String(uploadContent.toByteArray()).split("\n") as Set
+                    Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
+                    for (line in inputLines) {
+                        sampleIds.add(line.split(separator)[0])
+                    }
                     fireUploadSuccessEvent(sampleIds)
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)
