@@ -1,10 +1,12 @@
 package life.qbic.portal.sampletracking.web.views.samplefile
 
-
+import com.vaadin.server.Page
 import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.declarative.DesignContext
 import groovy.util.logging.Log4j2
+import life.qbic.datamodel.identifiers.SampleCodeFunctions
+import life.qbic.portal.sampletracking.web.StyledNotification
 
 import static com.vaadin.ui.Upload.*
 
@@ -81,10 +83,12 @@ class UploadComponent extends VerticalLayout {
                 try {
                     Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
                     for (line in inputLines) {
-                        if (line.startsWith("Q")) {
-                            sampleIds.add(line.split(separator)[0])
+                        String sampleCode = line.split(separator)[0]
+                        if (SampleCodeFunctions.isQbicBarcode(sampleCode)) {
+                            sampleIds.add(sampleCode)
                         } else {
-                            //TODO inform the customer or log or sth :D 
+                            String invalidCodeMessage = "Entry '${sampleCode}' is not a valid QBiC Sample Code."
+                            log.error(invalidCodeMessage)
                         }
                     }
                     fireUploadSuccessEvent(sampleIds)
