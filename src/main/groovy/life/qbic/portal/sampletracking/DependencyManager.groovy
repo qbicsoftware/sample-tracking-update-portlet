@@ -120,8 +120,8 @@ class DependencyManager {
      * All Exceptions are handled and logged. Skips use cases where instantiation fails.
      */
     private void setupUseCaseInteractors() {
-        def sampleListPresenter
-        def controlElementsPresenter
+        SampleListPresenter sampleListPresenter
+        ControlElementsPresenter controlElementsPresenter
         def serviceUser = configManager.getServiceUser()
         try {
             sampleListPresenter = new SampleListPresenter(this.viewModel)
