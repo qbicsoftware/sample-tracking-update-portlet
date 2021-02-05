@@ -1,11 +1,9 @@
 package life.qbic.portal.sampletracking.web.views.samplefile
 
-
 import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
-import com.vaadin.ui.declarative.DesignContext
 import groovy.util.logging.Log4j2
-
+import life.qbic.datamodel.identifiers.SampleCodeFunctions
 import static com.vaadin.ui.Upload.*
 
 
@@ -76,11 +74,19 @@ class UploadComponent extends VerticalLayout {
         return new SucceededListener() {
             @Override
             void uploadSucceeded(SucceededEvent event) {
-
                 Set<String> sampleIds = [] as Set
-
+                String separator = ","
                 try {
-                    sampleIds = new String(uploadContent.toByteArray()).split("\n") as Set
+                    Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
+                    for (line in inputLines) {
+                        String sampleCode = line.split(separator)[0]
+                        if (SampleCodeFunctions.isQbicBarcode(sampleCode)) {
+                            sampleIds.add(sampleCode)
+                        } else {
+                            String invalidCodeMessage = "Entry '${sampleCode}' is not a valid QBiC Sample Code."
+                            log.error(invalidCodeMessage)
+                        }
+                    }
                     fireUploadSuccessEvent(sampleIds)
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)
