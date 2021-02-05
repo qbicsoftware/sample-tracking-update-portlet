@@ -1,13 +1,9 @@
 package life.qbic.portal.sampletracking.web.views.samplefile
 
-import com.vaadin.server.Page
 import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
-import com.vaadin.ui.declarative.DesignContext
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.identifiers.SampleCodeFunctions
-import life.qbic.portal.sampletracking.web.StyledNotification
-
 import static com.vaadin.ui.Upload.*
 
 
