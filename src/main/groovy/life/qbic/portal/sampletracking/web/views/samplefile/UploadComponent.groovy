@@ -81,8 +81,10 @@ class UploadComponent extends VerticalLayout {
                 try {
                     Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
                     for (line in inputLines) {
-                        if (line.capitalize().startsWith("Q")) {
+                        if (line.startsWith("Q")) {
                             sampleIds.add(line.split(separator)[0])
+                        } else {
+                            //TODO inform the customer or log or sth :D 
                         }
                     }
                     fireUploadSuccessEvent(sampleIds)
