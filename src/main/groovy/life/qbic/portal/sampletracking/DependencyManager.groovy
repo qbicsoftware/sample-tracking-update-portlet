@@ -62,7 +62,7 @@ class DependencyManager {
         // set up openBIS connection and data management system object
         def userID = "not logged in"
         try {
-            userID = PortalUtils.getScreenName() ?: configManager.getDataSourceUser()
+            userID = PortalUtils.getScreenName()
         } catch (NullPointerException e) {
             log.error("User not logged into Liferay. They won't be able to see samples.", e)
         }
