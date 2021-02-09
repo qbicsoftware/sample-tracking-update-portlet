@@ -32,14 +32,14 @@ This guide intends to showcase the features of the sample-tracking-update-portle
     * [Update Sample Status](#update-sample-status)
 * [Remove Selected Samples](#remove-selected-samples)
 
-###Select Samples
+### Select Samples
 
 The sample-tracking-update-portlet currently offers two methods for adding the samples to update.  
 This can be achieved by either uploading a *.csv file containing the Sample Ids in the first column 
 or by providing the Sample IDs directly.   
 Details for both methods are outlined below. 
 
-####Select Sample by ID
+#### Select Sample by ID
 The most convenient way of updating a singular sample is through the input of its sample code 
 into the "Sample ID" text field and pressing the "Add Sample Button". 
 ![add](readme-docs/screenshots/AddSampleById.png)
@@ -50,7 +50,7 @@ If the given sample ID is valid, the sample and its associated information will 
 Each subsequent Sample ID will be added to the "Samples to update" grid 
 ![add](readme-docs/screenshots/AddSampleByIdAgain.png)
  
-####Select Samples by File
+#### Select Samples by File
 It is also possible to select the samples of interest by 
 uploading one or multiple *.csv files containing the sample codes in the first column.
 ![add](readme-docs/screenshots/AddSampleByFile.png)
@@ -63,13 +63,13 @@ the samples and their associated information will appear in the sample grid.
 Subsequent Sample IDs from either a *.csv file or by direct input will also be added to the "Samples to update" grid. 
 ![add](readme-docs/screenshots/AddSampleByFileAgain.png)
  
-###Update Sample Information
+### Update Sample Information
 After the addition of the samples of interest, the user can update sample specific information,
 such as the sample arrival date, the sample location or the processing status of the sample.   
 Details for each of these methods are outlined below.   
 It should be noted that the change is applied to all samples in the "Samples to update" grid. 
 
-####Update Sample Date
+#### Update Sample Date
 To change the arrival date for all selected samples, 
 a new arrival date can be specified through manual user input 
 or by clicking on the calendar icon of the "New Arrival Date" Field 
@@ -79,17 +79,17 @@ After pressing the "Update Samples" button the arrival date of all currently sel
 
 <!--- ToDo How should this be shown, currently we don't show the date in the sample-update-portlet--->
 
-####Update Sample Location
+#### Update Sample Location
 To change the location for all selected samples, a new sample location can be selected in the "New Sample Location" dropdown selection.  
 ![add](readme-docs/screenshots/UpdateSampleLocation.png)
 
 After pressing the "Update Samples" button the location of all currently selected samples will be updated to the selected location.  
 ![add](readme-docs/screenshots/UpdateSampleLocationResult.png)
 
-####Update Sample Status
+#### Update Sample Status
 <!--- ToDo Update Readme section once the Sample Status were updated--->
 
-###Remove Selected Samples
+### Remove Selected Samples
 The only way to deselect samples is to clear the entire "Samples to update" grid of all added samples.
 ![add](readme-docs/screenshots/RemoveSampleFromList.png)
 
