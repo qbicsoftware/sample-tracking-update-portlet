@@ -62,7 +62,7 @@ class DependencyManager {
         // set up openBIS connection and data management system object
         def userID = "not logged in"
         try {
-            userID = PortalUtils.getScreenName() ?: configManager.getDataSourceUser()
+            userID = PortalUtils.getScreenName()
         } catch (NullPointerException e) {
             log.error("User not logged into Liferay. They won't be able to see samples.", e)
         }
@@ -178,7 +178,7 @@ class DependencyManager {
 
         ControlElements sampleModifyControls
         try {
-            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "steffen.greiner@uni-tuebingen.de"
+            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in"
             // set the appropriate fields in the view model
             this.portletController.queryAllLocationsForPerson(userEmail)
             sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
