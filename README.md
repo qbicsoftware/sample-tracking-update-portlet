@@ -87,7 +87,11 @@ After pressing the "Update Samples" button the location of all currently selecte
 ![add](readme-docs/screenshots/UpdateSampleLocationResult.png)
 
 #### Update Sample Status
-<!--- ToDo Update Readme section once the Sample Status were updated--->
+To change the status for all selected samples, a new sample status can be selected in the "New Sample Status" dropdown selection.  
+![add](readme-docs/screenshots/UpdateSampleStatus.png)
+
+After pressing the "Update Samples" button the status of all currently selected samples will be updated to the selected status.  
+![add](readme-docs/screenshots/UpdateSampleStatusResult.png)
 
 ### Remove Selected Samples
 The only way to deselect samples is to clear the entire "Samples to update" grid of all added samples.
