@@ -1,5 +1,6 @@
 package life.qbic.portal.sampletracking.web.views
 
+
 import com.vaadin.data.provider.ListDataProvider
 import com.vaadin.shared.ui.datefield.DateTimeResolution
 import com.vaadin.ui.*
@@ -11,12 +12,11 @@ import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @Log4j2
 class ControlElements extends VerticalLayout {
 
-    final static List<Status> FORBIDDEN_STATUS_OPTIONS = new ArrayList([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
+    final static List<Status> SAMPLE_STATUSES = [Status.SAMPLE_QC_PASS, Status.SAMPLE_QC_FAIL, Status.SEQUENCING, Status.SEQUENCING_COMPLETE]
     final static DATE_TIME_PATTERN = "yyyy-MM-dd hh:mm:ss a z"
     final private PortletController controller
     final private ViewModel viewModel
@@ -69,9 +69,7 @@ class ControlElements extends VerticalLayout {
         statusSelectMenu.setEmptySelectionAllowed(false)
         // Set a default value for the status
         statusSelectMenu.setValue(Status.WAITING)
-        List<Status> selectableStatusOptions = Status.values().findAll { status ->
-            !(status in FORBIDDEN_STATUS_OPTIONS)
-        }
+        List<Status> selectableStatusOptions = SAMPLE_STATUSES
 
         statusSelectMenu.setItems(selectableStatusOptions)
 
