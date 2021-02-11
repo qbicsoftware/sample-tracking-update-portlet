@@ -15,6 +15,14 @@
 	<url>http://github.com/qbicsoftware/sample-tracking-update-portlet</url>
 	<description>This application provides functionality to update and set the location and status of specific samples</description>
 	<packaging>war</packaging>
+	<!-- Since no distribution management was specified,
+	we need to explicitly set a dummy example here to allow for correct site generation-->
+	<distributionManagement>
+	<site>
+		<id>reportgeneration</id>
+		<url>reportgeneration.nonsense</url>
+	</site>
+</distributionManagement>
 	<!-- we only need to tell maven where to find our parent pom and other QBiC dependencies -->
 	<repositories>
 		<repository>
