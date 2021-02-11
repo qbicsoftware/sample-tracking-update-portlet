@@ -56,7 +56,25 @@
 			<name>QBiC Releases</name>
 			<url>http://qbic-repo.qbic.uni-tuebingen.de:8081/repository/maven-releases</url>
 		</repository>
+		<!-- Data-model-lib includes the everit dependency
+		making it necessary to include the jitpack repository where it is provided -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-central-plugins</id>
+			<url>c
+				https://repo.maven.apache.org/maven2
+			</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>qbic-plugins-2</id>
+			<url>https://qbic-repo.qbic.uni-tuebingen.de/repository/maven-releases</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>life.qbic</groupId>
@@ -97,6 +115,12 @@
 			<artifactId>groovy-json</artifactId>
 			<version>3.0.7</version>
 		</dependency>
+		<!-- Necessary since switch to Java 11 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
 
 		<!-- openBIS client -->
 		<dependency>
@@ -133,18 +157,11 @@
 			<plugin>
 				<groupId>org.codehaus.gmavenplus</groupId>
 				<artifactId>gmavenplus-plugin</artifactId>
-				<version>1.6.3</version>
-				<dependencies>
-					<!-- https://mvnrepository.com/artifact/org.codehaus.gmavenplus/gmavenplus-plugin -->
-					<dependency>
-						<groupId>org.codehaus.gmavenplus</groupId>
-						<artifactId>gmavenplus-plugin</artifactId>
-						<version>1.6.3</version>
-					</dependency>
-				</dependencies>
+				<version>1.12.0</version>
 				<executions>
 					<execution>
 						<goals>
+							<goal>execute</goal>
 							<goal>addSources</goal>
 							<goal>addTestSources</goal>
 							<goal>generateStubs</goal>
@@ -155,8 +172,45 @@
 							<goal>removeTestStubs</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>site</id>
+						<phase>site</phase>
+						<goals>
+							<goal>generateStubs</goal>
+							<goal>generateTestStubs</goal>
+							<goal>groovydoc</goal>
+							<goal>groovydocTests</goal>
+						</goals>
+					</execution>
 				</executions>
+				<configuration>
+					<groovyDocOutputDirectory>${project.build.directory}/site/gapidocs</groovyDocOutputDirectory>
+					<testGroovyDocOutputDirectory>${project.build.directory}/site/testgapidocs</testGroovyDocOutputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+			<plugin>
+				<groupId>life.qbic</groupId>
+				<artifactId>groovydoc-maven-plugin</artifactId>
+				<version>1.0.2</version>
 			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<plugins>
+		<plugin>
+			<groupId>life.qbic</groupId>
+			<artifactId>groovydoc-maven-plugin</artifactId>
+		</plugin>
+		</plugins>
+	</reporting>
 </project>
