@@ -45,6 +45,7 @@ class SampleList extends VerticalLayout {
             this.sampleGrid.addColumn({ sample -> sample.getCode() }).setCaption("Sample Code")
             this.sampleGrid.addColumn({ sample -> sample.getCurrentLocation().getName() }).setCaption("Current Location")
             this.sampleGrid.addColumn({ sample -> sample.getCurrentLocation().getStatus() }).setCaption("Status")
+            this.sampleGrid.addColumn({sample -> sample.getCurrentLocation().getArrivalDate()}).setCaption("Arrival Date")
         } catch (Exception e) {
             log.error("Unexpected exception in building the sample Grid", e)
         }
