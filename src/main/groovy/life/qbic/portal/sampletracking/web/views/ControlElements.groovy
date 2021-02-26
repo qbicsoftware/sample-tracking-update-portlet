@@ -7,17 +7,16 @@ import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
+import life.qbic.portal.sampletracking.web.DateConverter
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 import java.time.LocalDateTime
-import java.time.ZoneId
 
 @Log4j2
 class ControlElements extends VerticalLayout {
 
     final static List<Status> SAMPLE_STATUSES = [Status.SAMPLE_QC_PASS, Status.SAMPLE_QC_FAIL, Status.SEQUENCING, Status.SEQUENCING_COMPLETE]
-    final static DATE_TIME_PATTERN = "yyyy-MM-dd hh:mm:ss a z"
     final private PortletController controller
     final private ViewModel viewModel
 
@@ -56,13 +55,12 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setItemCaptionGenerator({ it -> it?.name ?: "unknown" })
 
         // Add menu allowing date picking for new sample
-        String timeZone = TimeZone.getDefault().getID()
-        dateChooser = new DateTimeField("New Arrival Date ($timeZone)")
-        dateChooser.setZoneId(ZoneId.of(timeZone))
+        dateChooser = new DateTimeField("New Arrival Date [$DateConverter.SYSTEM_ZONE_ID]")
+        dateChooser.setZoneId(DateConverter.SYSTEM_ZONE_ID)
         dateChooser.setTextFieldEnabled(true)
-        dateChooser.setDateFormat(DATE_TIME_PATTERN)
+        dateChooser.setDateFormat(DateConverter.DISPLAY_PATTERN)
         dateChooser.setResolution(DateTimeResolution.MINUTE)
-        dateChooser.setValue(LocalDateTime.now())
+        dateChooser.setValue(LocalDateTime.now(DateConverter.SYSTEM_ZONE_ID))
 
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")

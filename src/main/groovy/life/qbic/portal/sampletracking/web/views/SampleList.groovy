@@ -5,6 +5,7 @@ import com.vaadin.ui.Grid
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Sample
+import life.qbic.portal.sampletracking.web.DateConverter
 import life.qbic.portal.sampletracking.web.ViewModel
 
 import java.beans.PropertyChangeEvent
@@ -45,7 +46,10 @@ class SampleList extends VerticalLayout {
             this.sampleGrid.addColumn({ sample -> sample.getCode() }).setCaption("Sample Code")
             this.sampleGrid.addColumn({ sample -> sample.getCurrentLocation().getName() }).setCaption("Current Location")
             this.sampleGrid.addColumn({ sample -> sample.getCurrentLocation().getStatus() }).setCaption("Status")
-            this.sampleGrid.addColumn({sample -> sample.getCurrentLocation().getArrivalDate()}).setCaption("Arrival Date")
+            this.sampleGrid.addColumn({ sample ->
+                String locationDate = sample.getCurrentLocation().getArrivalDate()
+                return DateConverter.format(locationDate)
+            }).setCaption("Arrival Date [$DateConverter.SYSTEM_ZONE_ID]")
         } catch (Exception e) {
             log.error("Unexpected exception in building the sample Grid", e)
         }
