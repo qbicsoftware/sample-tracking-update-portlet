@@ -6,6 +6,7 @@ import life.qbic.datamodel.samples.Status
 import life.qbic.portal.sampletracking.trackinginformation.query.locations.QueryAvailableLocationsInput
 import life.qbic.portal.sampletracking.trackinginformation.query.sample.QuerySampleInput
 import life.qbic.portal.sampletracking.trackinginformation.update.SampleTrackingUpdateInput
+import life.qbic.portal.sampletracking.web.DateConverter
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -54,7 +55,7 @@ class SampleTrackingPortletController implements PortletController {
     @Override
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus, LocalDateTime date) {
         Location location = desiredLocation
-        location?.arrivalDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant())
+        location?.arrivalDate = DateConverter.parse(date)
         location?.status = desiredStatus
 
         for (sampleId in sampleIds) {
