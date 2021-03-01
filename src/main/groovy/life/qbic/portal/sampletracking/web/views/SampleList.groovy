@@ -1,6 +1,7 @@
 package life.qbic.portal.sampletracking.web.views
 
 import com.vaadin.data.provider.ListDataProvider
+import com.vaadin.shared.ui.grid.HeightMode
 import com.vaadin.ui.Grid
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
@@ -39,7 +40,7 @@ class SampleList extends VerticalLayout {
         this.sampleGrid.setSelectionMode(Grid.SelectionMode.NONE)
 
         this.sampleGrid.setWidth("100%")
-        this.sampleGrid.setHeight("30%")
+        this.sampleGrid.setHeightMode(HeightMode.UNDEFINED)
 
 
         try {

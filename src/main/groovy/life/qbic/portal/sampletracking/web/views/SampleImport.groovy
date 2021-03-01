@@ -1,14 +1,7 @@
 package life.qbic.portal.sampletracking.web.views
 
-import com.vaadin.shared.ui.MarginInfo
-import com.vaadin.ui.Alignment
-import com.vaadin.ui.Button
-import com.vaadin.ui.FormLayout
-import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.TextField
-import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
-import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.views.samplefile.UploadComponent
@@ -33,7 +26,7 @@ class SampleImport extends VerticalLayout {
     private def initLayout() {
         // Add textfield for sample Id input with placeholder sample id
         this.additionalSampleId = new TextField("Sample ID")
-        this.additionalSampleId.setPlaceholder("QABCD004AO")
+        this.additionalSampleId.setPlaceholder("Please enter a QBiC sample identifier")
         // Add upload receiver to get uploaded file content
 
         uploadComponent = new UploadComponent()
@@ -42,10 +35,24 @@ class SampleImport extends VerticalLayout {
         this.singleSampleAddButton = new Button("Add Sample")
         // Add components to layout
         HorizontalLayout row1 = new HorizontalLayout()
+        row1.setSizeFull()
         row1.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+        HorizontalLayout row2 = new HorizontalLayout()
+        row2.setSizeFull()
+        row2.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT)
 
-        row1.addComponentsAndExpand(this.additionalSampleId, this.singleSampleAddButton, this.uploadComponent)
-        this.addComponents(row1)
+        this.additionalSampleId.setSizeFull()
+        this.singleSampleAddButton.setSizeFull()
+        row1.addComponents(this.additionalSampleId, this.singleSampleAddButton)
+        row1.setExpandRatio(additionalSampleId, 2)
+        row1.setExpandRatio(singleSampleAddButton, 1)
+
+        this.uploadComponent.setWidth("33%")
+        row2.addComponent(this.uploadComponent)
+
+        this.addComponents(row1, row2)
+
+        this.setComponentAlignment(row2, Alignment.MIDDLE_RIGHT)
     }
 
     private def registerListeners() {
