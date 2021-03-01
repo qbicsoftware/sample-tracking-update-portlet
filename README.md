@@ -35,32 +35,33 @@ This guide intends to showcase the features of the sample-tracking-update-portle
 ### Select Samples
 
 The sample-tracking-update-portlet currently offers two methods for adding the samples to update.  
-This can be achieved by either uploading a *.csv file containing the Sample Ids in the first column 
-or by providing the Sample IDs directly.   
+This can be achieved by either uploading a *.csv file containing the sample identifiers in the first column 
+or by providing sample identifiers directly.   
 Details for both methods are outlined below. 
 
-#### Select Sample by ID
-The most convenient way of updating a singular sample is through the input of its sample code 
+#### Select Sample By ID
+The most convenient way of updating a singular sample is through the input of its QBiC sample identifier 
 into the "Sample ID" text field and pressing the "Add Sample Button". 
 ![add](readme-docs/screenshots/AddSampleById.png)
 
-If the given sample ID is valid, the sample and its associated information will appear in the "Samples to update" grid 
+If the given sample identifier is valid, the sample and its associated information will appear in the "Samples to update" grid 
 ![add](readme-docs/screenshots/AddSampleByIdResult.png)
 
-Each subsequent Sample ID will be added to the "Samples to update" grid 
+Each subsequent sample identifier will be added to the "Samples to update" grid 
 ![add](readme-docs/screenshots/AddSampleByIdAgain.png)
  
-#### Select Samples by File
-It is also possible to select the samples of interest by 
+#### Select Samples By File
+It is also possible to select the samples of interest, by 
 uploading one or multiple *.csv files containing the sample codes in the first column.
 ![add](readme-docs/screenshots/AddSampleByFile.png)
 
-A template file can be seen [here](readme-docs/templates/ExampleCsv.csv)  
-If the Sample Ids in the csv file are valid, 
+A template file can be found at [``readme-docs/templates/example.csv``](readme-docs/templates/example.csv).
+
+If the sample identifiers in the csv file are valid, and if they are not already in the list of loaded samples, 
 the samples and their associated information will appear in the sample grid.
 ![add](readme-docs/screenshots/AddSampleByFileResult.png)
   
-Subsequent Sample IDs from either a *.csv file or by direct input will also be added to the "Samples to update" grid. 
+Subsequent sample identifiers from either a *.csv file or by direct input will also be added to the "Samples to update" grid. 
 ![add](readme-docs/screenshots/AddSampleByFileAgain.png)
  
 ### Update Sample Information
@@ -75,28 +76,25 @@ a new arrival date can be specified through manual user input
 or by clicking on the calendar icon of the "New Arrival Date" Field 
 ![add](readme-docs/screenshots/UpdateSampleDate.png)
 
-After pressing the "Update Samples" button the arrival date of all currently selected samples will be updated to the specified date.  
-
-<!--- ToDo How should this be shown, currently we don't show the date in the sample-update-portlet--->
+After pressing the "Update Samples" button the arrival date of all currently selected samples will be updated to the specified date.
+A successful update can be verified by selecting the samples again and observing the changed location and/or status. 
+Please note, that the information shown reflects the most recent status and location found for the sample, so changes for a past date are not presented.
 
 #### Update Sample Location
 To change the location for all selected samples, a new sample location can be selected in the "New Sample Location" dropdown selection.  
 ![add](readme-docs/screenshots/UpdateSampleLocation.png)
 
-After pressing the "Update Samples" button the location of all currently selected samples will be updated to the selected location.  
+After pressing the "Update Samples" button, the location of all currently selected samples will be updated to the selected location.  
 ![add](readme-docs/screenshots/UpdateSampleLocationResult.png)
 
 #### Update Sample Status
 To change the status for all selected samples, a new sample status can be selected in the "New Sample Status" dropdown selection.  
 ![add](readme-docs/screenshots/UpdateSampleStatus.png)
 
-After pressing the "Update Samples" button the status of all currently selected samples will be updated to the selected status.  
+After pressing the "Update Samples" button, the status of all currently selected samples will be updated to the selected status.  
 ![add](readme-docs/screenshots/UpdateSampleStatusResult.png)
 
-### Remove Selected Samples
-The only way to deselect samples is to clear the entire "Samples to update" grid of all added samples.
+### Remove Samples From Selection
+By pressing the "Clear List" button you can remove all samples from the selection.
 ![add](readme-docs/screenshots/RemoveSampleFromList.png)
-
-This can be easily achieved by clicking the "Clear List" button. 
-![add](readme-docs/screenshots/RemoveSampleFromListResult.png)
  
