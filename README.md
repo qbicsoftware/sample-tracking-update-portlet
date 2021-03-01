@@ -15,9 +15,12 @@ A Liferay portlet to update the sample-tracking information of selected samples.
 
 
 ## How to Install
-1. clone repository
-2. install maven
-3. run `mvn clean package`
+### Prerequisites
+1. A [Properly Configured Liferay Portal](https://github.com/qbicsoftware/qbic-setup-doc/blob/main/application_servers/liferay7.md) <!-- TODO: Where to link?-->
+2. Access to a running instance of the [sample-tracking service](https://github.com/qbicsoftware/sample-tracking-service)
+   
+3. An properly configured [openBIS instance](https://openbis.ch/) <!-- TODO where to link? -->
+4. A [configuration file](https://github.com/qbicsoftware/portal-utils-lib#how-portlets-are-configured) providing information about the location of the sample-tracking service as well as the database and the openBIS instance
 
 ## How to Use 
 
