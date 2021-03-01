@@ -66,8 +66,8 @@ class ControlElements extends VerticalLayout {
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
         // Set a default value for the status
-        statusSelectMenu.setValue(Status.WAITING)
         List<Status> selectableStatusOptions = SAMPLE_STATUSES
+        statusSelectMenu.setValue(SAMPLE_STATUSES.get(0))
 
         statusSelectMenu.setItems(selectableStatusOptions)
 
