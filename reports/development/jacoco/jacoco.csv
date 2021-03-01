@@ -2,7 +2,7 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query.sample,QuerySample,329,0,4,0,22,0,6,0,4,0
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._registerListeners_closure2._closure5,17,0,0,0,1,0,2,0,2,0
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport,702,0,26,0,41,0,20,0,7,0
-Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements,582,0,4,0,41,0,7,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements,584,0,4,0,41,0,7,0,5,0
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport._selectSamplesFromFile_closure3,24,0,2,0,1,0,3,0,2,0
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,PortletView._registerListeners_closure1,58,0,2,0,4,0,3,0,2,0
 Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,PortletView._registerListeners_closure2,58,0,2,0,4,0,3,0,2,0
