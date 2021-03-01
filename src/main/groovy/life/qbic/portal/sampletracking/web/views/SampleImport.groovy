@@ -42,10 +42,24 @@ class SampleImport extends VerticalLayout {
         this.singleSampleAddButton = new Button("Add Sample")
         // Add components to layout
         HorizontalLayout row1 = new HorizontalLayout()
+        row1.setSizeFull()
         row1.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+        HorizontalLayout row2 = new HorizontalLayout()
+        row2.setSizeFull()
+        row2.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT)
 
-        row1.addComponentsAndExpand(this.additionalSampleId, this.singleSampleAddButton, this.uploadComponent)
-        this.addComponents(row1)
+        this.additionalSampleId.setSizeFull()
+        this.singleSampleAddButton.setSizeFull()
+        row1.addComponents(this.additionalSampleId, this.singleSampleAddButton)
+        row1.setExpandRatio(additionalSampleId, 2)
+        row1.setExpandRatio(singleSampleAddButton, 1)
+
+        this.uploadComponent.setWidth("33%")
+        row2.addComponent(this.uploadComponent)
+
+        this.addComponents(row1, row2)
+
+        this.setComponentAlignment(row2, Alignment.MIDDLE_RIGHT)
     }
 
     private def registerListeners() {
