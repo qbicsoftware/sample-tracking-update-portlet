@@ -1,14 +1,7 @@
 package life.qbic.portal.sampletracking.web.views
 
-import com.vaadin.shared.ui.MarginInfo
-import com.vaadin.ui.Alignment
-import com.vaadin.ui.Button
-import com.vaadin.ui.FormLayout
-import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.TextField
-import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
-import life.qbic.datamodel.samples.Sample
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.views.samplefile.UploadComponent
@@ -33,7 +26,7 @@ class SampleImport extends VerticalLayout {
     private def initLayout() {
         // Add textfield for sample Id input with placeholder sample id
         this.additionalSampleId = new TextField("Sample ID")
-        this.additionalSampleId.setPlaceholder("QABCD004AO")
+        this.additionalSampleId.setPlaceholder("Please enter a QBiC sample identifier")
         // Add upload receiver to get uploaded file content
 
         uploadComponent = new UploadComponent()
