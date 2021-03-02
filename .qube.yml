@@ -1,0 +1,25 @@
+qube_version: '2.6.1 # <<QUBE_NO_BUMP>>'
+full_name: Tobias Koch
+email: tobias.koch@qbic.uni-tuebingen.de
+project_name: sample-tracking-update-portlet
+project_short_description: This application provides functionality to update and set
+  the location and status of specific samples
+version: 1.2.0
+domain: portlet
+language: groovy
+project_slug: sample-tracking-update-portlet
+project_slug_no_hyphen: sample_tracking_update_portlet
+template_version: '1.0.4 # <<QUBE_NO_BUMP>>'
+template_handle: portlet-groovy
+github_username: KochTobi
+creator_github_username: KochTobi
+is_github_repo: false
+is_repo_private: false
+is_github_orga: false
+copyright_holder: QBiC
+license: MIT
+main_class_prefix: Qbic
+use_openbis_client: yes
+use_openbis_raw_api: no
+use_qbic_databases: yes
+use_vaadin_charts: no

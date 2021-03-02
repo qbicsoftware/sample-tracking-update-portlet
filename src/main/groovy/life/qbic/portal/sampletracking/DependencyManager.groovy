@@ -120,8 +120,8 @@ class DependencyManager {
      * All Exceptions are handled and logged. Skips use cases where instantiation fails.
      */
     private void setupUseCaseInteractors() {
-        def sampleListPresenter
-        def controlElementsPresenter
+        SampleListPresenter sampleListPresenter
+        ControlElementsPresenter controlElementsPresenter
         def serviceUser = configManager.getServiceUser()
         try {
             sampleListPresenter = new SampleListPresenter(this.viewModel)
@@ -178,7 +178,7 @@ class DependencyManager {
 
         ControlElements sampleModifyControls
         try {
-            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in."
+            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in"
             // set the appropriate fields in the view model
             this.portletController.queryAllLocationsForPerson(userEmail)
             sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)

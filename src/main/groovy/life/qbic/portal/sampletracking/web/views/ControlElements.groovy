@@ -1,22 +1,23 @@
 package life.qbic.portal.sampletracking.web.views
 
+
 import com.vaadin.data.provider.ListDataProvider
+import com.vaadin.server.Sizeable
 import com.vaadin.shared.ui.datefield.DateTimeResolution
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.samples.Location
 import life.qbic.datamodel.samples.Status
+import life.qbic.portal.sampletracking.web.DateConverter
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Log4j2
-class ControlElements extends VerticalLayout {
+class ControlElements extends GridLayout {
 
-    final static List<Status> FORBIDDEN_STATUS_OPTIONS = new ArrayList([Status.DATA_AT_QBIC, Status.METADATA_REGISTERED])
-    final static DATE_TIME_PATTERN = "yyyy-MM-ddT hh:mm:ss"
+    final static List<Status> SAMPLE_STATUSES = [Status.SAMPLE_QC_PASS, Status.SAMPLE_QC_FAIL, Status.SEQUENCING, Status.SEQUENCING_COMPLETE]
     final private PortletController controller
     final private ViewModel viewModel
 
@@ -33,7 +34,7 @@ class ControlElements extends VerticalLayout {
         throw new AssertionError("${ControlElements.getSimpleName()} cannot be initialized by its default constructor.")
     }
     ControlElements(PortletController portletController, ViewModel viewModel, String userEmail) {
-        super()
+        super(2, 4)
         this.controller = portletController
         this.viewModel = viewModel
         this.userEmail = userEmail
@@ -55,20 +56,19 @@ class ControlElements extends VerticalLayout {
         locationSelectMenu.setItemCaptionGenerator({ it -> it?.name ?: "unknown" })
 
         // Add menu allowing date picking for new sample
-        dateChooser = new DateTimeField("New Arrival Date")
+        dateChooser = new DateTimeField("New Arrival Date [$DateConverter.SYSTEM_ZONE_ID]")
+        dateChooser.setZoneId(DateConverter.SYSTEM_ZONE_ID)
         dateChooser.setTextFieldEnabled(true)
-        dateChooser.setDateFormat(DATE_TIME_PATTERN)
+        dateChooser.setDateFormat(DateConverter.DISPLAY_PATTERN)
         dateChooser.setResolution(DateTimeResolution.MINUTE)
-        dateChooser.setValue(LocalDateTime.now())
+        dateChooser.setValue(LocalDateTime.now(DateConverter.SYSTEM_ZONE_ID))
 
         // Add menu allowing status selection for new sample
         statusSelectMenu = new NativeSelect<Status>("New Sample Status")
         statusSelectMenu.setEmptySelectionAllowed(false)
         // Set a default value for the status
-        statusSelectMenu.setValue(Status.WAITING)
-        List<Status> selectableStatusOptions = Status.values().findAll { status ->
-            !(status in FORBIDDEN_STATUS_OPTIONS)
-        }
+        List<Status> selectableStatusOptions = SAMPLE_STATUSES
+        statusSelectMenu.setValue(SAMPLE_STATUSES.get(0))
 
         statusSelectMenu.setItems(selectableStatusOptions)
 
@@ -78,18 +78,38 @@ class ControlElements extends VerticalLayout {
         // Add clear Button to delete samples from SampleList
         clearButton = new Button("Clear List")
 
-        // Add all Vaadin components to layout
-        HorizontalLayout row1 = new HorizontalLayout()
-        row1.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
-        HorizontalLayout row2 = new HorizontalLayout()
-        row2.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
-        HorizontalLayout row3 = new HorizontalLayout()
-        row3.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT)
+        this.setSizeFull()
+        this.setMargin(true)
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+        this.setHideEmptyRowsAndColumns(false)
+        this.setSpacing(true)
 
-        row1.addComponentsAndExpand(userEmailField, dateChooser)
-        row2.addComponentsAndExpand(locationSelectMenu, statusSelectMenu)
-        row3.addComponentsAndExpand(updateSampleButton, clearButton)
-        this.addComponents(row1, row2, row3)
+        this.addComponent(dateChooser, 0, 0, 0, 0)
+        this.addComponent(userEmailField, 0, 1, 0, 1)
+        this.addComponent(clearButton, 0, 3, 0, 3)
+
+        this.addComponent(locationSelectMenu , 1, 0, 1, 0)
+        this.addComponent(statusSelectMenu, 1, 1, 1, 1)
+        this.addComponent(updateSampleButton, 1, 3, 1, 3)
+
+
+        Iterator<Component> childrenIterator = this.iterator()
+
+        while(childrenIterator.hasNext()) {
+            Component component = childrenIterator.next()
+            if (component instanceof Sizeable) {
+                component.setWidth("100%")
+            }
+        }
+
+        // set alignment for right column
+        for (int rowId = 0; rowId < this.getRows(); rowId++)  {
+            Component component = this.getComponent(1, rowId)
+            if (component) {
+                this.setComponentAlignment(this.getComponent(1, rowId), Alignment.MIDDLE_RIGHT)
+            }
+        }
+
     }
 
     private void registerListeners() {
