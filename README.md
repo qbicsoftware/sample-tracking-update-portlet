@@ -39,8 +39,8 @@ This guide intends to showcase the features of the sample-tracking-update-portle
 ### Select Samples
 
 The sample-tracking-update-portlet currently offers two methods for adding the samples to update.  
-This can be achieved by either uploading a *.csv file containing the sample identifiers in the first column 
-or by providing sample identifiers directly.   
+This can be achieved by either uploading a `*.csv` file containing the sample identifiers in the first column 
+or by providing them directly.   
 Details for both methods are outlined below. 
 
 #### Select Sample By ID
