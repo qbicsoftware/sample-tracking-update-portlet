@@ -19,7 +19,7 @@ A Liferay portlet to update the sample-tracking information of selected samples.
 1. A [Properly Configured Liferay Portal](https://liferay.dev/blogs/-/blogs/liferay-6-2-ce-ga6-now-available)
 2. Access to a running instance of the [sample-tracking service](https://github.com/qbicsoftware/sample-tracking-service)
    
-3. An properly configured [openBIS instance](https://openbis.ch/) <!-- TODO where to link? -->
+3. A properly configured [openBIS instance](https://openbis.ch/) <!-- TODO where to link? -->
 4. A [configuration file](https://github.com/qbicsoftware/portal-utils-lib#how-portlets-are-configured) providing information about the location of the sample-tracking service as well as the database and the openBIS instance
 ### Installation
 Either run it locally or deploy it on your liferay instance. To run it locally you can execute ``mvn clean jetty:run``. To deploy it on your liferay instance you can create the required ``.war`` file by executing ``mvn clean package``
