@@ -20,12 +20,16 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 * Add arrival time information column to sample description (`#54 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/54>`_)
 
+* Add improved view layout (`#56 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/56>`_)
 
 **Fixed**
 
 * Fixed (`#34 Sample update deletes history <https://github.com/qbicsoftware/sample-tracking-update-portlet/issues/34>`_)
 
 * Fixed arrival time selection behaves consistent now (`#54 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/54>`_)
+
+* Fixed wrong default status being selected if no selection was made by the user (`#55<https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/55>`_)
+
 
 **Dependencies**
 
