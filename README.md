@@ -66,37 +66,42 @@ the samples and their associated information will appear in the sample grid.
 ![add](readme-docs/screenshots/AddSampleByFileResult.png)
   
 Subsequent sample identifiers from either a *.csv file or by direct input will also be added to the "Samples to update" grid. 
-![add](readme-docs/screenshots/AddSampleByFileAgain.png)
  
 ### Update Sample Information
 After the addition of the samples of interest, the user can update sample specific information,
 such as the sample arrival date, the sample location or the processing status of the sample.   
 Details for each of these methods are outlined below.   
 It should be noted that the change is applied to all samples in the "Samples to update" grid. 
+You can either update a single property or update multiple properties at once by pressing the "Update Samples" button.
 
 #### Update Sample Date
 To change the arrival date for all selected samples, 
 a new arrival date can be specified through manual user input 
 or by clicking on the calendar icon of the "New Arrival Date" Field 
-![add](readme-docs/screenshots/UpdateSampleDate.png)
 
-After pressing the "Update Samples" button the arrival date of all currently selected samples will be updated to the specified date.
-A successful update can be verified by selecting the samples again and observing the changed location and/or status. 
-Please note, that the information shown reflects the most recent status and location found for the sample, so changes for a past date are not presented.
+The date and time has to provided formatted as prefilled by the system `yyyy-MM-dd hh:mm:ss a`.
+
+Pressing the "Update Samples" button submits your changes.
 
 #### Update Sample Location
 To change the location for all selected samples, a new sample location can be selected in the "New Sample Location" dropdown selection.  
 ![add](readme-docs/screenshots/UpdateSampleLocation.png)
 
-After pressing the "Update Samples" button, the location of all currently selected samples will be updated to the selected location.  
-![add](readme-docs/screenshots/UpdateSampleLocationResult.png)
+Pressing the "Update Samples" button submits your changes.
 
 #### Update Sample Status
 To change the status for all selected samples, a new sample status can be selected in the "New Sample Status" dropdown selection.  
 ![add](readme-docs/screenshots/UpdateSampleStatus.png)
 
-After pressing the "Update Samples" button, the status of all currently selected samples will be updated to the selected status.  
-![add](readme-docs/screenshots/UpdateSampleStatusResult.png)
+Pressing the "Update Samples" button submits your changes.
+
+### Verifying Successful Update
+After pressing the "Update Samples" button, the samples will be updated with the provided information.
+![add](readme-docs/screenshots/UpdateSampleNotification.png)
+A successful update can be verified by selecting the samples again and observing the changed information.
+![add](readme-docs/screenshots/UpdateSampleResult.png)
+Please note, that the information shown reflects the most recent status and location found for the sample, so changes for a past date are not presented.
+
 
 ### Remove Samples From Selection
 By pressing the "Clear List" button you can remove all samples from the selection.
