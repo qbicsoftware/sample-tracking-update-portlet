@@ -18,6 +18,7 @@ A Liferay portlet to update the sample-tracking information of selected samples.
 ### Prerequisites
 1. A [Liferay 6.2 Portal](https://liferay.dev/blogs/-/blogs/liferay-6-2-ce-ga6-now-available)
 2. Access to a running instance of the [sample-tracking service](https://github.com/qbicsoftware/sample-tracking-service)
+   
 3. A running [openBIS instance](https://openbis.ch/)
 4. A [configuration file](https://github.com/qbicsoftware/portal-utils-lib#how-portlets-are-configured) providing information about the location of the sample-tracking service as well as the database and the openBIS instance
 ### Installation
