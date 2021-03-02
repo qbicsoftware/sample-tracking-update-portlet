@@ -46,7 +46,15 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Add ``org.apache.ant:ant-launcher:jar:1.10.9``
 * Add ``org.apache.ant:ant:jar:1.10.9``
 * Add ``org.apiguardian:apiguardian-api:jar:1.1.0``
-
+* Add ``org.codehaus.groovy:groovy-all:pom:3.0.7``
+* Add ``org.hamcrest:hamcrest:jar:2.2``
+* Add ``org.json:json:jar:20190722``
+* Add ``org.junit.jupiter:junit-jupiter-api:jar:5.7.0``
+* Add ``org.junit.jupiter:junit-jupiter-engine:jar:5.7.0``
+* Add ``org.junit.platform:junit-platform-commons:jar:1.7.0``
+* Add ``org.junit.platform:junit-platform-engine:jar:1.7.0``
+* Add ``org.junit.platform:junit-platform-launcher:jar:1.7.0``
+* Add ``org.testng:testng:jar:7.3.0``
 
 * Upgrade ``com.fasterxml.jackson.core:jackson-annotations:jar:2.9.9`` -> ``2.12.0``
 * Upgrade ``com.fasterxml.jackson.core:jackson-databind:jar:2.9.10.4`` -> ``2.9.10.7``
@@ -63,8 +71,11 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Upgrade ``life.qbic:xml-manager-lib:jar:1.5.0`` -> ``1.6.0``
 * Upgrade ``org.apache.logging.log4j:log4j-api:jar:2.11.0`` -> ``2.13.2``
 * Upgrade ``org.apache.logging.log4j:log4j-core:jar:2.11.0`` -> ``2.13.2``
-
-
+* Upgrade ``org.codehaus.groovy:groovy-json:jar:2.5.7`` -> ``3.0.7``
+* Upgrade ``org.codehaus.groovy:groovy-sql:jar:2.5.7`` -> ``3.0.7``
+* Upgrade ``org.slf4j:slf4j-api:jar:1.7.25`` -> ``1.7.26``
+* Upgrade ``org.spockframework:spock-core:jar:1.3-groovy-2.5`` -> ``2.0-M4-groovy-3.0``
+* Upgrade ``org.yaml:snakeyaml:jar:1.23`` -> ``1.24``
 
 * Remove ``com.github.stefanbirkner:system-rules:jar:1.17.2``
 * Remove ``com.google.errorprone:error_prone_annotations:jar:2.1.3``
@@ -77,6 +88,19 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Remove ``life.qbic.openbis:openbis_api:jar:3-S253.0``
 * Remove ``net.bytebuddy:byte-buddy-agent:jar:1.8.5``
 * Remove ``net.bytebuddy:byte-buddy:jar:1.8.5``
+* Remove ``org.codehaus.groovy:jar:2.5.4``
+* Remove ``org.codehaus.mojo:animal-sniffer-annotations:jar:1.14``
+* Remove ``org.hamcrest:hamcrest-all:jar:1.3``
+* Remove ``org.javassist:javassist:jar:3.22.0-CR2``
+* Remove ``org.mockito:mockito-core:jar:2.18.3``
+* Remove ``org.objenesis:objenesis:jar:2.6``
+* Remove ``org.powermock:powermock-api-mockito2:jar:2.0.0-beta.5``
+* Remove ``org.powermock:powermock-api-support:jar:2.0.0-beta.5``
+* Remove ``org.powermock:powermock-core:jar:2.0.0-beta.5``
+* Remove ``org.powermock:powermock-module-junit4-common:jar:2.0.0-beta.5``
+* Remove ``org.powermock:powermock-module-junit4:jar:2.0.0-beta.5``
+* Remove ``org.powermock:powermock-reflect:jar:2.0.0-beta.5``
+
 
 **Deprecated**
 
