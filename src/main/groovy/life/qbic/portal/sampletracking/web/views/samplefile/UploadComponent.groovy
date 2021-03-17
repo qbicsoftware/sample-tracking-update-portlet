@@ -4,6 +4,7 @@ import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.identifiers.SampleCodeFunctions
+
 import static com.vaadin.ui.Upload.*
 
 
@@ -77,6 +78,7 @@ class UploadComponent extends VerticalLayout {
                 Set<String> sampleIds = [] as Set
                 String separator = ","
                 try {
+                    //TODO extract into its own class >> END
                     Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
                     for (line in inputLines) {
                         String sampleCode = line.split(separator)[0]
@@ -87,6 +89,7 @@ class UploadComponent extends VerticalLayout {
                             log.error(invalidCodeMessage)
                         }
                     }
+                    //TODO END
                     fireUploadSuccessEvent(sampleIds)
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)

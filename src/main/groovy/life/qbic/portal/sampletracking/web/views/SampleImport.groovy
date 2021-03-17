@@ -12,7 +12,7 @@ class SampleImport extends VerticalLayout {
     final private ViewModel viewModel
 
     private Button singleSampleAddButton
-    private TextField additionalSampleId
+    private TextArea additionalSampleId
     private UploadComponent uploadComponent
 
     SampleImport(PortletController controller, ViewModel viewModel) {
@@ -25,8 +25,10 @@ class SampleImport extends VerticalLayout {
 
     private def initLayout() {
         // Add textfield for sample Id input with placeholder sample id
-        this.additionalSampleId = new TextField("Sample ID")
-        this.additionalSampleId.setPlaceholder("Please enter a QBiC sample identifier")
+        this.additionalSampleId = new TextArea("Sample ID")
+        this.additionalSampleId.setPlaceholder("""\
+            Please enter one or more QBiC sample codes.
+            The input must be in TSV format with the QBiC sample codes being in the first column.""".stripIndent())
         // Add upload receiver to get uploaded file content
 
         uploadComponent = new UploadComponent()
