@@ -29,8 +29,8 @@ class SampleImport extends VerticalLayout {
         this.additionalSampleId.setPlaceholder("""\
             Please enter one or more QBiC sample codes.
             The input must be in TSV format with the QBiC sample codes being in the first column.""".stripIndent())
-        // Add upload receiver to get uploaded file content
 
+        // Add upload receiver to get uploaded file content
         uploadComponent = new UploadComponent()
 
         // Add Button to add sample
@@ -72,6 +72,8 @@ class SampleImport extends VerticalLayout {
      * @return
      */
     private def selectSampleFromTextfield() {
+        //TODO change this to parse input as TSV and from a text area
+
         // Get value from user input in textField
         String sampleId = additionalSampleId.getValue()
         try {
