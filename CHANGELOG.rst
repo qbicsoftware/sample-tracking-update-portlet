@@ -14,7 +14,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Dependencies**
 
-* Bump ``data-model-lib:2.0.0`` -> ``2.3.0``
+* Bump ``data-model-lib:2.0.0`` -> ``2.4.0``
 
 **Deprecated**
 
