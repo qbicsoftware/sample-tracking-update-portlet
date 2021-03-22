@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 @Log4j2
 class ControlElements extends GridLayout {
 
-    final static List<Status> SAMPLE_STATUSES = [Status.SAMPLE_QC_PASS, Status.SAMPLE_QC_FAIL, Status.SEQUENCING, Status.SEQUENCING_COMPLETE]
+    final static List<Status> SAMPLE_STATUSES = [Status.SAMPLE_RECEIVED, Status.SAMPLE_QC_PASS, Status.SAMPLE_QC_FAIL, Status.LIBRARY_PREP_FINISHED]
     final private PortletController controller
     final private ViewModel viewModel
 
