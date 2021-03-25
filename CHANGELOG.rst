@@ -34,7 +34,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 * Bump `jackson-databind <https://github.com/FasterXML/jackson>`_ ``:2.9.10.7`` -> ``2.12.2`` (`#71 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/71>`_)
 
-* Bump ``data-model-lib:2.0.0`` -> ``2.4.0`` (`#75 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/75>`_)
+* Bump ``data-model-lib:2.0.0`` -> ``2.4.0`` (`#74 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/74>`_,`#75 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/75>`_)
 
 **Deprecated**
 
