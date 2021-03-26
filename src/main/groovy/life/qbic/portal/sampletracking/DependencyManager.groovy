@@ -178,7 +178,7 @@ class DependencyManager {
 
         ControlElements sampleModifyControls
         try {
-            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "tobias.koch@qbic.uni-tuebingen.de"
+            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in"
             // set the appropriate fields in the view model
             this.portletController.queryAllLocationsForPerson(userEmail)
             sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
