@@ -14,6 +14,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 * Selectable statuses have changed to ``[life.qbic.datamodel.samples.Status.SAMPLE_RECEIVED, life.qbic.datamodel.samples.Status.SAMPLE_QC_PASS, life.qbic.datamodel.samples.Status.SAMPLE_QC_FAIL, life.qbic.datamodel.samples.Status.LIBRARY_PREP_FINISHED]`` (`#76 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/76>`_)
 
+* The user now receives a concise notification after updating multiple samples (`#79 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/79>`_)
+
 **Dependencies**
 
 * Bump ``maven-site-plugin:3.7.1`` -> ``3.9.1`` (`#66 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/66>`_)
