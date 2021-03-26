@@ -52,6 +52,7 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
             Location location = request.getValue()
             try {
                 updateSampleLocation(sampleId, location)
+                successfullyUpdated.add(sampleId)
             } catch (SampleTrackingUpdateException updateException) {
                 log.error("Could not update sample $sampleId to location $location")
                 log.debug("Could not update sample $sampleId to location $location", updateException)

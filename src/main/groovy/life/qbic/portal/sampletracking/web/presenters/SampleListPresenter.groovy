@@ -40,7 +40,7 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutp
      */
     @Override
     void updateFinished(Collection<String> successfulCodes, Collection<String> failedCodes) {
-        viewModel.successNotifications.add("Updated ${successfulCodes.size()} sample locations.")
+        viewModel.successNotifications.add("Updated ${successfulCodes.size()} samples.")
         if (failedCodes) {
             viewModel.failureNotifications.add("Could not update\n" + failedCodes.join("\n\t"))
         }
