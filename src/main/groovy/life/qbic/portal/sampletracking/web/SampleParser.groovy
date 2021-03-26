@@ -15,12 +15,12 @@ class SampleParser {
     /**
      * Extracts QBiC barcodes from a (multi-)line string in TSV format.
      * The barcode has to be contained in the first column. Header rows are ignored
-     * @param string the string
+     * @param source the string
      * @return a collection of extracted sample codes
      */
-    static Collection<String> extractSampleCodes(String string) {
+    static Collection<String> extractSampleCodes(String source) {
         Collection<String> sampleCodes = new ArrayList<>()
-        List<String> lines = string.split("\n").toList()
+        List<String> lines = source.split("\n").toList()
         for (line in lines) {
             Optional<String> sampleCode = parseLine(line)
             sampleCode.ifPresent({
