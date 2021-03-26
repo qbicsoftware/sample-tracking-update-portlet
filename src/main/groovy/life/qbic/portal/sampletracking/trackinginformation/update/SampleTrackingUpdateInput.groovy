@@ -26,4 +26,11 @@ interface SampleTrackingUpdateInput {
      * @return
      */
     def setCurrentSampleLocation(String sampleId, Location location)
+
+    /**
+     * This method shall be called, when multiple samples and their current locations are updated
+     * @param updateInformation a map containing sample codes as keys and the desired location as value
+     * @since 1.3.0
+     */
+    void updateMultipleSampleLocations(Map<String, Location> updateInformation)
 }
