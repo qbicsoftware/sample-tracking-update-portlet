@@ -32,6 +32,20 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutp
         viewModel.samples.removeAll {  sample -> (sample as Sample).code == sampleId }
     }
 
+    /**
+     * Signals that the update for process is finished and includes information on the samples updated successfully
+     * @param successfulCodes the sample codes for which the update was successful
+     * @param failedCodes the sample codes for which the update was unsuccessful
+     * @since 1.3.0
+     */
+    @Override
+    void updateFinished(Collection<String> successfulCodes, Collection<String> failedCodes) {
+        viewModel.successNotifications.add("Updated ${successfulCodes.size()} sample locations.")
+        if (failedCodes) {
+            viewModel.failureNotifications.add("Could not update\n" + failedCodes.join("\n\t"))
+        }
+    }
+
     @Override
     def publishSample(Sample sample) {
         this.viewModel.samples.add(sample)

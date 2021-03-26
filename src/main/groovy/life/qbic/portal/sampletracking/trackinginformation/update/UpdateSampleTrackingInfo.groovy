@@ -45,7 +45,20 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
      */
     @Override
     void updateMultipleSampleLocations(Map<String, Location> updateInformation) {
-        //TODO implement
+        Collection<String> successfullyUpdated = new ArrayList<>()
+        Collection<String> updateFailed = new ArrayList<>()
+        for (Map.Entry<String, Location> request in updateInformation.entrySet()) {
+            String sampleId = request.getKey()
+            Location location = request.getValue()
+            try {
+                updateSampleLocation(sampleId, location)
+            } catch (SampleTrackingUpdateException updateException) {
+                log.error("Could not update sample $sampleId to location $location")
+                log.debug("Could not update sample $sampleId to location $location", updateException)
+                updateFailed.add(sampleId)
+            }
+        }
+        sampleUpdateOutput.updateFinished(successfullyUpdated, updateFailed)
     }
 
 
