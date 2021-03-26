@@ -34,7 +34,6 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
         } catch (SampleTrackingUpdateException e) {
             log.error e
             this.sampleUpdateOutput.invokeOnError "Could not update location for sample $sampleId."
-
         }
     }
 
@@ -56,6 +55,10 @@ class UpdateSampleTrackingInfo implements SampleTrackingUpdateInput {
             } catch (SampleTrackingUpdateException updateException) {
                 log.error("Could not update sample $sampleId to location $location")
                 log.debug("Could not update sample $sampleId to location $location", updateException)
+                updateFailed.add(sampleId)
+            } catch (Exception unexpected) {
+                log.error("Unexpected exception when updating $sampleId to location $location")
+                log.debug("Unexpected exception when updating $sampleId to location $location", unexpected)
                 updateFailed.add(sampleId)
             }
         }
