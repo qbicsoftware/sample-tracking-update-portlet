@@ -5,6 +5,46 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
+1.3.0 (2021-03-26)
+------------------
+
+**Added**
+
+* Add possibility to enter multiple QBiC barcodes by hand. (`#80 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/80>`_)
+
+**Fixed**
+
+* Files are now only accepted in TSV rather then CSV (`#80 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/79>`_)
+
+* Selectable statuses have changed to ``[life.qbic.datamodel.samples.Status.SAMPLE_RECEIVED, life.qbic.datamodel.samples.Status.SAMPLE_QC_PASS, life.qbic.datamodel.samples.Status.SAMPLE_QC_FAIL, life.qbic.datamodel.samples.Status.LIBRARY_PREP_FINISHED]`` (`#76 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/76>`_)
+
+* The user now receives a concise notification after updating multiple samples (`#79 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/79>`_)
+
+**Dependencies**
+
+* Bump ``maven-site-plugin:3.7.1`` -> ``3.9.1`` (`#66 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/66>`_)
+
+* Bump ``portlet-parent-pom:3.1.3`` -> ``3.1.4`` (`#68 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/68>`_)
+
+* Bump ``httpclient:4.5.9`` -> ``4.5.13`` (`#67 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/67>`_)
+
+* Bumps ``spock-core:2.0-M4-groovy-3.0`` -> ``2.0-M5-groovy-3.0`` (`#77 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/77>`_)
+
+* Bump ``maven-project-info-reports-plugin:3.0.0`` -> ``3.1.1`` (`#64 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/64>`_)
+
+* Bump ``core-utils-lib:1.7.0`` -> ``1.7.1`` (`#63 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/63>`_)
+
+* Bump ``gmavenplus-plugin:1.12.0`` -> ``1.12.1`` (`#61 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/61>`_)
+
+* Bump ``openbis-client-lib:1.4.0`` -> ``1.5.0`` (`#60 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/60>`_)
+
+* Bump `jackson-databind <https://github.com/FasterXML/jackson>`_ ``:2.9.10.7`` -> ``2.12.2`` (`#71 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/71>`_)
+
+* Bump ``data-model-lib:2.0.0`` -> ``2.4.0`` (`#74 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/74>`_, `#75 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/75>`_)
+
+**Deprecated**
+
+
 1.2.0 (2021-03-02)
 ------------------
 

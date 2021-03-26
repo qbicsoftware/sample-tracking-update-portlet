@@ -54,12 +54,16 @@ class SampleTrackingPortletController implements PortletController {
 
     @Override
     void updateSamples(List<String> sampleIds, Location desiredLocation, Status desiredStatus, LocalDateTime date) {
-        Location location = desiredLocation
-        location?.arrivalDate = DateConverter.parse(date)
-        location?.status = desiredStatus
-
+        Location location = new Location().name(desiredLocation.getName())
+                .responsiblePerson(desiredLocation.getResponsiblePerson())
+                .responsibleEmail(desiredLocation.getResponsibleEmail())
+                .address(desiredLocation.getAddress())
+                .status(desiredStatus)
+                .arrivalDate(DateConverter.parse(date))
+        Map<String, Location> request = new HashMap<>()
         for (sampleId in sampleIds) {
-            this.sampleUpdateInput.setCurrentSampleLocation(sampleId, location)
+            request.put(sampleId, location)
         }
+        sampleUpdateInput.updateMultipleSampleLocations(request)
     }
 }
