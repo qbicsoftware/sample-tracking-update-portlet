@@ -2,6 +2,7 @@ package life.qbic.portal.sampletracking.web.views
 
 import com.vaadin.ui.*
 import groovy.util.logging.Log4j2
+import life.qbic.portal.sampletracking.web.SampleParser
 import life.qbic.portal.sampletracking.web.ViewModel
 import life.qbic.portal.sampletracking.web.controllers.PortletController
 import life.qbic.portal.sampletracking.web.views.samplefile.UploadComponent
@@ -12,7 +13,7 @@ class SampleImport extends VerticalLayout {
     final private ViewModel viewModel
 
     private Button singleSampleAddButton
-    private TextField additionalSampleId
+    private TextArea barcodeInputArea
     private UploadComponent uploadComponent
 
     SampleImport(PortletController controller, ViewModel viewModel) {
@@ -25,14 +26,14 @@ class SampleImport extends VerticalLayout {
 
     private def initLayout() {
         // Add textfield for sample Id input with placeholder sample id
-        this.additionalSampleId = new TextField("Sample ID")
-        this.additionalSampleId.setPlaceholder("Please enter a QBiC sample identifier")
+        this.barcodeInputArea = new TextArea("Sample Codes")
+        this.barcodeInputArea.setPlaceholder("Please enter a QBiC sample identifier. This can also be done in TSV format. The barcode has to be contained in the first column. Header rows are ignored.")
         // Add upload receiver to get uploaded file content
 
         uploadComponent = new UploadComponent()
 
         // Add Button to add sample
-        this.singleSampleAddButton = new Button("Add Sample")
+        this.singleSampleAddButton = new Button("Add Samples")
         // Add components to layout
         HorizontalLayout row1 = new HorizontalLayout()
         row1.setSizeFull()
@@ -41,11 +42,10 @@ class SampleImport extends VerticalLayout {
         row2.setSizeFull()
         row2.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT)
 
-        this.additionalSampleId.setSizeFull()
+        this.barcodeInputArea.setSizeFull()
         this.singleSampleAddButton.setSizeFull()
-        row1.addComponents(this.additionalSampleId, this.singleSampleAddButton)
-        row1.setExpandRatio(additionalSampleId, 2)
-        row1.setExpandRatio(singleSampleAddButton, 1)
+        row1.addComponents(new VerticalLayout(this.barcodeInputArea, this.singleSampleAddButton))
+
 
         this.uploadComponent.setWidth("33%")
         row2.addComponent(this.uploadComponent)
@@ -57,11 +57,19 @@ class SampleImport extends VerticalLayout {
 
     private def registerListeners() {
         this.singleSampleAddButton.addClickListener({ event ->
-            selectSampleFromTextfield()
+            try {
+                selectSampleFromTextfield()
+            } catch (Exception e) {
+                log.error("Unexpected Exception", e)
+            }
         })
 
         this.uploadComponent.addUploadSucceededListener({ event ->
-            selectSamplesFromFile(event.sampleIds)
+            try {
+                selectSamplesFromFile(event.sampleIds)
+            } catch (Exception e) {
+                log.error("Unexpected Exception", e)
+            }
         })
     }
 
@@ -71,22 +79,22 @@ class SampleImport extends VerticalLayout {
      */
     private def selectSampleFromTextfield() {
         // Get value from user input in textField
-        String sampleId = additionalSampleId.getValue()
-        try {
-            if (sampleId?.trim()) {
+        String userInput = barcodeInputArea.getValue()
+        List<String> sampleIds = SampleParser.extractSampleCodes(userInput)
+        for (sampleId in sampleIds) {
+            try {
                 if (isSampleSelected(sampleId)) {
                     viewModel.failureNotifications.add("You already selected ${sampleId}")
                     log.warn("Tried to select ${sampleId} multiple times.")
                 } else {
                     controller.selectSampleById(sampleId)
                 }
-            } else {
-                viewModel.failureNotifications.add("Please enter a sample ID and try again.")
+            } catch (Exception e) {
+                log.error("Unexpected error trying to add samples by id $sampleIds", e)
+                viewModel.failureNotifications.add("Could not select new sample $sampleId." + e.getMessage())
             }
-        } catch (Exception e) {
-            log.error("Unexpected error trying to add sample by id $sampleId", e)
-            viewModel.failureNotifications.add("Could not select sample $sampleId")
         }
+        barcodeInputArea.clear()
     }
 
     private selectSamplesFromFile(List<String> sampleIds) {
