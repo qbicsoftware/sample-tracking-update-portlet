@@ -44,6 +44,7 @@ class SampleListPresenter implements SampleTrackingUpdateOutput, QuerySampleOutp
         if (failedCodes) {
             viewModel.failureNotifications.add("Could not update\n" + failedCodes.join("\n\t"))
         }
+        viewModel.samples.removeAll {  sample -> (sample as Sample).code in successfulCodes }
     }
 
     @Override
