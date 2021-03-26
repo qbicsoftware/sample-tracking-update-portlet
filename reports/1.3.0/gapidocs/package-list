@@ -1,0 +1,12 @@
+life.qbic.portal.sampletracking
+life.qbic.portal.sampletracking.datasources
+life.qbic.portal.sampletracking.trackinginformation
+life.qbic.portal.sampletracking.trackinginformation.query
+life.qbic.portal.sampletracking.trackinginformation.query.locations
+life.qbic.portal.sampletracking.trackinginformation.query.sample
+life.qbic.portal.sampletracking.trackinginformation.update
+life.qbic.portal.sampletracking.web
+life.qbic.portal.sampletracking.web.controllers
+life.qbic.portal.sampletracking.web.presenters
+life.qbic.portal.sampletracking.web.views
+life.qbic.portal.sampletracking.web.views.samplefile

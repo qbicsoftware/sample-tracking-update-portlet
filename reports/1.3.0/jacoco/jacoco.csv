@@ -1,0 +1,52 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query.sample,QuerySample,328,0,4,0,22,0,6,0,4,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._registerListeners_closure2._closure5,15,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport,646,0,16,0,50,0,15,0,7,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements,804,0,24,0,53,0,17,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport._selectSamplesFromFile_closure3,22,0,2,0,1,0,3,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,PortletView._registerListeners_closure1,58,0,2,0,4,0,3,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,PortletView._registerListeners_closure2,58,0,2,0,4,0,3,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport._registerListeners_closure1,51,0,0,0,4,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport._registerListeners_closure2,56,0,0,0,4,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList,324,0,6,0,21,0,10,0,7,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList._initLayout_closure3,19,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList._initLayout_closure4,30,0,0,0,2,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList._initLayout_closure1,15,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList._initLayout_closure2,19,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleImport._isSampleSelected_closure4,28,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._registerListeners_closure3,42,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._registerListeners_closure4,24,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._registerListeners_closure2,70,0,0,0,5,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,SampleList.new PropertyChangeListener() {...},9,0,0,0,1,0,1,0,1,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,ControlElements._initLayout_closure1,22,0,2,0,1,0,3,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views,PortletView,191,0,4,0,16,0,7,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query,OpenbisAuthorizationException,224,0,12,0,3,0,13,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query,SampleNotInOpenbisException,224,0,12,0,3,0,13,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query,SampleTrackingQueryException,224,0,12,0,3,0,13,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views.samplefile,UploadSucceededEvent,29,0,0,0,1,0,1,0,1,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views.samplefile,UploadComponent,359,0,18,0,29,0,20,0,11,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views.samplefile,UploadComponent.new Upload.FailedListener() {...},25,0,0,0,2,0,1,0,1,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views.samplefile,UploadComponent.new Upload.SucceededListener() {...},66,0,0,0,8,0,1,0,1,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.views.samplefile,UploadComponent.new Upload.Receiver() {...},64,0,0,0,6,0,1,0,1,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.query.locations,QueryAvailableLocations,145,0,0,0,9,0,4,0,4,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.presenters,SampleListPresenter,210,0,2,0,9,0,7,0,6,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.presenters,ControlElementsPresenter,80,0,2,0,4,0,5,0,4,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.presenters,SampleListPresenter._updateFinished_closure1,31,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.presenters,SampleListPresenter._updateFinished_closure2,31,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.update,SampleTrackingUpdateException,224,0,12,0,3,0,13,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.trackinginformation.update,UpdateSampleTrackingInfo,498,0,10,0,33,0,11,0,6,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking,DependencyManager,1116,0,36,0,93,0,25,0,7,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking,SampleUpdatePortlet,221,0,8,0,22,0,8,0,4,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web,SampleParser,188,0,10,0,13,0,8,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web,SampleParser._extractSampleCodes_closure1,40,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web,StyledNotification,379,0,20,0,10,0,19,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web,DateConverter,168,0,4,0,13,0,7,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web,ViewModel,115,0,0,0,5,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker.SampleTrackingCenter._availableLocationsForPerson_closure2,37,0,0,0,2,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker.SampleTrackingCenter._updateSampleLocation_closure3,48,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker.SampleTrackingCenter._currentSampleLocation_closure1,31,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker.SampleTrackingCenter._updateSampleStatus_closure4,48,0,0,0,1,0,2,0,2,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker.SampleTrackingCenter,977,0,18,0,54,0,14,0,5,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,OpenbisDataSource,206,0,4,0,11,0,5,0,3,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.datasources,SampleTracker,61,0,0,0,3,0,4,0,4,0
+Sample Tracking Update Portlet,life.qbic.portal.sampletracking.web.controllers,SampleTrackingPortletController,236,0,4,0,21,0,10,0,8,0
