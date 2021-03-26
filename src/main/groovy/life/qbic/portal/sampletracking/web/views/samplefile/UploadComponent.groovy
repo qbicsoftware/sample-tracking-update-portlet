@@ -4,6 +4,8 @@ import com.vaadin.ui.Upload
 import com.vaadin.ui.VerticalLayout
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.identifiers.SampleCodeFunctions
+import life.qbic.portal.sampletracking.web.SampleParser
+
 import static com.vaadin.ui.Upload.*
 
 
@@ -18,7 +20,7 @@ class UploadComponent extends VerticalLayout {
     private FailedListener failedListener
     private Upload upload
     private ByteArrayOutputStream uploadContent
-    public final static String MIME_TYPE = "text/csv"
+    public final static String MIME_TYPE = "text/tsv"
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
@@ -62,7 +64,7 @@ class UploadComponent extends VerticalLayout {
                     uploadContent = new ByteArrayOutputStream()
                     return uploadContent
                 } catch (Exception e) {
-                    log.error("Unexpected. Could not upload to temporary file ${tempFile.getAbsolutePath()}.", e.getMessage())
+                    log.error("Unexpected. Could not upload to temporary file.", e.getMessage())
                     throw e
                 }
 
@@ -75,18 +77,8 @@ class UploadComponent extends VerticalLayout {
             @Override
             void uploadSucceeded(SucceededEvent event) {
                 Set<String> sampleIds = [] as Set
-                String separator = ","
                 try {
-                    Set inputLines = new String(uploadContent.toByteArray()).split("\n") as Set
-                    for (line in inputLines) {
-                        String sampleCode = line.split(separator)[0]
-                        if (SampleCodeFunctions.isQbicBarcode(sampleCode)) {
-                            sampleIds.add(sampleCode)
-                        } else {
-                            String invalidCodeMessage = "Entry '${sampleCode}' is not a valid QBiC Sample Code."
-                            log.error(invalidCodeMessage)
-                        }
-                    }
+                    sampleIds.addAll(SampleParser.extractSampleCodes(new String(uploadContent.toByteArray())))
                     fireUploadSuccessEvent(sampleIds)
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)
