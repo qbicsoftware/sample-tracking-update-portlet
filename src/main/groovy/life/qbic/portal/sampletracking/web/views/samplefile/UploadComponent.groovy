@@ -20,7 +20,7 @@ class UploadComponent extends VerticalLayout {
     private FailedListener failedListener
     private Upload upload
     private ByteArrayOutputStream uploadContent
-    public final static String MIME_TYPE = "text/csv"
+    public final static String MIME_TYPE = "text/tsv"
 
     private List<UploadSucceededListener> uploadSucceededListenerList
 
@@ -64,7 +64,7 @@ class UploadComponent extends VerticalLayout {
                     uploadContent = new ByteArrayOutputStream()
                     return uploadContent
                 } catch (Exception e) {
-                    log.error("Unexpected. Could not upload to temporary file ${tempFile.getAbsolutePath()}.", e.getMessage())
+                    log.error("Unexpected. Could not upload to temporary file.", e.getMessage())
                     throw e
                 }
 
@@ -78,7 +78,7 @@ class UploadComponent extends VerticalLayout {
             void uploadSucceeded(SucceededEvent event) {
                 Set<String> sampleIds = [] as Set
                 try {
-                    sampleIds.addAll(SampleParser.extractSampleCodes(uploadContent.toByteArray().toString()))
+                    sampleIds.addAll(SampleParser.extractSampleCodes(new String(uploadContent.toByteArray())))
                     fireUploadSuccessEvent(sampleIds)
                 } catch (Exception e) {
                     log.error ("The parsing of the sample ids from the output stream failed", e)
