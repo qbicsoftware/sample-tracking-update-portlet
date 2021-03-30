@@ -39,7 +39,7 @@ This guide intends to showcase the features of the sample-tracking-update-portle
 ### Select Samples
 
 The sample-tracking-update-portlet currently offers two methods for adding the samples to update.  
-This can be achieved by either uploading a `*.csv` file containing the sample identifiers in the first column 
+This can be achieved by either uploading a `*.tsv` file containing the sample identifiers in the first column 
 or by providing them directly.   
 Details for both methods are outlined below. 
 
@@ -56,16 +56,16 @@ Each subsequent sample identifier will be added to the "Samples to update" grid
  
 #### Select Samples By File
 It is also possible to select the samples of interest, by 
-uploading one or multiple *.csv files containing the sample codes in the first column.
+uploading one or multiple *.tsv files containing the sample codes in the first column.
 ![add](readme-docs/screenshots/AddSampleByFile.png)
 
-A template file can be found at [``readme-docs/templates/example.csv``](readme-docs/templates/example.csv).
+A template file can be found at [``readme-docs/templates/example.tsv``](readme-docs/templates/example.tsv).
 
-If the sample identifiers in the csv file are valid, and if they are not already in the list of loaded samples, 
+If the sample identifiers in the tsv file are valid, and if they are not already in the list of loaded samples, 
 the samples and their associated information will appear in the sample grid.
 ![add](readme-docs/screenshots/AddSampleByFileResult.png)
   
-Subsequent sample identifiers from either a *.csv file or by direct input will also be added to the "Samples to update" grid. 
+Subsequent sample identifiers from either a *.tsv file or by direct input will also be added to the "Samples to update" grid. 
  
 ### Update Sample Information
 After the addition of the samples of interest, the user can update sample specific information,
