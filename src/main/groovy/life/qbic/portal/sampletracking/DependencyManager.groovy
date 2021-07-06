@@ -1,6 +1,7 @@
 
 package life.qbic.portal.sampletracking
 
+import life.qbic.portal.sampletracking.datasources.SpaceNotFoundException
 import life.qbic.portal.utils.PortalUtils
 import groovy.util.logging.Log4j2
 import life.qbic.datamodel.services.ServiceUser
@@ -68,6 +69,9 @@ class DependencyManager {
         }
         try {
             this.sampleManagementDataSource = new OpenbisDataSource(configManager, userID)
+        } catch (SpaceNotFoundException spaceNotFound) {
+            log.error("User $userID has no access to openBIS spaces.")
+            throw spaceNotFound
         } catch (Exception e) {
             log.error("Error when trying to connect to openBIS.")
             throw e
@@ -177,15 +181,23 @@ class DependencyManager {
         }
 
         ControlElements sampleModifyControls
+        String userEmail
         try {
-            def userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in"
+            userEmail = PortalUtils.isLiferayPortlet() ? PortalUtils.getUser().getEmailAddress() : "Not logged in"
             // set the appropriate fields in the view model
             this.portletController.queryAllLocationsForPerson(userEmail)
-            sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
         } catch (Exception e) {
             log.error("Could not create ${ControlElements.getSimpleName()} view.", e)
             throw e
         }
+        if (!userEmail) {
+            throw new RuntimeException("Could not retrieve the user email.")
+        }
+        if (this.viewModel.availableLocations.isEmpty()) {
+            throw new RuntimeException("No locations available for $userEmail")
+        }
+        sampleModifyControls = new ControlElements(this.portletController, this.viewModel, userEmail)
+
 
         PortletView portletView
         try {

@@ -20,7 +20,16 @@ class OpenbisDataSource implements SampleManagementDataSource {
     openbis = new OpenBisClient(configManager.getDataSourceUser(), configManager.getDataSourcePassword(), configManager.getDataSourceApiUrl())
     openbis.login()
     log.info("Fetching user spaces for " + userID)
+    loadUserSpaces()
     userSpaces.addAll(openbis.getUserSpaces(userID))
+  }
+
+  private Collection<String> loadUserSpaces(String userId) {
+    List<String> spaceIds = openbis.getUserSpaces(userId)
+    if (spaceIds.isEmpty()) {
+      throw new SpaceNotFoundException("No spaces associated with $userId")
+    }
+    return spaceIds
   }
 
   @Override
