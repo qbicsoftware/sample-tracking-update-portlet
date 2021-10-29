@@ -1,1 +1,3 @@
 developer.properties
+# compiled Vaadin style
+**/mytheme/styles.css
