@@ -10,7 +10,7 @@
 		<version>3.1.4</version>
 	</parent>
 	<artifactId>sample-tracking-update-portlet</artifactId>
-	<version>1.3.1</version> <!-- <<QUBE_FORCE_BUMP>> -->
+	<version>1.4.0-SNAPSHOT</version> <!-- <<QUBE_FORCE_BUMP>> -->
 	<name>Sample Tracking Update Portlet</name>
 	<url>http://github.com/qbicsoftware/sample-tracking-update-portlet</url>
 	<description>This application provides functionality to update and set the location and status of specific samples</description>
