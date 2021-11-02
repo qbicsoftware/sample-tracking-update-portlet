@@ -5,6 +5,20 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
+1.3.1 (2021-10-29)
+------------------
+
+**Added**
+
+**Fixed**
+
+**Dependencies**
+
+* Overwrite com.vaadin 8.9.2 from portlet-pom with com.vaadin 8.14.0 property in pom.xml (addresses CVE-2021-37714)
+
+**Deprecated**
+
+
 1.3.0 (2021-03-26)
 ------------------
 
