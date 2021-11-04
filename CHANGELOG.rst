@@ -5,12 +5,42 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
-1.3.0-SNAPSHOT (2021-03-02)
+1.4.0-SNAPSHOT (2021-11-02)
 ---------------------------
 
 **Added**
 
 **Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
+1.3.1 (2021-10-29)
+------------------
+
+**Added**
+
+**Fixed**
+
+**Dependencies**
+
+* Overwrite com.vaadin 8.9.2 from portlet-pom with com.vaadin 8.14.0 property in pom.xml (addresses CVE-2021-37714)
+
+**Deprecated**
+
+
+1.3.0 (2021-03-26)
+------------------
+
+**Added**
+
+* Add possibility to enter multiple QBiC barcodes by hand. (`#80 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/80>`_)
+
+**Fixed**
+
+* Files are now only accepted in TSV rather then CSV (`#80 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/79>`_)
 
 * Selectable statuses have changed to ``[life.qbic.datamodel.samples.Status.SAMPLE_RECEIVED, life.qbic.datamodel.samples.Status.SAMPLE_QC_PASS, life.qbic.datamodel.samples.Status.SAMPLE_QC_FAIL, life.qbic.datamodel.samples.Status.LIBRARY_PREP_FINISHED]`` (`#76 <https://github.com/qbicsoftware/sample-tracking-update-portlet/pull/76>`_)
 
