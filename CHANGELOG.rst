@@ -14,7 +14,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Dependencies**
 
-* Overwrite org.apache.log4j 2.13.2 from portlet-parent-pom with org.apache.log4j 2.15.0 version property in pom.xml (addresses CVE-2021-44228)
+* org.apache.logging.log4j 2.13.2 -> 2.15.0 (addresses CVE-2021-44228)
 
 **Deprecated**
 
