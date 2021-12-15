@@ -4,6 +4,23 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.3.3 (2021-12-15)
+------------------
+
+**Added**
+
+**Fixed**
+
+**Dependencies**
+
+* com.vaadin.* 8.14.0 -> 8.14.3
+* org.apache.logging.log4j 2.15.0 -> 2.16.0
+* org.codehaus.groovy.* 3.0.7 -> 3.0.9
+* org.mariadb.jdbc:mariadb-java-client 2.0.2 -> 2.7.3
+
+**Deprecated**
+
+
 
 1.3.2 (2021-12-13)
 ------------------
