@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* CVE-2021-45046
+
 **Dependencies**
 
 * com.vaadin.* 8.14.0 -> 8.14.3
