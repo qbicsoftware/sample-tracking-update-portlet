@@ -4,6 +4,21 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.3.4 (2021-12-22)
+------------------
+
+**Added**
+
+**Fixed**
+
+* CVE-2021-45105
+
+**Dependencies**
+
+* org.apache.logging.log4j 2.16.0 -> 2.17.0
+
+**Deprecated**
+
 1.3.3 (2021-12-15)
 ------------------
 
@@ -21,7 +36,6 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * org.mariadb.jdbc:mariadb-java-client 2.0.2 -> 2.7.3
 
 **Deprecated**
-
 
 
 1.3.2 (2021-12-13)
