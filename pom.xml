@@ -18,7 +18,7 @@
 	<properties>
 		<vaadin.version>8.14.3</vaadin.version>
 		<vaadin.plugin.version>8.14.3</vaadin.plugin.version>
-		<log4j.version>2.16.0</log4j.version>
+		<log4j.version>2.17.0</log4j.version>
 	</properties>
 	<!-- Since no distribution management was specified,
 	we need to explicitly set a dummy example here to allow for correct site generation-->
