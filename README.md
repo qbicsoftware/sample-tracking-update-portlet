@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/qbicsoftware/sample-tracking-update-portlet.svg?branch=development)](https://travis-ci.com/qbicsoftware/sample-tracking-update-portlet)[![Code Coverage]( https://codecov.io/gh/qbicsoftware/sample-tracking-update-portlet/branch/development/graph/badge.svg)](https://codecov.io/gh/qbicsoftware/sample-tracking-update-portlet)
 
-Sample Tracking Update Portlet, version 1.0.0-SNAPSHOT - Portlet to update sample status
+Sample Tracking Update Portlet, version 1.3.5 - Portlet to update sample status
 
 ## Author
 Created by all the [contributors](https://github.com/qbicsoftware/sample-tracking-update-portlet/graphs/contributors)
