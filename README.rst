@@ -9,10 +9,6 @@ sample-tracking-update-portlet
     :target: https://github.com/qbicsoftware/sample-tracking-update-portlet/workflows/Run%20Maven%20Tests/badge.svg
     :alt: Github Workflow Tests Status
 
-.. image:: https://github.com/qbicsoftware/sample-tracking-update-portlet/workflows/QUBE%20lint/badge.svg
-    :target: https://github.com/qbicsoftware/sample-tracking-update-portlet/workflows/QUBE%20lint/badge.svg
-    :alt: qube Lint Status
-
 .. image:: https://readthedocs.org/projects/sample-tracking-update-portlet/badge/?version=latest
     :target: https://sample-tracking-update-portlet.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
