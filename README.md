@@ -34,7 +34,7 @@ This guide intends to showcase the features of the sample-tracking-update-portle
     * [Update Sample Date](#update-sample-date)
     * [Update Sample Location](#update-sample-location)
     * [Update Sample Status](#update-sample-status)
-* [Remove Samples From Selection](#emove-samples-from-selection)
+* [Remove Samples From Selection](#remove-samples-from-selection)
 
 ### Select Samples
 
