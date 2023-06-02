@@ -1,3 +1,6 @@
+# NOT MAINTAINED ANYMORE #
+
+
 # Sample Tracking Update Portlet
 
 [![Build Status](https://travis-ci.com/qbicsoftware/sample-tracking-update-portlet.svg?branch=development)](https://travis-ci.com/qbicsoftware/sample-tracking-update-portlet)[![Code Coverage]( https://codecov.io/gh/qbicsoftware/sample-tracking-update-portlet/branch/development/graph/badge.svg)](https://codecov.io/gh/qbicsoftware/sample-tracking-update-portlet)
